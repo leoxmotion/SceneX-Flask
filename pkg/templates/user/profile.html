@@ -1,0 +1,332 @@
+{% include "user/header.html" %}
+
+            <!-- MAIN PROFILE -->
+            <main class="col-lg-7 offset-lg-2 profile-main">
+
+                <!-- COVER -->
+                <div class="cover-photo">
+                    <!-- <div class="cover-overlay"> -->
+                        <img src="/static/uploads/{{user_deets.profile_pic}}" alt="">
+                    <!-- </div> -->
+                </div>
+
+                <!-- PROFILE HEADER -->
+                <div class="profile-header">
+
+                    <div class="profile-top-row">
+                        <div class="profile-avatar">
+                            <img src="/static/uploads/{{user_deets.profile_pic}}" alt="Leo's avatar">
+                        </div>
+                        <div class="profile-actions">
+                            {% if session['useronline']==user_deets.id %}
+                            <button class="btn-outline-profile" id="editProfileBtn">Edit Profile</button>
+                            <a href="/edit-profile/" id="editProfile" style="display: none;"></a>
+                            {%else%}
+                            <button class="btn-follow">Follow</button>
+                            
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="profile-info">
+                        <div class="profile-name-row">
+                            <h1 class="profile-name">{{ user_deets.fullname }}</h1>
+                            {% if user_deets.verified_status == 'verified' %}
+                            <span class="creator-badge">Creator</span>
+                            {% endif %}
+                        </div>
+                        <p class="profile-handle">@{{ user_deets.username }}</p>
+                        {% if user_deets.bio %}
+                        <p class="profile-bio">
+                            {{ user_deets.bio }}
+                        </p>
+                        {% endif %}
+
+                        <div class="profile-meta">
+                            <span class="meta-item">
+                                <i class="fa-solid fa-location-dot"></i>
+                                {{ user_deets.state.name }}, Nigeria
+                            </span>
+                            <span class="meta-item">
+                                <i class="fa-regular fa-calendar"></i>
+                                Joined {{ user_deets.joined_at.strftime("%B %Y") }}
+                            </span>
+                        </div>
+
+                        <div class="profile-stats">
+                            <div class="stat-item">
+                                <strong>{{ events|length }}</strong>
+                                <span>Events</span>
+                            </div>
+                            <div class="stat-item">
+                                <strong>2.1k</strong>
+                                <span>Followers</span>
+                            </div>
+                            <div class="stat-item">
+                                <strong>340</strong>
+                                <span>Following</span>
+                            </div>
+                            
+                        </div>
+                        {#
+                        <div class="interest-tags">
+                            <span class="interest-tag">#Afrobeats</span>
+                            <span class="interest-tag">#Nightlife</span>
+                            <span class="interest-tag">#Tech</span>
+                            <span class="interest-tag">#Design</span>
+                            <span class="interest-tag">#Music</span>
+                        </div> #}
+                    </div>
+                </div>
+
+                <!-- TABS -->
+                <div class="profile-tabs">
+                    <button class="profile-tab active-tab" data-tab="posts">Posts</button>
+                    <button class="profile-tab" data-tab="events">Events</button>
+                    <button class="profile-tab" data-tab="communities">Communities</button>
+                    <button class="profile-tab" data-tab="media">Media</button>
+                </div>
+
+                <!-- TAB CONTENT -->
+
+                <!-- POSTS TAB -->
+                <div class="tab-content active-content" id="tab-posts">
+                {% if posts %}
+                    {% for p in posts %}
+                    
+                        {% if p.creator.id == user_deets.id %}
+                            <div class="post-card">
+
+                                <div class="post-event">
+                                    <div class="row">
+                                        <div class="col-12 text-center event-pill">
+                                            <div>
+                                                <i class="fa-solid fa-bolt"></i>
+                                                {{ p.event.name }}
+                                            </div>
+
+                                            <div class="event-meta">
+                                                {% if p.event.address %}
+                                                <span>
+                                                    <i class="fa-solid fa-location-dot"></i>
+                                                    {{ p.event.address }}
+                                                </span>
+                                                {% endif %}
+                                                <span>
+                                                    <i class="fa-regular fa-clock"></i>
+                                                    {{ p.event.event_start.strftime("%a, %b %d, %Y") }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="post-header">
+                                    <div class="post-user-info">
+                                        <div class="avatar">
+                                            <img src="{{ url_for('static', filename='uploads/' ~ p.creator.profile_pic) }}"
+                        alt="" >
+                                        </div>
+
+                                        <div class="px-3">
+                                            <h5 class="post-username">@{{ p.creator.username }}</h5>
+                                            <span class="post-time">{{ p.created_at }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <p class="post-text">
+                                    {{ p.content }}
+                                </p>
+
+                                {% if p.media %}
+                                <div class="post-image">
+                                    <img src="{{ url_for('static', filename='uploads/' ~ p.media) }}"
+                                        class="img-fluid"
+                                        alt="">
+                                </div>
+                                {% endif %}
+
+                                <div class="post-footer">
+                                    <div class="post-actions">
+
+                                        {% if p is defined %}
+                                        <button class="like-btn" data-post-id="{{ p.id }}">
+                                            {% if liked_post_ids is defined and p.id in liked_post_ids %}
+                                                <i class="fa-solid fa-heart" style="color:#ef4444"></i>
+                                            {% else %}
+                                                <i class="fa-regular fa-heart"></i>
+                                            {% endif %}
+                                            <span>{{ p.likes|length }}</span>
+                                        </button>
+                                        {% else %}
+                                        <button class="like-btn">
+                                            <i class="fa-regular fa-heart"></i>
+                                            <span>2</span>
+                                        </button>
+                                        {% endif %}
+
+                                        <button class="comment-btn" data-open-comment="{{ p.id }}">
+                                            <i class="fa-regular fa-comment"></i>
+                                            <span>
+                                            {{ p.comments|length }}
+                                        </span>
+                                        </button>
+
+                                        <button class="share-btn">
+                                            <i class="fa-solid fa-share"></i>
+                                            <span>7</span>
+                                        </button>
+
+                                        <a href="/comments/{{ p.id }}/"
+                                        id="openComment{{ p.id }}"
+                                        style="display:none;"></a>
+
+                                    </div>
+
+                                    <button class="post-event-footer" data-view-event="{{ p.id }}">
+                                        <i class="fa-regular fa-calendar"></i>
+                                        View Event
+                                    </button>
+
+                                    <a href="/creator/view-event/{{ p.event.id }}/"
+                                    id="viewEvent{{ p.id }}"
+                                    style="display:none;"></a>
+
+                                </div>
+
+                            </div>
+
+                        {% endif %}
+                    
+                    {% endfor %}
+                {% else %}
+                        <h3 class="text-white">No Posts Yet</h3>
+                {% endif %}
+                    
+                </div>
+
+                <!-- EVENTS TAB -->
+                <div class="tab-content" id="tab-events">
+                    <div class="events-section-label">Hosting</div>
+                    <div class="row event-grid">
+                        {% for event in events %}
+                    {% if creator.id == user_deets.id %}
+                        <div class="col-md-6 mb-3" data-category="{{ event.category.name }}">
+                                <div class="all-event-card">
+                                    <div class="all-event-image">
+                                        <img src="/static/uploads/{{ event.banner }}" alt="" onerror="this.style.display='none'">
+                                        <span class="event-badge">{{ event.category.name }}</span>
+                                        <span class="event-time-badge">{{ event.status }}</span>
+                                    </div>
+                                    <div class="all-event-body">
+                                        <h3>{{ event.name }}</h3>
+                                        <div class="all-event-meta">
+                                            <span><i class="fa-solid fa-location-dot"></i> {{ event.address }}</span>
+                                            <span><i class="fa-regular fa-calendar"></i> {{ event.event_start.strftime("%a, %B %d %Y") }}</span>
+                                            <span><i class="fa-regular fa-clock"></i> {{ event.event_start.strftime("%I:%M %p") }}</span>
+                                        </div>
+                                        <div class="all-event-footer">
+                                            <div class="attendees">
+                                                <div class="mini-avatar"></div>
+                                                <div class="mini-avatar"></div>
+                                                <div class="mini-avatar"></div>
+                                                <span>0 going</span>
+                                            </div>
+                                            <button class="rsvp-btn viewBtn" data-view-event="{{ event.id }}">
+                                                    View Event
+                                            </button>
+                                            <a href="/creator/view-event/{{ event.id }}/" id="viewEvent{{event.id}}" style="display:none"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    {% endif %}
+                    {% endfor %}
+
+                        
+                    </div>
+
+                    <div class="events-section-label" style="margin-top:16px">Attended</div>
+                    <div class="row event-grid">
+                        <div class="col-md-6">
+                            <div class="profile-event-card past-event">
+                                <div class="profile-event-image"></div>
+                                <div class="profile-event-body">
+                                    <h3>Zodiac Sign Party</h3>
+                                    <div class="event-meta">
+                                        <p><i class="fa-solid fa-location-dot"></i> Lagos</p>
+
+                                        <p><i class="fa-regular fa-calendar"></i> May 28</p>
+
+                                    </div>
+                                    <span class="past-label">Attended</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="profile-event-card past-event">
+                                <div class="profile-event-image"></div>
+                                <div class="profile-event-body">
+                                    <h3>Afrotech Summit</h3>
+                                    <div class="event-meta">
+                                        <p><i class="fa-solid fa-location-dot"></i> Lagos</p>
+
+                                        <p><i class="fa-regular fa-calendar"></i> May 28</p>
+
+                                    </div>
+                                    <span class="past-label">Attended</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COMMUNITIES TAB -->
+                <div class="tab-content" id="tab-communities">
+                    <div class="community-card">
+                        <div class="community-avatar"></div>
+                        <div class="community-info">
+                            <h3>Lagos Creatives</h3>
+                            <p>4.2k members</p>
+                        </div>
+                        <button class="join-btn">Joined</button>
+                    </div>
+                    <div class="community-card">
+                        <div class="community-avatar" style="background:#9b5cf6"></div>
+                        <div class="community-info">
+                            <h3>Afrobeats Producers</h3>
+                            <p>1.8k members</p>
+                        </div>
+                        <button class="join-btn">Joined</button>
+                    </div>
+                    <div class="community-card">
+                        <div class="community-avatar" style="background:#f59e0b"></div>
+                        <div class="community-info">
+                            <h3>Lagos Tech Scene</h3>
+                            <p>6.1k members</p>
+                        </div>
+                        <button class="join-btn">Joined</button>
+                    </div>
+                </div>
+
+                <!-- MEDIA TAB -->
+                <div class="tab-content" id="tab-media">
+                    <div class="media-grid">
+                        {% for p in posts %}
+                        {% if creator.id==user_deets.id %}
+                        {% if p.media %}
+                        <div class="media-tile"><img src="{{ url_for('static', filename='uploads/' ~ p.media) }}"
+                                    class="img-fluid"
+                                    alt=""></div>
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}
+                    
+                    </div>
+                </div>
+
+            </main>
+
+            {% set sidebar_mode = 'profile' %}
+{% include "user/footer.html" %}

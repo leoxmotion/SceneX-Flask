@@ -1,0 +1,79 @@
+{% include "admin/admin_header.html" %}
+
+<main class="col-lg-7 offset-lg-2 admin-main">
+    <div class="admin-page-shell">
+        <div class="admin-page-header">
+            <div>
+                <p class="eyebrow">Platform management</p>
+                <h1>Users</h1>
+                <p class="admin-subtitle">Review registered users and keep the community healthy.</p>
+            </div>
+            <a href="/admin/dashboard/" class="btn btn-outline-light admin-pill-btn">Back to dashboard</a>
+        </div>
+
+        <div class="admin-panel">
+            <div class="section-head-row">
+                <h3>All users</h3>
+                <span class="admin-badge">{{ users|length }} members</span>
+            </div>
+
+            <div class="search-bar" style="margin-bottom:1rem;">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Search users..." id="userSearch">
+            </div>
+
+            <div class="table-responsive">
+                <table class="table admin-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                            <th>Joined</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                        <tr class="user-row">
+                            <td class="bg-dark text-white">{{ user.fullname or user.username }}</td>
+                            <td class="bg-dark text-white">{{ user.email }}</td>
+                            <td class="bg-dark text-white"><span class="admin-badge">{{ user.verified_status }}</span></td>
+                            <td class="bg-dark text-white">{{ user.joined_at.strftime('%b %d, %Y') if user.joined_at else 'N/A' }}</td>
+                            <td class="bg-dark text-white">
+                                <div class="admin-action-group">
+                                    <a href="/admin/user-details/{{ user.id }}/" class="admin-action-btn admin-action-btn-primary">View details</a>
+                                    
+                                </div>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="5" class="admin-empty">No users found.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% include "admin/admin_footer.html" %}
+
+{% block customjs %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.getElementById('userSearch');
+        if (searchInput) {
+            searchInput.addEventListener('input', function () {
+                const query = this.value.toLowerCase();
+                document.querySelectorAll('.user-row').forEach(function (row) {
+                    const text = row.textContent.toLowerCase();
+                    row.style.display = text.includes(query) ? '' : 'none';
+                });
+            });
+        }
+    });
+</script>
+{% endblock %}

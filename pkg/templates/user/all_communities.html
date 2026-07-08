@@ -1,0 +1,293 @@
+{% include "user/header.html" %}
+
+            <!-- MAIN -->
+
+            <section class="col-lg-7 offset-lg-2 all-communities-page">
+
+                <!-- HEADER -->
+                <div class="all-page-header">
+                    <div class="all-page-header-top">
+                        <a href="communities.html" class="back-link">
+                            <i class="fa-solid fa-arrow-left"></i>
+                            Communities
+                        </a>
+
+                        <div class="all-page-view-toggle">
+                            <button class="view-toggle-btn active-view-btn" id="gridViewBtn">
+                                <i class="fa-solid fa-grip"></i>
+                            </button>
+
+                            <button class="view-toggle-btn" id="listViewBtn">
+                                <i class="fa-solid fa-list"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="all-page-title-row">
+                        <div>
+                            <h1>All Communities</h1>
+                            <p>Showing <span id="communityCount">18</span> active communities</p>
+                        </div>
+
+                        <button class="all-page-sort-btn">
+                            <i class="fa-solid fa-arrow-up-wide-short"></i>
+                            Sort
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SEARCH -->
+                <div class="search-bar" style="margin-bottom:1.25rem;">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Search communities..." id="communitySearch">
+
+                    <button class="filter-btn">
+                        <i class="fa-solid fa-sliders"></i>
+                        Filter
+                    </button>
+                </div>
+
+                <!-- CATEGORY PILLS -->
+                <div class="category-row" style="margin-bottom:1rem;">
+                    <button class="category-pill active-pill" data-filter="all">All</button>
+                    <button class="category-pill" data-filter="music">Music</button>
+                    <button class="category-pill" data-filter="tech">Tech</button>
+                    <button class="category-pill" data-filter="design">Design</button>
+                    <button class="category-pill" data-filter="gaming">Gaming</button>
+                    <button class="category-pill" data-filter="fashion">Fashion</button>
+                    <button class="category-pill" data-filter="sports">Sports</button>
+                    <button class="category-pill" data-filter="photography">Photography</button>
+                </div>
+
+                <!-- STATUS FILTER -->
+                <div class="category-row" style="margin-bottom:2rem;">
+                    <button class="date-pill active-date-pill">All Communities</button>
+                    <button class="date-pill">Trending</button>
+                    <button class="date-pill">New</button>
+                    <button class="date-pill">Most Active</button>
+                    <button class="date-pill">Verified</button>
+                </div>
+
+                <!-- COMMUNITIES GRID -->
+                <div class="row g-3" id="communitiesGrid">
+
+                    <!-- COMMUNITY -->
+                    <div class="col-md-6" data-category="music">
+
+                        <div class="all-community-card">
+
+                            <div class="all-community-cover">
+                                <img src="images/community1.jpg" alt="" onerror="this.style.display='none'">
+
+                                <span class="community-badge">Music</span>
+
+                                <div class="community-members-badge">
+                                    <i class="fa-solid fa-user-group"></i>
+                                    12.4k
+                                </div>
+                            </div>
+
+                            <div class="all-community-body">
+
+                                <div class="community-avatar-large">
+                                    <img src="images/dp1.jpg" alt="" onerror="this.style.display='none'">
+                                </div>
+
+                                <h3>Afrobeats Central</h3>
+
+                                <p>
+                                    A community for afrobeats lovers, artists, DJs and nightlife culture across Lagos.
+                                </p>
+
+                                <div class="community-meta-row">
+
+                                    <span>
+                                        <i class="fa-solid fa-location-dot"></i>
+                                        Lagos
+                                    </span>
+
+                                    <span>
+                                        <i class="fa-solid fa-bolt"></i>
+                                        Very Active
+                                    </span>
+
+                                </div>
+
+                                <div class="community-footer">
+
+                                    <div class="mini-community-users">
+                                        <div class="mini-avatar"></div>
+                                        <div class="mini-avatar"></div>
+                                        <div class="mini-avatar"></div>
+
+                                        <span>+1.2k online</span>
+                                    </div>
+
+                                    <button class="join-community-btn">
+                                        Join
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- COMMUNITY -->
+                    <div class="col-md-6" data-category="tech">
+
+                        <div class="all-community-card">
+
+                            <div class="all-community-cover">
+                                <img src="images/community2.jpg" alt="" onerror="this.style.display='none'">
+
+                                <span class="community-badge">Tech</span>
+
+                                <div class="community-members-badge">
+                                    <i class="fa-solid fa-user-group"></i>
+                                    8.7k
+                                </div>
+                            </div>
+
+                            <div class="all-community-body">
+
+                                <div class="community-avatar-large"></div>
+
+                                <h3>SceneX Developers</h3>
+
+                                <p>
+                                    Frontend developers, designers and startup builders creating digital products together.
+                                </p>
+
+                                <div class="community-meta-row">
+
+                                    <span>
+                                        <i class="fa-solid fa-location-dot"></i>
+                                        Remote
+                                    </span>
+
+                                    <span>
+                                        <i class="fa-solid fa-bolt"></i>
+                                        Trending
+                                    </span>
+
+                                </div>
+
+                                <div class="community-footer">
+
+                                    <div class="mini-community-users">
+                                        <div class="mini-avatar"></div>
+                                        <div class="mini-avatar"></div>
+
+                                        <span>+870 online</span>
+                                    </div>
+
+                                    <button class="join-community-btn">
+                                        Join
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- COMMUNITY -->
+                    <div class="col-md-6" data-category="design">
+
+                        <div class="all-community-card">
+
+                            <div class="all-community-cover">
+                                <img src="images/community3.jpg" alt="" onerror="this.style.display='none'">
+
+                                <span class="community-badge">Design</span>
+
+                                <div class="community-members-badge">
+                                    <i class="fa-solid fa-user-group"></i>
+                                    5.2k
+                                </div>
+                            </div>
+
+                            <div class="all-community-body">
+
+                                <div class="community-avatar-large"></div>
+
+                                <h3>UI/UX Africa</h3>
+
+                                <p>
+                                    Product designers, illustrators and creatives sharing ideas, resources and inspiration.
+                                </p>
+
+                                <div class="community-meta-row">
+
+                                    <span>
+                                        <i class="fa-solid fa-location-dot"></i>
+                                        Africa
+                                    </span>
+
+                                    <span>
+                                        <i class="fa-solid fa-bolt"></i>
+                                        Active
+                                    </span>
+
+                                </div>
+
+                                <div class="community-footer">
+
+                                    <div class="mini-community-users">
+                                        <div class="mini-avatar"></div>
+                                        <div class="mini-avatar"></div>
+
+                                        <span>+540 online</span>
+                                    </div>
+
+                                    <button class="join-community-btn">
+                                        Join
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- LOAD MORE -->
+                <div class="load-more-wrap">
+
+                    <button class="load-more-btn">
+
+                        Load More Communities
+
+                        <i class="fa-solid fa-chevron-down"></i>
+
+                    </button>
+
+                </div>
+
+            </section>
+
+            {% set sidebar_mode = 'community' %}
+            {% include 'user/footer.html' %}
+
+        </div>
+    </div>
+</div>
+
+<script src="/static/jquery.js"></script>
+<script src="/static/bootstrap/js/bootstrap.bundle.js"></script>
+<script src="/static/scenequery.js"></script>
+
+<script>
+
+</script>
+
+</body>
+</html>

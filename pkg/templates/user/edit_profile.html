@@ -1,0 +1,406 @@
+{% include "user/header.html" %}
+
+            <!-- MAIN -->
+            <section class="col-lg-7 offset-lg-2 edit-profile-page">
+
+                <!-- HEADER -->
+                <div class="ep-header">
+                    <a href="/profile/{{ user_deets.id }}/" class="back-link">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        Back to Profile
+                    </a>
+                    <div class="ep-header-right">
+                        <button class="ep-discard-btn">
+                            Discard
+                        </button>
+                        <button class="ep-save-btn">
+                            <i class="fa-solid fa-check"></i>
+                            Save Changes
+                        </button>
+                    </div>
+                </div>
+
+                <!-- COVER + AVATAR EDIT -->
+                <div class="ep-media-section">
+
+                    <!-- COVER PHOTO -->
+            
+                    
+
+                    <!-- AVATAR -->
+                    
+
+                <!-- FORM SECTIONS -->
+                <form class="ep-form" id="editForm" action="" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <div class="ep-cover mb-2" id="epCover">
+                        
+                        <img src="{{ url_for('static', filename='uploads/' ~ user_deets.profile_pic) }}" alt="Cover photo" id="coverPreview" onerror="this.style.display='none'">
+                        <div class="ep-cover-overlay">
+                            <button class="ep-media-btn" type="button">
+                                <i class="fa-solid fa-camera"></i>
+                                {{ profileform.profile_pic() }}
+                                
+                            </button>
+
+                            
+                            
+                        </div>
+                    </div>
+                    <!-- SECTION: Basic Info -->
+                    <div class="ep-section">
+                        <div class="ep-section-head">
+                            <h3>
+                                <i class="fa-regular fa-id-card"></i>
+                                Basic Info
+                            </h3>
+                        </div>
+
+                        <div class="ep-field-row">
+                            <div class="ep-field">
+                                <label for="epDisplayName">Display Name</label>
+                                
+                                {{ profileform.fullname(id="epDisplayName",
+                                    class_="ep-input") }}
+                                <div class="ep-input-meta">
+                                    <span class="ep-hint">Your name as it appears on your profile</span>
+                                    <!-- <span class="ep-char-count" id="nameCount">12/50</span> -->
+                                </div>
+                            </div>
+                            
+                            <div class="ep-field">
+                                <label for="epUsername">Username</label>
+                                <div class="ep-input-prefix-wrap">
+                                    <span class="ep-input-prefix">@</span>
+                                    
+                                    {{ profileform.username(id="epUsername",
+                                        class_="ep-input ep-input-prefixed") }}
+                                    <span class="ep-username-status" id="usernameStatus">
+                                        <i class="fa-solid fa-check" style="color:#22c55e"></i>
+                                    </span>
+                                </div>
+                                <div class="ep-input-meta">
+                                    <span class="ep-hint">scenex.app/@<span id="hintUsername">leoxmotion</span></span>
+                                    <!-- <span class="ep-char-count" id="userCount">10/30</span> -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ep-field">
+                            <label for="epBio">Bio</label>
+                            {{ profileform.bio(id="epBio",
+                                class_="ep-input ep-textarea") }}
+                            <div class="ep-input-meta">
+                                <span class="ep-hint">Tell the scene who you are</span>
+                                <!-- <span class="ep-char-count" id="bioCount">104/160</span> -->
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Location & Contact -->
+                    <div class="ep-section">
+                        <div class="ep-section-head">
+                            <h3>
+                                <i class="fa-solid fa-location-dot"></i>
+                                Location & Contact
+                            </h3>
+                        </div>
+
+                        <div class="ep-field-row">
+                            <div class="ep-field">
+                                <label for="epCity">City</label>
+                                {{ profileform.state(id="epCity", class_="ep-input ep-select") }}
+                            </div>
+                            
+                            <div class="ep-field">
+                                <label for="epCountry">Country</label>
+                                <select id="epCountry" class="ep-input ep-select">
+                                    <option value="NG" selected>Nigeria</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="ep-field">
+                            <label for="epWebsite">Website</label>
+                            <div class="ep-input-prefix-wrap">
+                                <span class="ep-input-prefix">
+                                    <i class="fa-solid fa-link"></i>
+                                </span>
+                                <input
+                                    type="url"
+                                    id="epWebsite"
+                                    class="ep-input ep-input-prefixed"
+                                    placeholder="https://yoursite.com"
+                                    value=""
+                                >
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- SECTION: Interests -->
+                    <!-- <div class="ep-section">
+                        <div class="ep-section-head">
+                            <h3>
+                                <i class="fa-solid fa-tags"></i>
+                                Interests
+                            </h3>
+                            <span class="ep-section-hint">Picked interests shape your event recommendations</span>
+                        </div>
+
+                        <div class="ep-interests-grid" id="interestsGrid">
+                            <button class="ep-interest-btn active-interest" data-tag="Afrobeats">
+                                <i class="fa-solid fa-music"></i> Afrobeats
+                            </button>
+                            <button class="ep-interest-btn active-interest" data-tag="Nightlife">
+                                <i class="fa-solid fa-martini-glass"></i> Nightlife
+                            </button>
+                            <button class="ep-interest-btn active-interest" data-tag="Tech">
+                                <i class="fa-solid fa-laptop-code"></i> Tech
+                            </button>
+                            <button class="ep-interest-btn active-interest" data-tag="Design">
+                                <i class="fa-solid fa-pen-ruler"></i> Design
+                            </button>
+                            <button class="ep-interest-btn active-interest" data-tag="Music">
+                                <i class="fa-solid fa-headphones"></i> Music
+                            </button>
+                            <button class="ep-interest-btn" data-tag="Art">
+                                <i class="fa-solid fa-palette"></i> Art
+                            </button>
+                            <button class="ep-interest-btn" data-tag="Fashion">
+                                <i class="fa-solid fa-shirt"></i> Fashion
+                            </button>
+                            <button class="ep-interest-btn" data-tag="Sports">
+                                <i class="fa-solid fa-futbol"></i> Sports
+                            </button>
+                            <button class="ep-interest-btn" data-tag="Food">
+                                <i class="fa-solid fa-utensils"></i> Food
+                            </button>
+                            <button class="ep-interest-btn" data-tag="Film">
+                                <i class="fa-solid fa-film"></i> Film
+                            </button>
+                            <button class="ep-interest-btn" data-tag="Comedy">
+                                <i class="fa-solid fa-masks-theater"></i> Comedy
+                            </button>
+                            <button class="ep-interest-btn" data-tag="Gaming">
+                                <i class="fa-solid fa-gamepad"></i> Gaming
+                            </button>
+                        </div>
+                        <div class="ep-input-meta" style="margin-top:0.75rem">
+                            <span class="ep-hint">Select up to 8 interests</span>
+                            <span class="ep-char-count" id="interestCount">5/8 selected</span>
+                        </div>
+                    </div> -->
+
+                    <!-- SECTION: Social Links -->
+                    <!-- <div class="ep-section">
+                        <div class="ep-section-head">
+                            <h3>
+                                <i class="fa-solid fa-share-nodes"></i>
+                                Social Links
+                            </h3>
+                        </div>
+
+                        
+                        <div class="ep-field">
+                            <label for="epInstagram">Instagram</label>
+                            <div class="ep-input-prefix-wrap">
+                                <span class="ep-input-prefix ep-social-prefix" style="color:#e1306c;">
+                                    <i class="fa-brands fa-instagram"></i>
+                                </span>
+                                <input
+                                    type="text"
+                                    id="epInstagram"
+                                    class="ep-input ep-input-prefixed"
+                                    placeholder="your_handle"
+                                    value="leoxmotion"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="ep-field">
+                            <label for="epTwitter">X (Twitter)</label>
+                            <div class="ep-input-prefix-wrap">
+                                <span class="ep-input-prefix ep-social-prefix">
+                                    <i class="fa-brands fa-x-twitter"></i>
+                                </span>
+                                <input
+                                    type="text"
+                                    id="epTwitter"
+                                    class="ep-input ep-input-prefixed"
+                                    placeholder="your_handle"
+                                    value=""
+                                >
+                            </div>
+                        </div>
+
+                        <div class="ep-field">
+                            <label for="epSpotify">Spotify</label>
+                            <div class="ep-input-prefix-wrap">
+                                <span class="ep-input-prefix ep-social-prefix" style="color:#1db954;">
+                                    <i class="fa-brands fa-spotify"></i>
+                                </span>
+                                <input
+                                    type="text"
+                                    id="epSpotify"
+                                    class="ep-input ep-input-prefixed"
+                                    placeholder="Artist or profile link"
+                                    value=""
+                                >
+                            </div>
+                        </div>
+
+                        <div class="ep-field">
+                            <label for="epSoundcloud">SoundCloud</label>
+                            <div class="ep-input-prefix-wrap">
+                                <span class="ep-input-prefix ep-social-prefix" style="color:#ff5500;">
+                                    <i class="fa-brands fa-soundcloud"></i>
+                                </span>
+                                <input
+                                    type="text"
+                                    id="epSoundcloud"
+                                    class="ep-input ep-input-prefixed"
+                                    placeholder="soundcloud.com/your-name"
+                                    value="leoxmotion"
+                                >
+                            </div>
+                        </div>
+
+                    </div> -->
+
+                    <!-- SECTION: Creator Settings -->
+                    <!-- <div class="ep-section">
+                        <div class="ep-section-head">
+                            <h3>
+                                <i class="fa-solid fa-bolt"></i>
+                                Creator Settings
+                            </h3>
+                            <span class="ep-section-hint">Controls how you appear as an event creator</span>
+                        </div>
+
+                        <div class="ep-toggle-row">
+                            <div class="ep-toggle-info">
+                                <span class="ep-toggle-label">Creator Profile</span>
+                                <span class="ep-toggle-desc">Show the Creator badge on your profile</span>
+                            </div>
+                            <label class="ep-toggle-switch">
+                                <input type="checkbox" id="creatorToggle" checked>
+                                <span class="ep-toggle-track"></span>
+                            </label>
+                        </div>
+
+                        <div class="ep-toggle-row">
+                            <div class="ep-toggle-info">
+                                <span class="ep-toggle-label">Event Notifications</span>
+                                <span class="ep-toggle-desc">Get notified when someone RSVPs to your events</span>
+                            </div>
+                            <label class="ep-toggle-switch">
+                                <input type="checkbox" id="eventNotifToggle" checked>
+                                <span class="ep-toggle-track"></span>
+                            </label>
+                        </div>
+
+                        <div class="ep-toggle-row">
+                            <div class="ep-toggle-info">
+                                <span class="ep-toggle-label">Public Event List</span>
+                                <span class="ep-toggle-desc">Let others see events you're attending</span>
+                            </div>
+                            <label class="ep-toggle-switch">
+                                <input type="checkbox" id="publicEventsToggle" checked>
+                                <span class="ep-toggle-track"></span>
+                            </label>
+                        </div>
+
+                    </div> -->
+
+                    <!-- SECTION: Privacy -->
+                    <!-- <div class="ep-section">
+                        <div class="ep-section-head">
+                            <h3>
+                                <i class="fa-solid fa-shield-halved"></i>
+                                Privacy
+                            </h3>
+                        </div>
+
+                        <div class="ep-toggle-row">
+                            <div class="ep-toggle-info">
+                                <span class="ep-toggle-label">Private Account</span>
+                                <span class="ep-toggle-desc">Only approved followers can see your posts</span>
+                            </div>
+                            <label class="ep-toggle-switch">
+                                <input type="checkbox" id="privateToggle">
+                                <span class="ep-toggle-track"></span>
+                            </label>
+                        </div>
+
+                        <div class="ep-toggle-row">
+                            <div class="ep-toggle-info">
+                                <span class="ep-toggle-label">Show Location on Posts</span>
+                                <span class="ep-toggle-desc">Display your city on your public posts</span>
+                            </div>
+                            <label class="ep-toggle-switch">
+                                <input type="checkbox" id="locationToggle" checked>
+                                <span class="ep-toggle-track"></span>
+                            </label>
+                        </div>
+
+                        <div class="ep-toggle-row">
+                            <div class="ep-toggle-info">
+                                <span class="ep-toggle-label">Allow Message Requests</span>
+                                <span class="ep-toggle-desc">Let people who don't follow you send message requests</span>
+                            </div>
+                            <label class="ep-toggle-switch">
+                                <input type="checkbox" id="msgToggle" checked>
+                                <span class="ep-toggle-track"></span>
+                            </label>
+                        </div>
+
+                    </div> -->
+
+                    <!-- DANGER ZONE -->
+                    <!-- <div class="ep-section ep-danger-section">
+                        <div class="ep-section-head">
+                            <h3 style="color:#ef4444;">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                                Danger Zone
+                            </h3>
+                        </div>
+
+                        <div class="ep-danger-row">
+                            <div>
+                                <span class="ep-toggle-label">Deactivate Account</span>
+                                <span class="ep-toggle-desc">Temporarily hide your profile and content</span>
+                            </div>
+                            <button class="ep-danger-btn ep-outline-danger">
+                                Deactivate
+                            </button>
+                        </div>
+
+                        <div class="ep-danger-row">
+                            <div>
+                                <span class="ep-toggle-label">Delete Account</span>
+                                <span class="ep-toggle-desc">Permanently delete your account and all data. This cannot be undone.</span>
+                            </div>
+                            <button class="ep-danger-btn ep-solid-danger">
+                                Delete Account
+                            </button>
+                        </div>
+                    </div> -->
+
+                    <!-- BOTTOM SAVE -->
+                    <div class="ep-bottom-actions">
+                        <!-- <button class="ep-discard-btn" onclick="confirmDiscard()">Discard Changes</button> -->
+                        <button class="ep-save-btn" id="saveBtn" >
+                            <i class="fa-solid fa-check"></i>
+                            Save Changes
+                        </button>
+                    </div>
+
+                </form>
+
+            </section>
+
+            
+{% set sidebar_mode = 'profile' %}
+{% include 'user/footer.html' %}

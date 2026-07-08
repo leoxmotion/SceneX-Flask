@@ -1,0 +1,194 @@
+{% include 'user/header.html' %}
+
+            <!-- MAIN -->
+            <section class="col-lg-7 offset-lg-2 comments-page">
+
+                <!-- TOP BAR -->
+                <div class="cm-topbar">
+                    <a href="/home/" class="back-link">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        Back
+                    </a>
+                    <span class="cm-topbar-title">Post</span>
+                    <div style="width:2.25rem;"></div>
+                </div>
+
+                
+                        <div class="post-card">
+
+                            <div class="post-event">
+                                <div class="row">
+                                    <div class="col-12 text-center event-pill">
+                                        <div>
+                                            <i class="fa-solid fa-bolt"></i>
+                                            {{ p.event.name }}
+                                        </div>
+
+                                        <div class="event-meta">
+                                            {% if p.event.address %}
+                                            <span>
+                                                <i class="fa-solid fa-location-dot"></i>
+                                                {{ p.event.address }}
+                                            </span>
+                                            {% endif %}
+                                            <span>
+                                                <i class="fa-regular fa-clock"></i>
+                                                {{ p.event.event_start.strftime("%a, %b %d, %Y") }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="post-header">
+                                <div class="post-user-info">
+                                    <div class="avatar">
+                                        <img src="{{ url_for('static', filename='uploads/' ~ p.creator.profile_pic) }}"
+                                        alt="">
+                                    </div>
+
+                                    <div class="px-3">
+                                        <h4 class="post-username"><a href="/profile/{{ p.creator.id }}">@{{ p.creator.username }}</a></h4>
+                                        <span class="post-time">{{ p.created_at }}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p class="post-text">
+                                {{ p.content }}
+                            </p>
+
+                            {% if p.media %}
+                            <div class="post-image">
+                                <img src="{{ url_for('static', filename='uploads/' ~ p.media) }}"
+                                    class="img-fluid"
+                                    alt="">
+                            </div>
+                            {% endif %}
+
+                            <div class="post-footer">
+                                <div class="post-actions">
+
+                                    {% if p is defined %}
+                                    <button class="like-btn" data-post-id="{{ p.id }}">
+                                        {% if liked_post_ids is defined and p.id in liked_post_ids %}
+                                            <i class="fa-solid fa-heart" style="color:#ef4444"></i>
+                                        {% else %}
+                                            <i class="fa-regular fa-heart"></i>
+                                        {% endif %}
+                                        <span>{{ p.likes|length }}</span>
+                                    </button>
+                                    {% else %}
+                                    <button class="like-btn">
+                                        <i class="fa-regular fa-heart"></i>
+                                        <span>{{ p.likes|length }}</span>
+                                    </button>
+                                    {% endif %}
+
+                                    <button class="comment-btn">
+                                        <i class="fa-regular fa-comment"></i>
+                                        <span>{{ p.comments|length }}</span>
+                                    </button>
+
+                                    <button class="share-btn">
+                                        <i class="fa-solid fa-share"></i>
+                                        <span>7</span>
+                                    </button>
+
+                                    <a href="/comments/{{ p.id }}/"
+                                    id="openComment{{ p.id }}"
+                                    style="display:none;"></a>
+
+                                </div>
+
+                                <button class="post-event-footer"
+                                        onclick="document.getElementById('viewEvent{{ p.id }}').click()">
+                                    <i class="fa-regular fa-calendar"></i>
+                                    View Event
+                                </button>
+
+                                <a href="/creator/view-event/{{ p.event.id }}/"
+                                id="viewEvent{{ p.id }}"
+                                style="display:none;"></a>
+
+                            </div>
+                            <form class="cm-reply-input-bar mt-2" method="post" id="commentInput">
+                                    <span class="cm-reply-to">@{{user.username}}</span>
+                                    {{ commentform.csrf_token() }}
+                                    {{ commentform.comment(class_="cm-reply-input", placeholder="Write a reply...", rows=1, id="commentbox") }}
+                                    
+                                    <button class="cm-reply-post-btn" type="button" id="sendComment">
+                                        <i class="fa-solid fa-paper-plane"></i>
+                                        
+                                    </button>
+                            </form>
+
+                        </div>
+                    
+
+                <!-- COMMENT COUNT -->
+                <div class="cm-count-row">
+                    <span class="cm-count-label">{{ p.comments|length }} Comments</span>
+                    <div class="cm-sort-btn" id="sortBtn">
+                        <i class="fa-solid fa-arrow-up-wide-short"></i>
+                        Top
+                    </div>
+                </div>
+
+                <!-- COMMENTS LIST -->
+                <div class="cm-list" id="cmList">
+
+                    <!-- COMMENT 1 -->
+                     {% for cm in p.comments %}
+                    <div class="cm-item" id="cm-1">
+                        <div class="cm-avatar">
+                            <img src="atar">
+                                        <img src="{{ url_for('static', filename='uploads/' ~ cm.user.profile_pic) }}" alt="" onerror="this.style.display='none'">
+                        </div>
+                        <div class="cm-body">
+                            <div class="cm-bubble">
+                                <div class="cm-meta">
+                                    
+                                    <span class="cm-username"><a href="/profile/{{ cm.user.id }}">@{{ cm.user.username }}</a></span>
+                                    <span class="cm-time">{{ cm.created_at.strftime("%A, %B %d, %Y at %I:%M %p") }}</span>
+                                </div>
+                                <p class="cm-text">{{ cm.comment }}</p>
+                            </div>
+                            <div class="cm-actions">
+                                <button class="cm-like-btn like-btn" data-id="cm-1">
+                                    <i class="fa-regular fa-heart"></i>
+                                    <span>0</span>
+                                </button>
+                                <button class="cm-reply-trigger" data-username="{{ cm.user.username }}">
+                                    Reply
+                                </button>
+                                <span class="cm-action-time"></span>
+                            </div>
+                        
+                            
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    
+
+           
+                    {#
+                    <!-- LOAD MORE -->
+                    <div class="load-more-wrap">
+                        <button class="load-more-btn">
+                            Load More Comments
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    #}
+                </div>
+
+            </section>
+
+            <script>
+                var post_id = {{ p.id }};
+            </script>
+
+{% set sidebar_mode = 'feed' %}
+{% include 'user/footer.html' %}

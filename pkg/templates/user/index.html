@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SceneX - Landing Page</title>
+
+    
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link rel="stylesheet" href="/static/css/landingstyle.css">
+
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/animate.min.css">
+    <link rel="stylesheet" href="/static/fontawesome/css/all.min.css">
+
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=Syne:wght@800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-shell">
+    <div class="container-fluid">
+    <div class="row mynav">
+      <div class="col-12">
+				<nav class="navbar navbar-expand-lg">
+			  <div class="container-fluid">
+			    <a class="navbar-brand" href="/">SceneX</a>
+			    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+			    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+			      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+			        <li class="nav-item">
+			          <a class="nav-link active" aria-current="page" href="/">Home</a>
+			        </li>
+			        <li class="nav-item">
+			          <a class="nav-link" href="#features">Features</a>
+			        </li>
+			        <li class="nav-item">
+			          <a class="nav-link" href="/index/login/">Log In</a>
+			        </li>
+			        <li class="nav-item">
+			          <a class="nav-link" href="/index/signup/">Sign Up</a>
+			        </li>
+			        
+				   </ul>
+				</div>
+			  </div>
+			</nav>
+
+			
+			</div>
+			</div>
+      </div>
+      
+  
+
+    <section class="hero-section">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col-lg-6 hero-left">
+            <h2>Discover the culture happening around you.</h2>
+
+            <p>SceneX helps you discover events, creators and communities in real time.</p>
+
+            <div class="hero-button">
+              <button class="hero-primary-btn" onclick="document.getElementById('exploreEvents').click()">Join the Scene</button>
+              <a href="/index/signup/" id="exploreEvents" style="display: none;"></a>
+            </div>
+
+            <div class="hero-stats">
+              <div class="stat-box">
+                <h3>12k+</h3>
+                <span>Active Users</span>
+              </div>
+
+              <div class="stat-box">
+                <h3>1.8k+</h3>
+                <span>Events Hosted</span>
+              </div>
+
+              <div class="stat-box">
+                <h3>240+</h3>
+                <span>Communities</span>
+              </div>
+            </div>
+
+          </div>
+          <div class="col-lg-6 hero-right">
+          
+
+            <div class="hero-ui">
+              <img src="/static/images/dancing.png" alt="">
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <section class="feature-section">
+      <div class="container-fluid">
+        <div class="section-head">
+          <span class="section-tag">PLATFORM FEATURES</span>
+          <h2>Built for real-world discovery</h2>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="feature-card large-feature">
+              <span class="feature-label">DISCOVERY</span>
+              <h3>Smart Event Discovery</h3>
+              <p>Find Events based in your interests and activity</p>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="feature-card">
+              <span class="feature-label">CREATORS</span>
+              <h3>Creator Profiles</h3>
+              <p>Become a creator and post your events</p>
+            </div>
+          </div>
+        
+
+          <div class="col-lg-4">
+            <div class="feature-card">
+              <span class="feature-label">SOCIAL</span>
+              <h3>Real Time Feed</h3>
+              <p>View posts of other user in real time and interact</p>
+            </div>
+          </div>
+      
+          <div class="col-lg-4">
+            <div class="feature-card">
+              <span class="feature-label">COMMUNITY</span>
+              <h3>Group Spaces</h3>
+              <p>View posts of other user in real time and interact</p>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="feature-card">
+              <span class="feature-label">CHAT</span>
+              <h3>Messaging System</h3>
+              <p>View posts of other user in real time and interact</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <section class="cta-section">
+
+      <div class="container-fluid">
+
+        <div class="cta-box">
+
+          <h2>
+            Your next scene is already happening.
+          </h2>
+
+          <p>
+            Discover communities, creators and experiences around you.
+          </p>
+
+          <button class="cta-main-btn" onclick="document.getElementById('exploreEvents').click()">
+            Open SceneX
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+
+      <div class="container-fluid">
+
+        <div class="row align-items-center">
+
+         
+
+
+
+          <div class="col-12 text-center">
+
+            <div class="footer-copy">
+              &copy; 2026 SceneX
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </footer>
+    </div>
+  </div>
+
+<script src="/static/js/jquery.js"></script>
+<script src="/static/bootstrap/js/bootstrap.bundle.js"></script>
+<script src="/static/js/scenequery.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+{% include "admin/admin_header.html" %}
+
+<main class="col-lg-7 offset-lg-2 admin-main">
+    <div class="admin-page-shell">
+        <div class="admin-page-header">
+            <div>
+                <p class="eyebrow">Category management</p>
+                <h1>Event categories</h1>
+                <p class="admin-subtitle">Create, review and remove event categories from one place.</p>
+            </div>
+            <a href="/admin/all-events/" class="btn btn-outline-light admin-pill-btn">Back to events</a>
+        </div>
+
+        <div class="admin-category-form">
+            <h3>Add a new category</h3>
+            <form method="post" action="/admin/event-categories/">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="text" name="name" class="form-control" placeholder="Category name" required>
+                <input type="text" name="description" class="form-control" placeholder="Short description">
+                <button class="admin-action-btn admin-action-btn-primary" type="submit">Add category</button>
+            </form>
+        </div>
+
+        <div class="admin-category-grid" style="margin-top: 1rem;">
+            {% for category in categories %}
+            <div class="admin-category-card">
+                <div class="section-head-row">
+                    <h3>{{ category.name }}</h3>
+                    <form action="/admin/delete-category/{{ category.id }}/" method="post">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button class="admin-action-btn admin-action-btn-danger">Remove</button>
+                    </form>
+                </div>
+                <p>{{ category.desc or 'No description provided.' }}</p>
+            </div>
+            {% else %}
+            <div class="admin-empty">No categories yet.</div>
+            {% endfor %}
+        </div>
+    </div>
+</main>
+
+{% include "admin/admin_footer.html" %}

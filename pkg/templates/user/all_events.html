@@ -1,0 +1,97 @@
+{% include "user/header.html" %}
+
+            <!-- MAIN -->
+            <section class="col-lg-7 offset-lg-2 all-events-page">
+
+                <!-- HEADER -->
+                <div class="all-page-header">
+                    <div class="all-page-header-top">
+                        <a href="/discover/" class="back-link">
+                            <i class="fa-solid fa-arrow-left"></i>
+                            Discover
+                        </a>
+                        
+                    </div>
+                    <div class="all-page-title-row">
+                        <div>
+                            <h1>All Events</h1>
+                            <p>Showing <span id="eventCount"></span> events near you.</p>
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <!-- SEARCH -->
+                <div class="search-bar" style="margin-bottom:1.25rem;">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Search events..." id="eventSearch">
+                    <button class="filter-btn">
+                        <i class="fa-solid fa-sliders"></i>
+                        Filter
+                    </button>
+                </div>
+
+                <!-- CATEGORY PILLS -->
+                <div class="category-row" style="margin-bottom:1rem;">
+                    <button class="category-pill active-pill" data-filter="all">All</button>
+                    <button class="category-pill" data-filter="music">Music</button>
+                    <button class="category-pill" data-filter="tech">Tech</button>
+                    <button class="category-pill" data-filter="art">Art</button>
+                    <button class="category-pill" data-filter="nightlife">Nightlife</button>
+                    <button class="category-pill" data-filter="fashion">Fashion</button>
+                    <button class="category-pill" data-filter="sports">Sports</button>
+                    <button class="category-pill" data-filter="food">Food</button>
+                </div>
+
+                
+
+                <!-- EVENTS GRID -->
+                <div class="row g-3" id="eventsGrid">
+
+                    {% for event in events %}
+                    
+                        <div class="col-md-6 mb-3" data-category="{{ event.category.name }}">
+                                <div class="all-event-card">
+                                    <div class="all-event-image">
+                                        <img src="/static/uploads/{{ event.banner }}" alt="" onerror="this.style.display='none'">
+                                        <span class="event-badge">{{ event.category.name }}</span>
+                                        <span class="event-time-badge">{{ event.status }}</span>
+                                    </div>
+                                    <div class="all-event-body">
+                                        <h3>{{ event.name }}</h3>
+                                        <div class="all-event-meta">
+                                            <span><i class="fa-solid fa-location-dot"></i> {{ event.address }}</span>
+                                            <span><i class="fa-regular fa-calendar"></i> {{ event.event_start.strftime("%a, %B %d %Y") }}</span>
+                                            <span><i class="fa-regular fa-clock"></i> {{ event.event_start.strftime("%I:%M %p") }}</span>
+                                        </div>
+                                        <div class="all-event-footer">
+                                            <div class="attendees">
+                                                <div class="mini-avatar"></div>
+                                                <div class="mini-avatar"></div>
+                                                <div class="mini-avatar"></div>
+                                                <span>0 going</span>
+                                            </div>
+                                            <button class="rsvp-btn viewBtn" data-view-event="{{ event.id }}">
+                                                View Event
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+                <!-- LOAD MORE -->
+                <div class="load-more-wrap">
+                    <button class="load-more-btn" id="loadMoreBtn">
+                        Load More Events
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                </div>
+
+            </section>
+
+            {% set sidebar_mode = 'feed' %}
+            {% include "user/footer.html" %}

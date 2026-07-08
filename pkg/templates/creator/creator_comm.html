@@ -1,0 +1,102 @@
+{% include "user/header.html" %}
+
+      
+
+                <section class="col-lg-7 offset-lg-2 notifications-page">
+
+                    <!-- HEADER -->
+
+                    <div class="notif-top">
+
+                        <div>
+
+                            <h1>My Communities</h1>
+
+                            <!-- <p>
+                                Stay updated with your events activity.
+                            </p> -->
+                            {% include 'user/alert.html' %}
+                        </div>
+
+                        
+                        
+
+                    </div>
+                    
+                    <div class="" id="tab-events">
+                        <div class="events-section-label">Pending</div>
+                        <div class="row event-grid">
+                            {% for comm in comms %}
+                            {% if creator.id == user.id %}
+                            <div class="col-md-6" data-category="{{ comm.category.name }}">
+
+                                <div class="all-community-card">
+
+                                    <div class="all-community-cover">
+                                        <img src="/static/uploads/{{ comm.banner }}" alt="" onerror="this.style.display='none'">
+
+                                        <span class="community-badge">{{ comm.category.name }}</span>
+
+                                        <div class="community-members-badge">
+                                            <i class="fa-solid fa-user-group"></i>
+                                            {{ comm.members|length }}
+                                        </div>
+                                    </div>
+
+                                    <div class="all-community-body">
+
+                                        <div class="community-avatar-large">
+                                            <img src="/static/uploads/{{ comm.banner }}" alt="" onerror="this.style.display='none'">
+                                        </div>
+
+                                        <h3>{{ comm.name }}</h3>
+
+                                        <p>
+                                            {{ comm.description }}
+                                        </p>
+                                        {#
+                                        <div class="community-meta-row">
+
+                                            <span>
+                                                <i class="fa-solid fa-location-dot"></i>
+                                                Lagos
+                                            </span>
+
+                                            <span>
+                                                <i class="fa-solid fa-bolt"></i>
+                                                Very Active
+                                            </span>
+
+                                        </div>
+                                        #}
+                                        <div class="community-footer">
+                                           
+                                            <button class="join-community-btn">
+                                                View
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            
+                            {% endif %}
+                            {% endfor %}
+                           
+                        </div>
+
+                        <div class="events-section-label" style="margin-top:16px">Completed</div>
+                        <div class="row event-grid">
+                            
+                        </div>
+                    </div>
+
+
+
+                </section>
+
+
+{% include 'user/footer.html' %}

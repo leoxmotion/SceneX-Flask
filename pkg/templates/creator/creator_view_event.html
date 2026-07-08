@@ -1,0 +1,335 @@
+{% include "user/header.html" %}
+
+            <!-- MAIN -->
+            <section class="col-lg-7 offset-lg-2 event-detail-page">
+
+                <!-- BACK + ACTIONS ROW -->
+                <div class="ed-topbar">
+                    <a href="" class="back-link">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        Back
+                    </a>
+                    <div class="ed-topbar-actions">
+                        <!-- <button class="ed-icon-btn" id="shareBtn" title="Share Event">
+                            <i class="fa-solid fa-share-nodes"></i>
+                        </button> -->
+                        <div class="menu">
+                        <a href="/creator/edit-event/{{ event.id }}/">Edit Event</a>
+                        <a href="/creator/delete-event/{{ event.id }}/">Delete Event</a>
+                        </div>
+                        <button class="ed-icon-btn" id="moreBtn" title="More Options">
+                            <i class="fa-solid fa-ellipsis"></i>
+                        </button>
+                        
+                        
+                    </div>
+                    
+                </div>
+                {% include 'user/alert.html' %}
+                <!-- HERO IMAGE -->
+                <div class="ed-hero">
+                    <img src="/static/uploads/{{ event.banner }}" alt="Lagos Soundwave Festival" onerror="this.style.display='none'">
+                    <div class="ed-hero-overlay">
+                        <span class="ed-live-badge">
+                            <span class="ed-live-dot"></span>
+                            {{ event.status }}
+                        </span>
+                        <span class="ed-category-badge">
+                            <i class="fa-solid fa-music"></i>
+                            {{ category.name }}
+                        </span>
+                    </div>
+                </div>
+
+                <!-- EVENT TITLE BLOCK -->
+                <div class="ed-title-block">
+                    <div class="ed-title-main">
+                        <h1 class="ed-title">{{ event.name }}</h1>
+                        <div class="ed-organiser-row">
+                            <div class="ed-organiser-avatar">
+                                <img src="/static/uploads/{{ user.profile_pic }}" alt="" onerror="this.style.display='none'">
+                            </div>
+                            <span>Hosted by</span>
+                            <a href="/profile/{{ creator.id }}" class="ed-organiser-name">@{{ creator.username }}</a>
+                            {% if creator.verified_status == 'verified' %}
+                            <span class="creator-badge">Creator</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- RSVP BLOCK -->
+                    <div class="ed-rsvp-block">
+                        
+                        <span class="ed-attendee-count">0 going</span>
+                        
+                    </div>
+                </div>
+
+                <!-- KEY DETAILS STRIP -->
+                <div class="ed-details-strip">
+                    <div class="ed-detail-item">
+                        <div class="ed-detail-icon">
+                            <i class="fa-regular fa-calendar"></i>
+                        </div>
+                        <div class="ed-detail-text">
+                            <span class="ed-detail-label">Date</span>
+                            <span class="ed-detail-value">{{ event.event_start.strftime("%A, %B %d, %Y") }}</span>
+                           
+                        </div>
+                    </div>
+                    <div class="ed-detail-item">
+                        <div class="ed-detail-icon">
+                            <i class="fa-regular fa-clock"></i>
+                        </div>
+                        <div class="ed-detail-text">
+                            <span class="ed-detail-label">Time</span>
+                            <span class="ed-detail-value">{{ event.event_start.strftime("%I:%M %p") }}</span>
+                        </div>
+                    </div>
+                    <div class="ed-detail-item">
+                        <div class="ed-detail-icon">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+                        <div class="ed-detail-text">
+                            <span class="ed-detail-label">Location</span>
+                            <span class="ed-detail-value">{{ event.address }}</span>
+                        </div>
+                    </div>
+                    <div class="ed-detail-item">
+                        <div class="ed-detail-icon">
+                            <i class="fa-solid fa-ticket"></i>
+                        </div>
+                        <div class="ed-detail-text">
+                            <span class="ed-detail-label">Ticket</span>
+                            <span class="ed-detail-value">---</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TABS -->
+                <div class="ed-tabs">
+                    <button class="ed-tab active-ed-tab" data-tab="about">About</button>
+                    <button class="ed-tab" data-tab="posts">Posts</button>
+                    <button class="ed-tab" data-tab="tickets">Tickets</button>
+                  {#  <button class="ed-tab" data-tab="attendees">Attendees</button> #}
+                    <button class="ed-tab" data-tab="location">Location</button>
+                </div>
+
+                <!-- TAB: ABOUT -->
+                <div class="ed-tab-content active-ed-content" id="ed-tab-about">
+
+                    <!-- DESCRIPTION -->
+                    <div class="ed-section">
+                        <h3 class="ed-section-title">About this Event</h3>
+                        <p class="ed-description" id="edDescription">
+                            {{ event.description }}
+                        </p>
+                        
+                        <button class="ed-read-more-btn" id="readMoreBtn" type="button">
+                            Read more <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+                       
+                    </div>
+
+                
+
+                    <!-- TAGS -->
+                    <div class="ed-section">
+                        <h3 class="ed-section-title">Tags</h3>
+                        <div class="ed-tags">
+                            <span class="ed-tag">#Afrobeats</span>
+                            <span class="ed-tag">#Lagos</span>
+                            <span class="ed-tag">#LiveMusic</span>
+                            <span class="ed-tag">#Nightlife</span>
+                            <span class="ed-tag">#LandmarkBeach</span>
+                            <span class="ed-tag">#VictoriaIsland</span>
+                        </div>
+                    </div>
+
+                    
+
+                </div>
+
+                <!-- TAB: TICKETS -->
+                <div class="ed-tab-content" id="ed-tab-tickets">
+                    <div class="ed-section">
+                        <h3 class="ed-section-title">Tickets</h3>
+                        <p class="ed-section-sub">Review ticket types created for this event.</p>
+
+                        <div class="ed-ticket-grid">
+                            {% if tickets %}
+                                {% for ticket in tickets %}
+                                    {% include 'creator/partials/ticket_card.html' %}
+                                {% endfor %}
+                            {% else %}
+                                <div class="empty-state">
+                                    <h4>No tickets have been created for this event yet.</h4>
+                                    <p>Click "Add Tickets" to create your first ticket.</p>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB: POSTS -->
+                <div class="ed-tab-content" id="ed-tab-posts">
+                    <div class="ed-section">
+                        <h3 class="ed-section-title">Event Posts</h3>
+                        <p class="ed-section-sub">Posts linked to this event</p>
+
+                        <!-- POST CARD -->
+                        {% for p in posts %}
+                        <div class="post-card">
+
+                            <div class="post-event">
+                                <div class="row">
+                                    <div class="col-12 text-center event-pill">
+                                        <div>
+                                            <i class="fa-solid fa-bolt"></i>
+                                            {{ p.event.name }}
+                                        </div>
+
+                                        <div class="event-meta">
+                                            {% if p.event.address %}
+                                            <span>
+                                                <i class="fa-solid fa-location-dot"></i>
+                                                {{ p.event.address }}
+                                            </span>
+                                            {% endif %}
+                                            <span>
+                                                <i class="fa-regular fa-clock"></i>
+                                                {{ p.event.event_start.strftime("%a, %b %d, %Y") }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="post-header">
+                                <div class="post-user-info">
+                                    <div class="avatar">
+                                        <img src="{{ url_for('static', filename='uploads/' ~ p.creator.profile_pic) }}"
+                                        alt="">
+                                    </div>
+
+                                    <div class="px-3">
+                                        <h4 class="post-username"><a href="/profile/{{ p.creator.id }}">@{{ p.creator.username }}</a></h4>
+                                        <span class="post-time">{{ p.created_at }}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p class="post-text">
+                                {{ p.content }}
+                            </p>
+
+                            {% if p.media %}
+                            <div class="post-image">
+                                <img src="{{ url_for('static', filename='uploads/' ~ p.media) }}"
+                                    class="img-fluid"
+                                    alt="">
+                            </div>
+                            {% endif %}
+
+                            <div class="post-footer">
+                                <div class="post-actions">
+
+                                    {% if p is defined %}
+                                    <button class="like-btn" data-post-id="{{ p.id }}">
+                                        {% if liked_post_ids is defined and p.id in liked_post_ids %}
+                                            <i class="fa-solid fa-heart" style="color:#ef4444"></i>
+                                        {% else %}
+                                            <i class="fa-regular fa-heart"></i>
+                                        {% endif %}
+                                        <span>{{ p.likes|length }}</span>
+                                    </button>
+                                    {% else %}
+                                    <button class="like-btn">
+                                        <i class="fa-regular fa-heart"></i>
+                                        <span>2</span>
+                                    </button>
+                                    {% endif %}
+
+                                    <button
+                                        class="comment-btn"
+                                        data-url="{{ url_for('comments', id=p.id) }}">
+                                        <i class="fa-regular fa-comment"></i>
+                                        <span>{{ p.comments|length }}</span>
+                                    </button>
+
+                                    <button class="share-btn">
+                                        <i class="fa-solid fa-share"></i>
+                                        <span>7</span>
+                                    </button>
+
+                                    <a href="/comments/{{ p.id }}/"
+                                    id="openComment{{ p.id }}"
+                                    style="display:none;"></a>
+
+                                </div>
+
+                               
+
+                                
+
+                            </div>
+
+                        </div>
+                        {% endfor %}
+
+                    
+                    </div>
+                </div>
+                
+                <!-- TAB: LOCATION -->
+                <div class="ed-tab-content" id="ed-tab-location">
+                    <div class="ed-section">
+                        <h3 class="ed-section-title">Event Location</h3>
+
+                        <!-- MAP PLACEHOLDER -->
+                        <div class="ed-map-placeholder">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                            <p>{{ event.address }}</p>
+                            <a
+                                href="{{ event.map_link }}"
+                                target="_blank"
+                                class="ed-map-link-btn"
+                            >
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                Open in Google Maps
+                            </a>
+                        </div>
+
+                        <!-- ADDRESS DETAILS -->
+                        <div class="ed-address-card">
+                            <div class="ed-address-row">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <div>
+                                    <span class="ed-detail-label">Full Address</span>
+                                    <span class="ed-detail-value">{{ event.address }}</span>
+                                </div>
+                            </div>
+                            <div class="ed-address-row">
+                                <i class="fa-solid fa-car"></i>
+                                <div>
+                                    <span class="ed-detail-label">Local Government</span>
+                                    <span class="ed-detail-value">{{ lga.name }}</span>
+                                </div>
+                            </div>
+                            <div class="ed-address-row">
+                                <i class="fa-solid fa-bus"></i>
+                                <div>
+                                    <span class="ed-detail-label">State</span>
+                                    <span class="ed-detail-value">{{ state.name }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+            {% set sidebar_mode = 'event' %}
+            {% include 'user/footer.html' %}
+
+

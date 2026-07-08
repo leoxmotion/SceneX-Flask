@@ -1,0 +1,250 @@
+{% include "user/header.html" %}
+
+                <!-- MAIN NOTIFICATIONS PAGE -->
+
+                <section class="col-lg-7 offset-lg-2 notifications-page">
+
+                    <!-- HEADER -->
+
+                    <div class="notif-top">
+
+                        <div>
+
+                            <h1>Notifications</h1>
+
+                            <p>
+                                Stay updated with your events and community activity.
+                            </p>
+
+                        </div>
+
+                        <button class="mark-read-btn">
+                            Mark all as read
+                        </button>
+
+                    </div>
+
+
+
+                    <!-- FILTER ROW -->
+
+                    <!-- <div class="notif-filter-row">
+
+                        <button class="notif-pill active-pill">
+                            All
+                        </button>
+
+                        <button class="notif-pill">
+                            Mentions
+                        </button>
+
+                        <button class="notif-pill">
+                            Events
+                        </button>
+
+                        <button class="notif-pill">
+                            Communities
+                        </button>
+
+                        <button class="notif-pill">
+                            Messages
+                        </button>
+
+                    </div> -->
+
+
+
+                    <!-- TODAY -->
+
+                    <div class="notif-section-label">
+                        Today
+                    </div>
+
+
+
+                    <!-- CARD -->
+
+                    <div class="notif-card unread-notif">
+
+                        <div class="notif-avatar">
+                            <img src="images/dp1.jpg" alt="">
+                        </div>
+
+                        <div class="notif-content">
+
+                            <p>
+                                <strong>@harrison</strong>
+                                liked your event post.
+                            </p>
+
+                            <span class="notif-time">
+                                2m ago
+                            </span>
+
+                        </div>
+
+                        <div class="notif-indicator"></div>
+
+                    </div>
+
+
+
+                    <!-- CARD -->
+
+                    <div class="notif-card unread-notif">
+
+                        <div class="notif-avatar">
+                            <img src="images/dp2.jpg" alt="">
+                        </div>
+
+                        <div class="notif-content">
+
+                            <p>
+                                <strong>23 people</strong>
+                                joined your event
+                                <strong>Lagos Soundwave Festival.</strong>
+                            </p>
+
+                            <span class="notif-time">
+                                10m ago
+                            </span>
+
+                        </div>
+
+                        <button class="notif-action-btn">
+                            View
+                        </button>
+
+                    </div>
+
+
+
+                    <!-- CARD -->
+
+                    <div class="notif-card">
+
+                        <div class="notif-avatar">
+                            <img src="images/dp1.jpg" alt="">
+                        </div>
+
+                        <div class="notif-content">
+
+                            <p>
+                                <strong>@seunscene</strong>
+                                mentioned you in a comment.
+                            </p>
+
+                            <span class="notif-time">
+                                35m ago
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- EVENT REMINDER -->
+
+                    <div class="event-reminder-card">
+
+                        <div class="event-reminder-left">
+
+                            <div class="event-icon">
+                                <i class="fa-solid fa-bolt"></i>
+                            </div>
+
+                            <div>
+
+                                <h3>
+                                    Rooftop Night starts in 2 hours
+                                </h3>
+
+                                <p>
+                                    <i class="fa-solid fa-location-dot"></i>Landmark Beach <i class="fa-regular fa-clock"></i> 7:00 PM
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <button class="join-event-btn">
+                            View Event
+                        </button>
+
+                    </div>
+
+
+
+                    <!-- YESTERDAY -->
+
+                    <div class="notif-section-label">
+                        Yesterday
+                    </div>
+
+
+
+                    <!-- CARD -->
+
+                    <div class="notif-card">
+
+                        <div class="notif-avatar">
+                            <img src="images/dp1.jpg" alt="">
+                        </div>
+
+                        <div class="notif-content">
+
+                            <p>
+                                <strong>@lagospadi</strong>
+                                followed you.
+                            </p>
+
+                            <span class="notif-time">
+                                <i class="fa-solid fa-calendar"></i>Yesterday <i class="fa-regular fa-clock"></i> 7:42 PM
+                            </span>
+
+                        </div>
+
+                        <button class="follow-back-btn">
+                            Follow Back
+                        </button>
+
+                    </div>
+
+
+
+                    <!-- CARD -->
+
+                    <div class="notif-card">
+
+                        <div class="notif-avatar">
+                            <img src="images/dp2.jpg" alt="">
+                        </div>
+
+                        <div class="notif-content">
+
+                            <p>
+                                You were invited to join
+                                <strong>Afro Creators Hub.</strong>
+                            </p>
+
+                            <span class="notif-time">
+                                <i class="fa-solid fa-calendar"></i>Yesterday <i class="fa-regular fa-clock"></i> 4:18 PM
+                            </span>
+
+                        </div>
+
+                        <button class="notif-action-btn">
+                            Join
+                        </button>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- RIGHT SIDEBAR -->
+
+{% set sidebar_mode = 'feed' %}
+{% include "user/footer.html" %}

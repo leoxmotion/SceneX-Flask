@@ -1,0 +1,190 @@
+                <div class="col-3 right-sidebar">
+                    {% if sidebar_mode == 'event' %}
+        <div class="widget ed-sidebar-rsvp">
+            <div class="ed-sidebar-event-thumb">
+                <img src="/static/uploads/{{ event.banner }}" alt="" onerror="this.style.display='none'">
+            </div>
+            <h4>{{ event.name }}</h4>
+            <p class="sidebar-muted-copy">
+                <i class="fa-regular fa-calendar"></i> {{ event.event_start.strftime('%a, %B %d, %Y') }}
+            </p>
+            {% if session['useronline']==creator.id %}
+            <button
+                class="ed-rsvp-btn btn btn-warning edit-event-btn"
+                style="width:100%;"
+                data-url="{{ url_for('creator_edit_event', id=event.id) }}">
+                <i class="fa-solid fa-pen"></i>
+                Edit Event
+            </button>
+
+            <button
+                class="ed-rsvp-btn btn btn-primary add-ticket-btn"
+                style="width:100%; margin-top:0.75rem;"
+                data-url="{{ url_for('creator_event_tickets', event_id=event.id) }}">
+                <i class="fa-solid fa-ticket"></i>
+                Add Tickets
+            </button>
+
+            <button
+                class="ed-rsvp-btn btn btn-danger delete-event-btn"
+                style="width:100%; margin-top:0.75rem;"
+                data-event-id="{{ event.id }}">
+                <i class="fa-solid fa-trash"></i>
+                Delete Event
+            </button>
+            {% endif %}
+        </div>
+    {% elif sidebar_mode == 'community' %}
+        <div class="widget">
+            <h3>Community Stats</h3>
+            <div class="sidebar-stat-list">
+                <div class="sidebar-stat-item">
+                    <span>Members</span>
+                    <strong>{{ comm.members|length if comm and comm.members is defined else 0 }}</strong>
+                </div>
+                <div class="sidebar-stat-item">
+                    <span>Posts</span>
+                    <strong>{{ posts|length if posts is defined else 0 }}</strong>
+                </div>
+            </div>
+        </div>
+       {# <div class="widget">
+            <h3>Upcoming Events</h3>
+            <div class="trending-list">
+                {% for item in events[:3] if events is defined %}
+                <div class="trending-item">
+                    <span class="trending-num">0{{ loop.index }}</span>
+                    <div>
+                        <p>{{ item.name }}</p>
+                        <span>{{ item.event_start.strftime('%a, %b %d') if item.event_start else 'TBA' }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div> #}
+    {% elif sidebar_mode == 'profile' %}
+        <div class="widget">
+            <h3>Profile Stats</h3>
+            <div class="sidebar-stat-list">
+                <div class="sidebar-stat-item">
+                    <span>Events</span>
+                    <strong>{{ events|length if events is defined else 0 }}</strong>
+                </div>
+                <div class="sidebar-stat-item">
+                    <span>Posts</span>
+                    <strong>{{ posts|length if posts is defined else 0 }}</strong>
+                </div>
+            </div>
+        </div>
+        <div class="widget">
+            <h3>Communities</h3>
+            <div class="creator-list">
+                <div class="creator-item">
+                    <div class="creator-av" style="background:#22d3ee"></div>
+                    <div class="creator-info">
+                        <p>Lagos Creatives</p>
+                        <span>4.2k members</span>
+                    </div>
+                    <button class="follow-small-btn">Join</button>
+                </div>
+            </div>
+        </div>
+    {% elif sidebar_mode == 'event_form' %}
+        <div class="widget">
+            <h3>Event Preview</h3>
+            <div class="ed-sidebar-event-thumb">
+                <img src="/static/uploads/{{ event.banner if event and event.banner else '' }}" alt="" onerror="this.style.display='none'">
+            </div>
+            <h4>{{ event.name if event and event.name else 'Your event title' }}</h4>
+            <p class="sidebar-muted-copy">
+                <i class="fa-regular fa-calendar"></i> {{ event.event_start.strftime('%a, %B %d, %Y') if event and event.event_start else 'Choose a date' }}
+            </p>
+            <p class="sidebar-muted-copy">
+                <i class="fa-solid fa-location-dot"></i> {{ event.address if event and event.address else 'Add a venue' }}
+            </p>
+            <button class="ed-rsvp-btn btn btn-outline-secondary" style="width:100%;" type="button">Preview Event</button>
+        </div>
+    {% elif sidebar_mode == 'community_form' %}
+        <div class="widget">
+            <h3>Community Preview</h3>
+            <div class="ed-sidebar-event-thumb">
+                <img src="/static/uploads/{{ comm.banner if comm and comm.banner else '' }}" alt="" onerror="this.style.display='none'">
+            </div>
+            <h4>{{ comm.name if comm and comm.name else 'Your community' }}</h4>
+            <p class="sidebar-muted-copy">{{ comm.description if comm and comm.description else 'Describe your community and invite people to join.' }}</p>
+            <button class="ed-rsvp-btn btn btn-outline-secondary" style="width:100%;" type="button">Preview Community</button>
+        </div>
+    {% else %}
+        <div class="widget">
+            <h3>Trending Events</h3>
+            <div class="trending-list">
+                <div class="trending-item">
+                    <span class="trending-num">01</span>
+                    <div>
+                        <p>Lagos Soundwave</p>
+                        <span>2.4k going</span>
+                    </div>
+                </div>
+                <div class="trending-item">
+                    <span class="trending-num">02</span>
+                    <div>
+                        <p>Afrotech Summit</p>
+                        <span>980 going</span>
+                    </div>
+                </div>
+                <div class="trending-item">
+                    <span class="trending-num">03</span>
+                    <div>
+                        <p>Rooftop Night</p>
+                        <span>560 going</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="widget">
+            <h3>Suggested Creators</h3>
+            <div class="creator-list">
+                <div class="creator-item">
+                    <div class="creator-av" style="background:#22d3ee"></div>
+                    <div class="creator-info">
+                        <p>@harrison</p>
+                        <span class="follower-small-btn">340</span><span> followers</span>
+                    </div>
+                    <button class="follow-small-btn">Follow</button>
+                </div>
+                <div class="creator-item">
+                    <div class="creator-av" style="background:#9b5cf6"></div>
+                    <div class="creator-info">
+                        <p>@lagospadi</p>
+                        <span class="follower-small-btn">547</span><span> followers</span>
+                    </div>
+                    <button class="follow-small-btn">Follow</button>
+                </div>
+                <div class="creator-item">
+                    <div class="creator-av" style="background:#f59e0b"></div>
+                    <div class="creator-info">
+                        <p>@seunscene</p>
+                        <span class="follower-small-btn">673</span><span> followers</span>
+                    </div>
+                    <button class="follow-small-btn">Follow</button>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+                </div>
+
+                
+                </div>
+            </div>
+        </div>
+
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.bundle.js"></script>
+    <script src="/static/js/scenequery.js"></script>
+    <script src="/static/js/ajaxjs.js"></script>
+    <script src="/static/js/buttons.js"></script>
+    
+  
+</body>
+</html>

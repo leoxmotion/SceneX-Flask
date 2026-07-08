@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SceneX - Admin Register</title>
+    <link rel="stylesheet" href="/static/css/style2.css">
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/animate.min.css">
+    <link rel="stylesheet" href="/static/fontawesome/css/all.min.css">
+
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Syne:wght@800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid auth-shell">
+       
+        <div class="row auth-wrap">
+            <div class="col-lg-4 offset-lg-1 auth-left">
+                <a href="/" class="mb-5 pb-5 " style="padding-bottom: 160px; color: gray; font-size: 0.9rem;">Back to Home</a>
+                <div class="sidebar-logo">SceneX</div>
+                <h1 class="pt-4">Admin Login</h1>
+                <!-- <p>Thousands of events. One platform.</p> -->
+                <div class="auth-features">
+                    <div class="feature-item">
+                        <i class="fa-solid fa-calendar-check"></i>
+                        <span>View and Approve events</span>
+                    </div>
+
+                    <div class="feature-item">
+                        <i class="fa-solid fa-users"></i>
+                        <span>View communities</span>
+                    </div>
+
+                    <div class="feature-item">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>Manage Users</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="auth-card">
+                    <div class="auth-step-1">
+                        <div class="step-header">
+                            <span class="step-badge">Step 1 of 2</span>
+                            <h2>Create your account</h2>
+                            <p>Start discovering what's happening around you.</p>
+                        </div>
+                        {% include 'user/alert.html' %}
+                        <form action="" method="post">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                          
+                            <div class="auth-field">
+                                <label for="username">Choose a username</label>
+                                <input type="text" name="adminname" id="adminname" class="form-control" placeholder="Your Username" required>
+                            </div>
+                            <div class="auth-field">
+                                <label for="usermail">Email</label>
+                                <input type="email" name="adminmail" id="adminmail" class="form-control" placeholder="you@email.com" required>
+                                <p id="feedback"></p>
+                            </div>
+                            <div class="auth-field password-field">
+                                <label for="userpass">Password</label>
+                                <input type="password" name="adminpass" id="adminpass" class="form-control" placeholder="Your Password" required>
+                                <i class="fa-solid fa-eye toggle-password"></i>
+                            </div>
+                            <div class="auth-field password-field">
+                                <label for="userconfirmpass">Confirm Password</label>
+                                <input type="password" name="adminconfirmpass" id="adminconfirmpass" class="form-control" placeholder="Confirm Password" required>
+                                <i class="fa-solid fa-eye toggle-password"></i>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary col-12 auth-submit-btn">Continue</button>
+                        </form><hr>
+
+                        
+                        <div class="col-md-8 offset-md-2 text-center my-3">
+                            <span>Already have an account? <a href="/admin/login/">Log In</a></span>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+       
+    </div>
+
+    <script src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/jquery.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Toggle password visibility
+            $('.toggle-password').click(function() {
+                var input = $(this).siblings('input');
+                var type = input.attr('type') === 'password' ? 'text' : 'password';
+                input.attr('type', type);
+                $(this).toggleClass('fa-eye fa-eye-slash');
+            });
+
+            // Handle form submission for step 1
+           // $('.auth-step-1 form').submit(function(e) {
+                // e.preventDefault();
+                
+            //     $('.auth-step-1').hide();
+            //     $('.auth-step-2').fadeIn();
+            // });
+
+            $('#adminmail').change(function(){
+                email = $(this).val()
+                data2send = "email="+email
+                $('#feedback').load('/check/email', data2send)
+            })
+        });
+    </script>
+</body>
+</html>

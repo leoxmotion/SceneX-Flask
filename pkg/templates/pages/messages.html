@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SceneX - Messages</title>
+
+    <link rel="stylesheet" href="style2.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="fontawesome/css/all.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=Syne:wght@800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="app-shell">
+        <div class="container-fluid">
+            <div class="row mynav">
+                <div class="col-12">
+                    <nav class="navbar navbar-expand-lg">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="index.html">SceneX</a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                            
+                            
+                            <li class="nav-item">
+                            <a href="home.html" class="active-nav">
+                                <i class="fa-solid fa-house"></i>
+                                
+                            </a>
+                            </li>
+                            <li class="nav-item">
+                            <a href="discover.html">
+                                <i class="fa-regular fa-compass"></i>
+                                
+                            </a>			        
+                            </li>
+                            <li class="nav-item">
+                            <a href="notifications.html">
+                                <i class="fa-solid fa-bell"></i>
+                                
+                            </a>			        </li>
+                            <li class="nav-item">
+                            <a href="communities.html">
+                                <i class="fa-solid fa-user-group"></i>
+
+                                
+                            </a>			        </li>
+                            <!-- <li>
+                            <a href="messages.html">
+                                <i class="fa-brands fa-facebook-messenger"></i>
+                                
+                            </a>
+                            </li> -->
+                            <li>
+                            <a href="profile.html">
+                                <i class="fa-regular fa-user"></i>
+                                
+                            </a>
+                            </li>
+                            
+                        </ul>
+                        </div>
+                    </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container-fluid">
+            <div class="row">
+            <div class="col-2 sidebar">
+                <div class="sidebar-logo">SceneX</div>
+                
+                <nav class="sidebar-nav">
+                    <a href="home.html" class="active-nav">
+                        <i class="fa-solid fa-house"></i>
+                        Home
+                    </a>
+
+                    <a href="discover.html">
+                        <i class="fa-regular fa-compass"></i>
+                        Discover
+                    </a>
+
+                    <a href="notifications.html">
+                        <i class="fa-solid fa-bell"></i>
+                        Notifications
+                    </a>
+
+                    <a href="communities.html">
+                        <i class="fa-solid fa-user-group"></i>
+                        Communities
+                    </a>
+
+                    <!-- <a href="messages.html">
+                        <i class="fa-brands fa-facebook-messenger"></i>
+                        Messages
+                    </a> -->
+                    <a href="profile.html">
+                        <i class="fa-regular fa-user"></i>
+                        Profile
+                    </a>
+                </nav>
+
+                <button class="btn btn-primary full-btn">
+                    <i class="fa-regular fa-calendar-plus"></i>
+                    Create Event
+                </button>
+            </div>
+
+            <!-- MESSAGES LAYOUT -->
+            <section class="col-md-10 offset-md-2 messages-shell">
+
+                <!-- CONVERSATION LIST (left panel) -->
+                <div class="convo-list" id="convoList">
+
+                    <!-- LIST HEADER -->
+                    <div class="convo-list-header">
+                        <h2>Messages</h2>
+                        <button class="new-msg-btn" id="newMsgBtn" title="New Message">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                    </div>
+
+                    <!-- SEARCH -->
+                    <div class="convo-search">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" placeholder="Search messages..." id="convoSearchInput">
+                    </div>
+
+                    <!-- FILTER TABS -->
+                    <div class="convo-filter-row">
+                        <button class="convo-filter active-convo-filter">All</button>
+                        <button class="convo-filter">Unread</button>
+                        <button class="convo-filter">Events</button>
+                    </div>
+
+                    <!-- CONVERSATION ITEMS -->
+                    <div class="convo-items" id="convoItems">
+
+                        <div class="convo-item active-convo" data-convo="harrison">
+                            <div class="convo-avatar">
+                                <img src="images/dp1.jpg" alt="" >
+                                <span class="online-dot"></span>
+                            </div>
+                            <div class="convo-preview">
+                                <div class="convo-preview-top">
+                                    <span class="convo-name">@harrison</span>
+                                    <span class="convo-time">2m</span>
+                                </div>
+                                <div class="convo-preview-bottom">
+                                    <span class="convo-last-msg">You coming to Rooftop Night?</span>
+                                    <span class="unread-badge">3</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="convo-item" data-convo="lagospadi">
+                            <div class="convo-avatar">
+                                <img src="images/dp2.jpg" alt="">
+                            </div>
+                            <div class="convo-preview">
+                                <div class="convo-preview-top">
+                                    <span class="convo-name">@lagospadi</span>
+                                    <span class="convo-time">18m</span>
+                                </div>
+                                <div class="convo-preview-bottom">
+                                    <span class="convo-last-msg">Bro that set was fire</span>
+                                    <span class="unread-badge">1</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="convo-item" data-convo="seunscene">
+                            <div class="convo-avatar">
+                                <img src="" alt="" onerror="this.style.background='#9b5cf6'">
+                            </div>
+                            <div class="convo-preview">
+                                <div class="convo-preview-top">
+                                    <span class="convo-name">@seunscene</span>
+                                    <span class="convo-time">1h</span>
+                                </div>
+                                <div class="convo-preview-bottom">
+                                    <span class="convo-last-msg">Seen ✓✓</span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        
+
+                        <div class="convo-item" data-convo="alicia">
+                            <div class="convo-avatar">
+                                <img src="" alt="" onerror="this.style.background='#f59e0b'">
+                            </div>
+                            <div class="convo-preview">
+                                <div class="convo-preview-top">
+                                    <span class="convo-name">@alicia_lagos</span>
+                                    <span class="convo-time">Yesterday</span>
+                                </div>
+                                <div class="convo-preview-bottom">
+                                    <span class="convo-last-msg">Thanks for the ticket link!</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="convo-item" data-convo="tunde">
+                            <div class="convo-avatar">
+                                <img src="" alt="" onerror="this.style.background='#22d3ee'">
+                            </div>
+                            <div class="convo-preview">
+                                <div class="convo-preview-top">
+                                    <span class="convo-name">@tunde_creates</span>
+                                    <span class="convo-time">Yesterday</span>
+                                </div>
+                                <div class="convo-preview-bottom">
+                                    <span class="convo-last-msg">Let's collab on the next one </span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- CHAT THREAD (right panel) -->
+                <div class="chat-thread" id="chatThread">
+
+                    <!-- CHAT HEADER -->
+                    <div class="chat-header">
+                        <button class="chat-back-btn" id="chatBackBtn">
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </button>
+                        <div class="chat-avatar">
+                            <img src="images/dp1.jpg" alt="">
+                            <span class="online-dot"></span>
+                        </div>
+                        <div class="chat-header-info">
+                            <h4>@harrison</h4>
+                            <span class="chat-status">Online</span>
+                        </div>
+                        <div class="chat-header-actions">
+                            <button class="chat-action-icon" title="View Profile">
+                                <i class="fa-regular fa-user"></i>
+                            </button>
+                            <button class="chat-action-icon" title="More Options">
+                                <i class="fa-solid fa-ellipsis"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- EVENT CONTEXT BANNER -->
+                    <!-- <div class="chat-event-banner">
+                        <div class="chat-event-banner-left">
+                            <i class="fa-solid fa-bolt"></i>
+                            <div>
+                                <span class="chat-event-label">Related Event</span>
+                                <p>Rooftop Night</p>
+                            </div>
+                        </div>
+                        <button class="chat-event-view-btn">View</button>
+                    </div> -->
+
+                    <!-- MESSAGES AREA -->
+                    <div class="chat-messages" id="chatMessages">
+
+                        <!-- DATE DIVIDER -->
+                        <div class="chat-date-divider">Today</div>
+
+                        <!-- INCOMING -->
+                        <div class="chat-msg incoming">
+                            <div class="msg-avatar">
+                                <img src="images/dp1.jpg" alt="" >
+                            </div>
+                            <div class="msg-bubble">
+                                <p>Omo bro, you coming to Rooftop Night or what?</p>
+                                <span class="msg-time">9:14 AM</span>
+                            </div>
+                        </div>
+
+                        <!-- OUTGOING -->
+                        <div class="chat-msg outgoing">
+                            <div class="msg-bubble">
+                                <p>100% I'll be there. Already RSVPd</p>
+                                <span class="msg-time">9:16 AM</span>
+                            </div>
+                        </div>
+
+                        <div class="chat-msg incoming">
+                            <div class="msg-avatar">
+                                <img src="images/dp1.jpg" alt="">
+                            </div>
+                            <div class="msg-bubble">
+                                <p>Yes na! Going with the whole crew. Should be mad fun tonight</p>
+                                <span class="msg-time">9:17 AM</span>
+                            </div>
+                        </div>
+
+                        <div class="chat-msg outgoing">
+                            <div class="msg-bubble">
+                                <p>Who else is going? @lagospadi and the boys?</p>
+                                <span class="msg-time">9:20 AM</span>
+                            </div>
+                        </div>
+
+                        <div class="chat-msg incoming">
+                            <div class="msg-avatar">
+                                <img src="images/dp1.jpg" alt="" >
+                            </div>
+                            <div class="msg-bubble">
+                                <p>Yeah padi and seun confirmed. It's a vibe</p>
+                                <span class="msg-time">9:22 AM</span>
+                            </div>
+                        </div>
+
+                        <div class="chat-msg outgoing">
+                            <div class="msg-bubble">
+                                <p>Let's link at the entrance by 9. I'll be the one looking too fresh</p>
+                                <span class="msg-time">9:25 AM</span>
+                            </div>
+                        </div>
+
+                        <div class="chat-msg incoming">
+                            <div class="msg-avatar">
+                                <img src="images/dp1.jpg" alt="">
+                            </div>
+                            <div class="msg-bubble">
+                                <p>You coming to Rooftop Night?</p>
+                                <span class="msg-time">9:44 AM</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- MESSAGE INPUT -->
+                    <div class="chat-input-wrap">
+                        <div class="chat-input-bar">
+                            <button class="chat-input-icon" title="Attach Media">
+                                <i class="fa-solid fa-image"></i>
+                            </button>
+                            <input
+                                type="text"
+                                class="chat-input"
+                                id="chatInput"
+                                placeholder="Send a message..."
+                            >
+                            <button class="chat-input-icon" title="Attach Event">
+                                <i class="fa-solid fa-bolt"></i>
+                            </button>
+                            <button class="chat-send-btn" id="chatSendBtn">
+                                <i class="fa-solid fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- EMPTY STATE -->
+                <div class="chat-empty-state" id="chatEmptyState" style="display:none;">
+                    <div class="chat-empty-inner">
+                        <div class="chat-empty-icon">
+                            <i class="fa-brands fa-facebook-messenger"></i>
+                        </div>
+                        <h3>Your Messages</h3>
+                        <p>Select a conversation to start chatting, or start a new one.</p>
+                        <button class="create-community-btn" id="startNewMsg">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                            New Message
+                        </button>
+                    </div>
+                </div>
+
+            </section>
+
+        </div>
+    </div>
+</div>
+
+<script src="jquery.js"></script>
+<script src="bootstrap/js/bootstrap.bundle.js"></script>
+<script src="scenequery.js"></script>
+
+<script>
+
+
+
+</script>
+</body>
+</html>

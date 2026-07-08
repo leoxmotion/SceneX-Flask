@@ -1,0 +1,147 @@
+{% include "user/header.html" %}
+
+
+                <!-- MAIN DISCOVER PAGE -->
+
+                <section class="col-lg-7 offset-lg-2 discover-page">
+                    <div class="page-header">
+                        <div>
+                            <h1>Discover</h1>
+                            <p>Events and creators near you.</p>
+                        </div>
+                    </div>
+                    <!-- SEARCH BAR -->
+
+                    <div class="search-bar">
+
+                        <span class="search-icon">
+                            <i class="fa-solid fa-search"></i>
+                        </span>
+
+                        <input
+                            type="text"
+                            placeholder="Search events, people..."
+                            id="searchInput"
+                        >
+
+                        <button class="filter-btn">
+                            <i class="fa-solid fa-sliders"></i>
+                        </button>
+
+                    </div>
+
+
+
+                    <!-- CATEGORY PILLS  -->
+
+                   <div class="category-row">
+
+                        <button class="category-pill active-pill">
+                            All
+                        </button>
+
+                        <button class="category-pill">
+                            Music
+                        </button>
+
+                        <button class="category-pill">
+                            Tech
+                        </button>
+
+                        <button class="category-pill">
+                            Art
+                        </button>
+
+                        <button class="category-pill">
+                            Gaming
+                        </button>
+
+                        <button class="category-pill">
+                            Nightlife
+                        </button>
+
+                        <button class="category-pill">
+                            Fashion
+                        </button>
+
+                    </div>
+
+
+                    <!-- TRENDING SECTION -->
+
+                    <div class="discover-section">
+
+                        <div class="section-top event-section-top">
+
+                            <h2>
+                                Trending Events
+                            </h2>
+
+                            <a href="/all_events/">
+                                See All
+                            </a>
+
+                        </div>
+
+
+
+                        <div class="row">
+
+                            <!-- CARD 1 -->
+
+                            {% for event in events %}
+                            
+                            {% if event.status == 'approved' %}
+                            <div class="col-md-6 mb-3" data-category="{{ event.category.name }}">
+                                <div class="all-event-card">
+                                    <div class="all-event-image">
+                                        <img src="/static/uploads/{{ event.banner }}" alt="" onerror="this.style.display='none'">
+                                        <span class="event-badge">{{ event.category.name }}</span>
+                                        <span class="event-time-badge">{{ event.status }}</span>
+                                    </div>
+                                    <div class="all-event-body">
+                                        <h3>{{ event.name }}</h3>
+                                        <div class="all-event-meta">
+                                            <span><i class="fa-solid fa-location-dot"></i> {{ event.address }}</span>
+                                            <span><i class="fa-regular fa-calendar"></i> {{ event.event_start.strftime("%a, %B %d %Y") }}</span>
+                                            <span><i class="fa-regular fa-clock"></i> {{ event.event_start.strftime("%I:%M %p") }}</span>
+                                        </div>
+                                        <div class="all-event-footer">
+                                            <div class="attendees">
+                                                <div class="mini-avatar"></div>
+                                                <div class="mini-avatar"></div>
+                                                <div class="mini-avatar"></div>
+                                                <span>0 going</span>
+                                            </div>
+                                            <button class="rsvp-btn viewBtn" data-view-event="{{ event.id }}">
+                                                    View Event
+                                            </button>
+                                            <a href="/creator/view-event/{{ event.id }}/" id="viewEvent{{event.id}}" style="display:none"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                            
+                            {% endfor %}
+
+
+
+                           
+
+                        </div>
+
+                    </div>
+
+
+
+                   
+
+                </section>
+
+
+
+                <!-- RIGHT SIDEBAR -->
+
+{% set sidebar_mode = 'feed' %}
+{% include "user/footer.html" %}

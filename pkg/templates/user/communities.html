@@ -1,0 +1,136 @@
+{% include "user/header.html" %}
+
+            <!-- MAIN CONTENT -->
+            <section class="col-lg-7 offset-lg-2 communities-page">
+
+                <!-- PAGE HEADER -->
+                <div class="communities-top">
+                    <div>
+                        <h1>Communities</h1>
+                        <p>Find your people. Join spaces built around events and culture.</p>
+                    </div>
+                    <button class="create-community-btn" id="createCommBtn" type="button">
+                        <i class="fa-solid fa-plus"></i>
+                        New Community
+                    </button>
+                    <a href="/create_community/" id="createComm" style="display:none;"></a>
+                </div>
+
+                <!-- SEARCH BAR -->
+                <div class="search-bar" style="margin-bottom:1.5rem;">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="commSearch" placeholder="Search communities..." />
+                    <button class="filter-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
+
+                <!-- CATEGORY PILLS -->
+                <div class="category-row" style="margin-bottom:2rem;">
+                    <button class="category-pill active-pill all-categories">All</button>
+                    <button class="category-pill">Music</button>
+                    <button class="category-pill">Tech</button>
+                    <button class="category-pill">Art</button>
+                    <button class="category-pill">Nightlife</button>
+                    <button class="category-pill">Fashion</button>
+                    <button class="category-pill">Sports</button>
+                    <button class="category-pill">Food</button>
+                </div>
+
+                <!-- YOUR COMMUNITIES -->
+                <div class="comm-section">
+                    <div class="section-top">
+                        <h2>Your Communities</h2>
+                        <a href="/communities/my_communities/">See All</a>
+                    </div>
+
+                    <!-- COMMUNITY CARD: LARGE -->
+                     {% if communities %}
+                     {% if creator.id == user.id %}
+                     {% for c in communities %}
+                    <div class="comm-card comm-card-joined dis-comm">
+                        <div class="comm-card-banner">
+                            <img src="/static/uploads/{{c.banner}}" alt="">
+                            <span class="comm-category-badge">{{ c.category.name }}</span>
+                        </div>
+                        <div class="comm-card-body">
+                            <div class="comm-card-top">
+                                {% include 'user/comm_icons.html' %}
+                                
+                                <div class="comm-card-info">
+                                    <h3 class="commName">{{ c.name }}</h3>
+                                    <p>
+                                        <span><i class="fa-solid fa-users"></i> 4.2k members</span>
+                                        <span><i class="fa-solid fa-bolt"></i> 12 events</span>
+                                        <span><i class="fa-regular fa-comment"></i> 240 posts</span>
+                                    </p>
+                                </div>
+                                <button class="joined-btn">
+                                    <i class="fa-solid fa-check"></i>
+                                    Joined
+                                </button>
+                            </div>
+                            <p class="comm-desc">
+                                {{ c.description }}
+                            </p>
+                            <div class="comm-card-footer">
+                                {#
+                                <div class="comm-recent-members">
+                                    <div class="mini-av" style="background:#22d3ee;"></div>
+                                    <div class="mini-av" style="background:#9b5cf6;"></div>
+                                    <div class="mini-av" style="background:#f59e0b;"></div>
+                                    <span>@harrison, @lagospadi + 4.1k others</span>
+                                </div> #}
+                                <a href="/comm_detail/{{c.id}}/" class="comm-view-btn">
+                                    Open <i class="fa-solid fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    {% endif %}
+
+                    
+                </div>
+
+                <!-- DISCOVER COMMUNITIES -->
+                <div class="comm-section">
+                    <div class="section-top">
+                        <h2>Discover Communities</h2>
+                        <a href="/communities/all_communities/">See All</a>
+                    </div>
+
+                    <div class="row g-3">
+                        {% if communities %}
+                        {% for c in communities %}
+                        <div class="col-md-6">
+                            <div class="comm-discover-card dis-comm">
+                                <div class="comm-discover-banner">
+                                    <img src="/static/uploads/{{ c.banner }}" alt="">
+                                    <span class="comm-category-badge">{{ c.category.name }}</span>
+                                </div>
+                                <div class="comm-discover-body">
+                                    {% include 'user/comm_icons.html' %}
+                                    <div class="comm-discover-info">
+                                        <h3 class="commName">{{ c.name }}</h3>
+                                        <p>
+                                            <span><i class="fa-solid fa-users"></i> 6.1k</span>
+                                            <span><i class="fa-solid fa-bolt"></i> 18 events</span>
+                                        </p>
+                                        <p class="comm-desc-sm">{{ c.description }}</p>
+                                    </div>
+                                    <a href="/comm_detail/{{c.id}}/" class="comm-view-btn">
+                                        Open <i class="fa-solid fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                        
+                    </div>
+                </div>
+
+            </section>
+
+{% set sidebar_mode = 'community' %}
+{% include 'user/footer.html' %}

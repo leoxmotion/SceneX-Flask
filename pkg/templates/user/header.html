@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scenex - {{ title }}</title>
+    <link rel="stylesheet" href="/static/css/style2.css">
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/animate.min.css">
+    <link rel="stylesheet" href="/static/fontawesome/css/all.min.css">
+
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Syne:wght@800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        <div class="app-shell">
+            <div class="container-fluid">
+                
+                <nav class="mobile-top-nav">
+
+                    <button class="sidebar-toggle-btn" id="sidebarToggle">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+
+                    <!-- Logo stays centre -->
+                    <a href="/home/" class="mobile-nav-logo">SceneX</a>
+
+                    <!-- Right actions say as they are -->
+                    <div class="mobile-nav-actions">
+                        <a href="/notifications/" class="mobile-nav-icon notif-icon">
+                            <i class="fa-solid fa-bell"></i>
+                            <span class="notif-dot"></span>
+                        </a>
+                        {#
+                        <a href="/profile/{{ session.get('useronline') }}/" class="mobile-nav-avatar">
+                            <img src="/static/images/dp1.jpg" alt="" onerror="this.style.display='none'">
+                        </a> #}
+                    </div>
+
+                </nav>
+               
+            </div>
+
+
+               <div class="container-fluid">
+                <div class="row">
+                <aside class="col-lg-2 col-6 sidebar" id="sidebar">
+                    <div class="sidebar-logo">SceneX</div>
+                    
+                    <nav class="sidebar-nav">
+                        <a href="/home/" class="{% if current_page == 'home' %}active-nav{% endif %}">
+                            <i class="fa-solid fa-house"></i>
+                            Home
+                        </a>
+
+                        <a href="/discover/" class="{% if current_page == 'discover' %}active-nav{% endif %}">
+                            <i class="fa-regular fa-compass"></i>
+                            Discover
+                        </a>
+
+                        <a href="/communities/" class="{{ 'active-nav' if current_page == 'communities' else '' }}">
+                            <i class="fa-solid fa-user-group"></i>
+                            Communities
+                        </a>
+
+                        <a href="/notifications/" class="{% if current_page == 'notifications' %}active-nav{% endif %}">
+                            <i class="fa-solid fa-bell"></i>
+                            Notifications
+                        </a>
+
+                        <a href="/creator/events/" class="{% if current_page == 'events' %}active-nav{% endif %}">
+                            <i class="fa-regular fa-calendar-days"></i>
+                            My Events
+                        </a>
+                        
+                        <a href="/profile/{{ session.get('useronline') }}/" class="{% if current_page == 'profile' %}active-nav{% endif %}">
+                            <i class="fa-regular fa-user"></i>
+                            Profile
+                        </a>
+                        <button class="btn btn-primary full-btn" onclick="document.getElementById('createEvent').click()">
+                            <i class="fa-regular fa-calendar-plus"></i>
+                            Create Event
+                            <a href="/create_event/" style="display: none;" id="createEvent"></a>
+                        </button>
+                        
+                         <button class="btn btn-danger full-btn"  onclick="document.getElementById('logOut').click()">
+                            <span>
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            Log Out
+                            </span>
+                            <a href="/logout/" style="display: none;" id="logOut"></a>
+                        </button>
+
+                    </nav>
+
+                    
+                </aside>

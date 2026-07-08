@@ -1,0 +1,101 @@
+{% include "admin/admin_header.html" %}
+
+<main class="col-lg-7 offset-lg-2 admin-main">
+    <div class="admin-page-shell">
+        <div class="admin-page-header">
+            <div>
+                <p class="eyebrow">Operations hub</p>
+                <h1>Admin dashboard</h1>
+                <p class="admin-subtitle">Monitor growth, manage new members and keep the platform running smoothly.</p>
+            </div>
+            <a href="/admin/all-events/" class="btn btn-primary admin-pill-btn">Review events</a>
+        </div>
+
+        <div class="admin-hero-card">
+            <div>
+                <p class="eyebrow">Today at a glance</p>
+                <h2>Keep your community active and well moderated.</h2>
+                <p>Track users, events and communities from one polished workspace.</p>
+            </div>
+            <div class="admin-hero-chips">
+                <span class="admin-chip">Live moderation</span>
+                <span class="admin-chip">Fast review</span>
+                <span class="admin-chip">Reliable insights</span>
+            </div>
+        </div>
+
+        <div class="stat-grid">
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
+                <div>
+                    <p class="stat-label">Total users</p>
+                    <h3 class="stat-value">{{ stats.users_count }}</h3>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fa-solid fa-calendar-days"></i></div>
+                <div>
+                    <p class="stat-label">Total events</p>
+                    <h3 class="stat-value">{{ stats.events_count }}</h3>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fa-solid fa-user-group"></i></div>
+                <div>
+                    <p class="stat-label">Total communities</p>
+                    <h3 class="stat-value">{{ stats.communities_count }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="admin-section-grid">
+            <div class="admin-panel">
+                <div class="section-head-row">
+                    <h3>Recent users</h3>
+                    <a href="/admin/users/" class="text-muted">View all</a>
+                </div>
+                {% if stats.recent_users %}
+                <div class="admin-list">
+                    {% for user in stats.recent_users %}
+                    <div class="admin-list-item">
+                        
+                        <div>
+                            
+                            <strong><a href="/admin/user-details/{{ user.id }}/">{{ user.fullname or user.username }}</a></strong>
+                            <span>{{ user.email }}</span>
+                        </div>
+                        <span class="admin-badge">{{ user.verified_status }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="admin-empty">No users yet.</div>
+                {% endif %}
+            </div>
+
+            <div class="admin-panel">
+                <div class="section-head-row">
+                    <h3>Recent events</h3>
+                    <a href="/admin/all-events/" class="text-muted">View all</a>
+                </div>
+                {% if stats.recent_events %}
+                <div class="admin-list">
+                    {% for event in stats.recent_events %}
+                    <div class="admin-list-item">
+                        <div>
+                            <strong><a href="/admin/view-event/{{ event.id }}/">{{ event.name }}</a></strong>
+                            <span>{{ event.address or 'Location not provided' }}</span>
+                        </div>
+                        <span class="admin-badge">{{ event.status }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="admin-empty">No events yet.</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</main>
+
+{% include "admin/admin_footer.html" %}

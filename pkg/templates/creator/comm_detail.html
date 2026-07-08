@@ -1,0 +1,591 @@
+{% include 'user/header.html' %}
+            <!-- MAIN -->
+            <section class="col-lg-7 offset-lg-2 cd-page">
+
+                <!-- BACK -->
+                <div class="cd-topbar">
+                    <a href="communities.html" class="back-link">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        Communities
+                    </a>
+                    
+                    <div class="dropdown">
+                        <button class="ed-icon-btn btn-link p-0" type="button" data-bs-toggle="dropdown">
+                            <i class="fa-solid fa-ellipsis"></i>
+                        </button>
+                        <ul class="menu bg-dark dropdown-menu dropdown-menu-end">
+                            {% if user.id == creator.id %}
+                            <li><a class="dropdown-item" href="/creator/edit-community/{{ comm.id }}/"><i class="fa fa-pencil me-2"></i>Edit</a></li>
+                            <li><a class="dropdown-item" href=""><i class="fa fa-gear me-2"></i>Settings</a></li>
+                            <li><a class="dropdown-item text-danger" href="/creator/delete-comm/{{ comm.id }}/"><i class="fa fa-trash me-2"></i>Delete</a></li>
+                            {% else %}
+                            <li><a class="dropdown-item text-danger" href="/creator/leave-comm/{{ comm.id }}/"><i class="fa fa-trash me-2"></i>Leave Community</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- BANNER -->
+                <div class="cd-banner">
+                    <img src="/static/images/uploads/{{ comm.banner }}" alt="" onerror="this.style.display='none'">
+                    <div class="cd-banner-overlay"></div>
+                </div>
+
+                <!-- COMMUNITY HEADER -->
+                <div class="cd-header">
+                    <div class="cd-header-top">
+                        <div class="cd-avatar-wrap">
+                            <div class="cd-avatar" style="background:#3b7ef8;">
+                                <i class="fa-solid fa-music"></i>
+                            </div>
+                        </div>
+                        <div class="cd-header-actions">
+                            <button
+                                class="cd-join-btn {% if joined %}active-join{% endif %}"
+                                id="joinBtn"
+                                data-community-id="{{ comm.id }}">
+
+                                {% if joined %}
+                                    <i class="fa-solid fa-check"></i>
+                                    Joined
+                                {% else %}
+                                    <i class="fa-solid fa-plus"></i>
+                                    Join Community
+                                {% endif %}
+
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="cd-info">
+                        <div class="cd-name-row">
+                            <h1 class="cd-name">{{ comm.name }}</h1>
+                            <span class="cd-category-badge">{{ comm.category.name }}</span>
+                        </div>
+                        <p class="cd-desc">
+                            {{ comm.description }}
+                        </p>
+
+                        <div class="cd-stats-row">
+                            <div class="cd-stat">
+                                <strong class="member-count">{{ comm.members|length }}</strong>
+                                <span>Members</span>
+                            </div>
+                            <div class="cd-stat">
+                                <strong>12</strong>
+                                <span>Events</span>
+                            </div>
+                            <div class="cd-stat">
+                                <strong>{{ posts|length }}</strong>
+                                <span>Posts</span>
+                            </div>
+                            <div class="cd-stat">
+                                <strong>Active</strong>
+                                <span>Status</span>
+                            </div>
+                        </div>
+
+                    
+                    </div>
+                </div>
+
+                <!-- TABS -->
+                <div class="cd-tabs">
+                    <button class="cd-tab active-cd-tab" data-tab="feed">Feed</button>
+                    <button class="cd-tab" data-tab="events">Events</button>
+                    <button class="cd-tab" data-tab="members">Members</button>
+                </div>
+
+                <!-- ================================ -->
+                <!-- TAB: FEED -->
+                <!-- ================================ -->
+                <div class="cd-tab-content active-cd-content" id="cd-tab-feed">
+
+                    <!-- COMPOSER -->
+                    <form class="composer" method="post" id="comm">
+                         {{ postform.csrf_token() }}
+                        <!-- Top row: avatar + text input -->
+                        <div class="composer-top">
+                            <div class="avatar">
+                                <img src="/static/uploads/{{ user.profile_pic }}" alt="profile pic">
+                            </div>
+                           
+                            {{ postform.content(placeholder="What's happening in your scene?",
+                                class_="composer-input", id="composerInput") }}
+                        </div>
+
+                        <!-- Event attach strip (shows after clicking Attach Event) -->
+                        <div class="composer-event-strip" id="composerEventStrip" style="display:none;">
+                            <div class="attached-event">
+                                <i class="fa-solid fa-bolt"></i>
+                                
+                                {{ postform.event_id(class_="composer-event-strip ") }}
+                            </div>
+                        </div>
+
+                        
+                        <!-- Media preview area -->
+                        <div class="media-preview-row" id="mediaPreviewRow" style="display:none;"></div>
+
+                        <!-- Bottom toolbar -->
+                        <div class="composer-toolbar">
+
+                            <div class="composer-tools">
+
+                                <!-- Attach event -->
+                                <button class="tool-btn" type="button" id="attachEventBtn" title="Attach Event">
+                                    <i class="fa-regular fa-calendar-plus"></i>
+                                    <span>Event</span>
+                                </button>
+
+                                <!-- Upload image -->
+                                <button class="tool-btn" type="button" id="uploadImageBtn" title="Add Image" onclick="document.getElementById('imageInput').click()">
+                                    <i class="fa-regular fa-image"></i>
+                                    <span>Photo</span>
+                                </button>
+                                
+                                {{ postform.media( id="imageInput", style="display:none;" ) }}
+
+                                <!-- Upload video -->
+                              {#  <button class="tool-btn" type="button" id="uploadVideoBtn" title="Add Video" onclick="document.getElementById('videoInput').click()">
+                                    <i class="fa-solid fa-video"></i>
+                                    <span>Video</span>
+                                </button> 
+                                <input type="file" id="videoInput" accept="video/*" style="display:none;">
+                                #}
+                            </div> 
+
+                           {# <button class="composer-post-btn" id="composerPostBtn" disabled>Post</button> #}
+                            {{ postform.submit(class_='composer-post-btn', id="commPostBtn") }}
+
+                        </div>
+
+                    </form>
+
+                    <!-- FEED POSTS -->
+                    {% for p in posts %}
+                        <div class="post-card">
+
+                            <div class="post-event">
+                                <div class="row">
+                                    <div class="col-12 text-center event-pill">
+                                        <div>
+                                            <i class="fa-solid fa-bolt"></i>
+                                            {{ p.event.name }}
+                                        </div>
+
+                                        <div class="event-meta">
+                                            {% if p.event.address %}
+                                            <span>
+                                                <i class="fa-solid fa-location-dot"></i>
+                                                {{ p.event.address }}
+                                            </span>
+                                            {% endif %}
+                                            <span>
+                                                <i class="fa-regular fa-clock"></i>
+                                                {{ p.event.event_start.strftime("%a, %b %d, %Y") }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="post-header">
+                                <div class="post-user-info">
+                                    <div class="avatar">
+                                        <img src="{{ url_for('static', filename='uploads/' ~ p.member.profile_pic) }}"
+                                        alt="">
+                                    </div>
+
+                                    <div class="px-3">
+                                        <h4 class="post-username"><a href="/profile/{{ p.member.id }}">@{{ p.member.username }}</a></h4>
+                                        <span class="post-time">{{ p.created_at }}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p class="post-text">
+                                {{ p.content }}
+                            </p>
+
+                            {% if p.media %}
+                            <div class="post-image">
+                                <img src="{{ url_for('static', filename='uploads/' ~ p.media) }}"
+                                    class="img-fluid"
+                                    alt="">
+                            </div>
+                            {% endif %}
+
+                            <div class="post-footer">
+                                <div class="post-actions">
+
+                                    {% if p is defined %}
+                                    <button class="like-btn" data-post-id="{{ p.id }}">
+                                        {% if liked_post_ids is defined and p.id in liked_post_ids %}
+                                            <i class="fa-solid fa-heart" style="color:#ef4444"></i>
+                                        {% else %}
+                                            <i class="fa-regular fa-heart"></i>
+                                        {% endif %}
+                                        <span>{{ p.likes|length }}</span>
+                                    </button>
+                                    {% else %}
+                                    <button class="like-btn">
+                                        <i class="fa-regular fa-heart"></i>
+                                        <span>2</span>
+                                    </button>
+                                    {% endif %}
+
+                                    <button class="comment-btn"
+                                            onclick="document.getElementById('openComment{{ p.id }}').click()">
+                                        <i class="fa-regular fa-comment"></i>
+                                        <span>
+                                            {{ p.comments|length }}
+                                        </span>
+                                    </button>
+
+                                    <button class="share-btn">
+                                        <i class="fa-solid fa-share"></i>
+                                        <span>{{ p.likes|length }}</span>
+                                    </button>
+
+                                    <a href="/comments/{{ p.id }}/"
+                                    id="openComment{{ p.id }}"
+                                    style="display:none;"></a>
+
+                                </div>
+
+                                <button class="post-event-footer"
+                                        onclick="document.getElementById('viewEvent{{ p.id }}').click()">
+                                    <i class="fa-regular fa-calendar"></i>
+                                    View Event
+                                </button>
+
+                                <a href="/creator/view-event/{{ p.event.id }}/"
+                                id="viewEvent{{ p.id }}"
+                                style="display:none;"></a>
+
+                            </div>
+
+                        </div>
+                    {% endfor %}
+                    <div class="load-more-wrap">
+                        <button class="load-more-btn">
+                            Load More Posts
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+                    </div>
+
+                </div>
+
+                <!-- TAB: EVENTS -->
+                <div class="cd-tab-content" id="cd-tab-events">
+                    <div class="cd-section">
+                        <div class="cd-section-top">
+                            <h3 class="cd-section-title">Upcoming Events</h3>
+                            <span class="cd-section-count">12 events</span>
+                        </div>
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="profile-event-card">
+                                    <div class="profile-event-image">
+                                        <img src="images/party1.jpg" alt="" onerror="this.style.display='none'">
+                                        <span class="event-cat-badge">Music</span>
+                                        <span class="event-tonight-badge">Tonight</span>
+                                    </div>
+                                    <div class="profile-event-body">
+                                        <h3>Lagos Soundwave Festival</h3>
+                                        <div class="event-meta">
+                                            <p><i class="fa-solid fa-location-dot"></i> Landmark Beach</p>
+                                            <p><i class="fa-regular fa-calendar"></i> Fri May 30</p>
+                                            <p><i class="fa-regular fa-clock"></i> 8:00 PM</p>
+                                        </div>
+                                        <div class="event-card-footer">
+                                            <div class="mini-attendees">
+                                                <div class="mini-av"></div>
+                                                <div class="mini-av"></div>
+                                                <div class="mini-av"></div>
+                                                <span>+230 going</span>
+                                            </div>
+                                            <button class="rsvp-btn">RSVP</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="profile-event-card">
+                                    <div class="profile-event-image">
+                                        <img src="images/party2.jpg" alt="" onerror="this.style.display='none'">
+                                        <span class="event-cat-badge">Art</span>
+                                    </div>
+                                    <div class="profile-event-body">
+                                        <h3>Creative Jam Session</h3>
+                                        <div class="event-meta">
+                                            <p><i class="fa-solid fa-location-dot"></i> Lekki Phase 1</p>
+                                            <p><i class="fa-regular fa-calendar"></i> Sat May 31</p>
+                                            <p><i class="fa-regular fa-clock"></i> 5:00 PM</p>
+                                        </div>
+                                        <div class="event-card-footer">
+                                            <div class="mini-attendees">
+                                                <div class="mini-av"></div>
+                                                <div class="mini-av"></div>
+                                                <span>+80 going</span>
+                                            </div>
+                                            <button class="rsvp-btn">RSVP</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="profile-event-card">
+                                    <div class="profile-event-image">
+                                        <img src="images/party3.jpg" alt="" onerror="this.style.display='none'">
+                                        <span class="event-cat-badge">Nightlife</span>
+                                    </div>
+                                    <div class="profile-event-body">
+                                        <h3>Rooftop Night</h3>
+                                        <div class="event-meta">
+                                            <p><i class="fa-solid fa-location-dot"></i> Ikoyi</p>
+                                            <p><i class="fa-regular fa-calendar"></i> Sun Jun 1</p>
+                                            <p><i class="fa-regular fa-clock"></i> 9:00 PM</p>
+                                        </div>
+                                        <div class="event-card-footer">
+                                            <div class="mini-attendees">
+                                                <div class="mini-av"></div>
+                                                <div class="mini-av"></div>
+                                                <span>+140 going</span>
+                                            </div>
+                                            <button class="rsvp-btn">RSVP</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="profile-event-card">
+                                    <div class="profile-event-image">
+                                        <span class="event-cat-badge">Tech</span>
+                                    </div>
+                                    <div class="profile-event-body">
+                                        <h3>Afrotech Summit</h3>
+                                        <div class="event-meta">
+                                            <p><i class="fa-solid fa-location-dot"></i> Victoria Island</p>
+                                            <p><i class="fa-regular fa-calendar"></i> Mon Jun 2</p>
+                                            <p><i class="fa-regular fa-clock"></i> 10:00 AM</p>
+                                        </div>
+                                        <div class="event-card-footer">
+                                            <div class="mini-attendees">
+                                                <div class="mini-av"></div>
+                                                <div class="mini-av"></div>
+                                                <span>+980 going</span>
+                                            </div>
+                                            <button class="rsvp-btn">RSVP</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="load-more-wrap">
+                            <button class="load-more-btn">
+                                Load More Events
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="cd-section" style="margin-top:2rem;">
+
+                        <div class="cd-section-top">
+                            <h3 class="cd-section-title">Completed Events</h3>
+                            <span class="cd-section-count">124 events</span>
+                        </div>
+
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+                                <div class="profile-event-card">
+
+                                    <div class="profile-event-image">
+                                        <img src="images/party1.jpg" alt="">
+                                        <span class="event-cat-badge">Music</span>
+                                    </div>
+
+                                    <div class="profile-event-body">
+
+                                        <h3>Lagos Soundwave Festival</h3>
+
+                                        <div class="event-meta">
+                                            <p>
+                                                <i class="fa-solid fa-location-dot"></i>
+                                                Landmark Beach
+                                            </p>
+
+                                            <p>
+                                                <i class="fa-regular fa-calendar"></i>
+                                                May 30, 2026
+                                            </p>
+                                        </div>
+
+                                        <div class="event-card-footer">
+
+                                            <span class="event-going-count">
+                                                530 Attendees
+                                            </span>
+
+                                            <button class="rsvp-btn">
+                                                View Event
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="profile-event-card">
+
+                                    <div class="profile-event-image">
+                                        <img src="images/party2.jpg" alt="">
+                                        <span class="event-cat-badge">Art</span>
+                                    </div>
+
+                                    <div class="profile-event-body">
+
+                                        <h3>Creative Jam Session</h3>
+
+                                        <div class="event-meta">
+                                            <p>
+                                                <i class="fa-solid fa-location-dot"></i>
+                                                Lekki Phase 1
+                                            </p>
+
+                                            <p>
+                                                <i class="fa-regular fa-calendar"></i>
+                                                May 21, 2026
+                                            </p>
+                                        </div>
+
+                                        <div class="event-card-footer">
+
+                                            <span class="event-going-count">
+                                                120 Attendees
+                                            </span>
+
+                                            <button class="rsvp-btn">
+                                                View Event
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- ================================ -->
+                <!-- TAB: MEMBERS -->
+                <!-- ================================ -->
+                <div class="cd-tab-content" id="cd-tab-members">
+                    <div class="cd-section">
+
+                        <div class="cd-section-top" style="margin-bottom:1.25rem;">
+                            <h3 class="cd-section-title">4,200 Members</h3>
+                            <div class="search-bar" style="flex:1;max-width:16rem;height:2.75rem;margin:0;">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <input type="text" placeholder="Search members..." id="memberSearch">
+                            </div>
+                        </div>
+
+                        <!-- ADMINS -->
+                        <p class="cd-members-label">Admins</p>
+                        <div class="cd-members-list" id="adminsList">
+                            <div class="cd-member-item">
+                                <div class="cd-member-avatar">
+                                    <img src="images/dp1.jpg" alt="" onerror="this.style.display='none'">
+                                </div>
+                                <div class="cd-member-info">
+                                    <span class="cd-member-name">@leoxmotion</span>
+                                    <span class="cd-member-role">Admin · 48 events</span>
+                                </div>
+                                <span class="cd-admin-badge">Admin</span>
+                            </div>
+                        </div>
+
+                        <!-- ALL MEMBERS -->
+                        <p class="cd-members-label" style="margin-top:1.5rem;">All Members</p>
+                        <div class="cd-members-list" id="membersList">
+                            <div class="cd-member-item">
+                                <div class="cd-member-avatar" style="background:#22d3ee;">
+                                    <img src="images/dp2.jpg" alt="" onerror="this.style.display='none'">
+                                </div>
+                                <div class="cd-member-info">
+                                    <span class="cd-member-name">@harrison</span>
+                                    <span class="cd-member-role">Member · 340 followers</span>
+                                </div>
+                                <button class="follow-small-btn">Follow</button>
+                            </div>
+                            <div class="cd-member-item">
+                                <div class="cd-member-avatar" style="background:#9b5cf6;"></div>
+                                <div class="cd-member-info">
+                                    <span class="cd-member-name">@lagospadi</span>
+                                    <span class="cd-member-role">Member · 1.2k followers</span>
+                                </div>
+                                <button class="follow-small-btn">Follow</button>
+                            </div>
+                            <div class="cd-member-item">
+                                <div class="cd-member-avatar" style="background:#f59e0b;"></div>
+                                <div class="cd-member-info">
+                                    <span class="cd-member-name">@seunscene</span>
+                                    <span class="cd-member-role">Member · 820 followers</span>
+                                </div>
+                                <button class="follow-small-btn">Follow</button>
+                            </div>
+                            <div class="cd-member-item">
+                                <div class="cd-member-avatar" style="background:#ef4444;"></div>
+                                <div class="cd-member-info">
+                                    <span class="cd-member-name">@alicia_lagos</span>
+                                    <span class="cd-member-role">Member · 210 followers</span>
+                                </div>
+                                <button class="follow-small-btn">Follow</button>
+                            </div>
+                            <div class="cd-member-item">
+                                <div class="cd-member-avatar" style="background:#10b981;"></div>
+                                <div class="cd-member-info">
+                                    <span class="cd-member-name">@chioma_v</span>
+                                    <span class="cd-member-role">Member · 540 followers</span>
+                                </div>
+                                <button class="follow-small-btn">Follow</button>
+                            </div>
+                            <div class="cd-member-item">
+                                <div class="cd-member-avatar" style="background:#3b7ef8;"></div>
+                                <div class="cd-member-info">
+                                    <span class="cd-member-name">@tunde_creates</span>
+                                    <span class="cd-member-role">Member · 680 followers</span>
+                                </div>
+                                <button class="follow-small-btn">Follow</button>
+                            </div>
+                        </div>
+
+                        <div class="load-more-wrap">
+                            <button class="load-more-btn">
+                                Load More Members
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </section>
+{% set sidebar_mode = 'community' %}
+{% include 'user/footer.html' %}

@@ -1,0 +1,102 @@
+{% include "admin/admin_header.html" %}
+
+            <!-- MAIN -->
+            <section class="col-lg-7 offset-lg-2 all-events-page">
+
+                <!-- HEADER -->
+                <div class="all-page-header">
+                    <div class="all-page-header-top">
+                        <a href="/admin/dashboard/" class="back-link">
+                            <i class="fa-solid fa-arrow-left"></i>
+                            Dashboard
+                        </a>
+                        
+                    </div>
+                    <div class="all-page-title-row">
+                        <div>
+                            <h1>All Events</h1>
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <div class="admin-panel" style="margin-bottom: 1rem;">
+                    <div class="section-head-row">
+                        <h3>Search and manage events</h3>
+                        <span class="admin-badge">{{ events|length }} total</span>
+                    </div>
+                    <div class="search-bar" style="margin-bottom:1.25rem;">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" placeholder="Search events..." id="eventSearch">
+                        <button class="filter-btn">
+                            <i class="fa-solid fa-sliders"></i>
+                            Filter
+                        </button>
+                    </div>
+
+                    <div class="category-row" style="margin-bottom:1rem;">
+                        <button class="category-pill active-pill" data-filter="all">All</button>
+                        <button class="category-pill" data-filter="music">Music</button>
+                        <button class="category-pill" data-filter="tech">Tech</button>
+                        <button class="category-pill" data-filter="art">Art</button>
+                        <button class="category-pill" data-filter="nightlife">Nightlife</button>
+                        <button class="category-pill" data-filter="fashion">Fashion</button>
+                        <button class="category-pill" data-filter="sports">Sports</button>
+                        <button class="category-pill" data-filter="food">Food</button>
+                    </div>
+                </div>
+
+                
+
+                <!-- EVENTS GRID -->
+                <div class="row g-3" id="eventsGrid">
+                    {% for event in events %}
+                    <div class="col-md-6 mb-3" data-category="{{ event.category.name }}">
+                                <div class="all-event-card">
+                                    <div class="all-event-image">
+                                        <img src="/static/uploads/{{ event.banner }}" alt="" onerror="this.style.display='none'">
+                                        <span class="event-badge">{{ event.category.name }}</span>
+                                        <span class="event-time-badge">{{ event.status }}</span>
+                                    </div>
+                                    <div class="all-event-body">
+                                        <h3>{{ event.name }}</h3>
+                                        <div class="all-event-meta">
+                                            <span><i class="fa-solid fa-location-dot"></i> {{ event.address }}</span>
+                                            <span><i class="fa-regular fa-calendar"></i> {{ event.event_start.strftime("%a, %B %d %Y") }}</span>
+                                            <span><i class="fa-regular fa-clock"></i> {{ event.event_start.strftime("%I:%M %p") }}</span>
+                                        </div>
+                                        <div class="all-event-footer admin-event-footer">
+                                            <span class="admin-badge">{{ event.status }}</span>
+                                            <div class="admin-event-actions">
+                                                <button class="admin-action-btn admin-action-btn-primary" onclick="document.getElementById('viewEvent{{event.id}}').click()">
+                                                    View
+                                                </button>
+                                                <form action="/admin/approve-event/{{ event.id }}/" method="post" style="display:inline;">
+                                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                                    <button class="admin-action-btn admin-action-btn-success">Approve</button>
+                                                </form>
+                                                <form action="/admin/reject-event/{{ event.id }}/" method="post" style="display:inline;">
+                                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                                    <button class="admin-action-btn admin-action-btn-warning">Reject</button>
+                                                </form>
+                                                <form action="/admin/delete-event/{{ event.id }}/" method="post" style="display:inline;">
+                                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                                    <button class="admin-action-btn admin-action-btn-danger">Delete</button>
+                                                </form>
+                                                <a href="/admin/view-event/{{ event.id }}/" id="viewEvent{{event.id}}" style="display:none"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    {% endfor %}
+                    
+
+                </div>
+
+                
+
+            </section>
+
+            {% include "admin/admin_footer.html" %}

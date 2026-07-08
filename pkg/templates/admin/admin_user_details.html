@@ -1,0 +1,94 @@
+{% include "admin/admin_header.html" %}
+
+<main class="col-lg-7 offset-lg-2 admin-main">
+    <div class="admin-page-shell">
+        <div class="admin-page-header">
+            <div>
+                <p class="eyebrow">Platform management</p>
+                <h1>User details</h1>
+                <p class="admin-subtitle">Inspect account activity and membership details for this profile.</p>
+            </div>
+            <a href="/admin/users/" class="btn btn-outline-light admin-pill-btn">Back to users</a>
+        </div>
+
+        <div class="admin-user-hero">
+            <div class="admin-user-hero-main">
+                <div class="admin-user-avatar">
+                    <img src="/static/uploads/{{ user.profile_pic }}" alt="{{ user.fullname }}" onerror="this.src='/static/images/default.jpg'">
+                </div>
+                <div>
+                    <h2>{{ user.fullname or user.username }}</h2>
+                    <p class="mb-2">@{{ user.username }}</p>
+                    <span class="admin-badge">{{ user.verified_status }}</span>
+                </div>
+            </div>
+            <div class="text-end">
+                <p class="mb-1">Joined</p>
+                <strong>{{ user.joined_at.strftime('%b %d, %Y') if user.joined_at else 'N/A' }}</strong>
+            </div>
+        </div>
+
+        <div class="admin-user-stats">
+            <div class="admin-user-stat">
+                <strong>{{ posts_count }}</strong>
+                <span>Posts</span>
+            </div>
+            <div class="admin-user-stat">
+                <strong>{{ events_count }}</strong>
+                <span>Events</span>
+            </div>
+            <div class="admin-user-stat">
+                <strong>{{ communities_count }}</strong>
+                <span>Communities</span>
+            </div>
+        </div>
+
+        <div class="admin-user-grid">
+            <div class="admin-user-card">
+                <h3>Moderation actions</h3>
+                <div class="admin-action-group admin-action-group-stack">
+                    {% if user.verified_status == 'not verified' %}
+                    <form action="/admin/verify-user/{{ user.id }}/" method="post" style="display:inline;">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button class="admin-action-btn admin-action-btn-success">Verify user</button>
+                    </form>
+                    {% else %}
+                    <form action="/admin/remove-verify/{{ user.id }}/" method="post" style="display:inline;">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button class="admin-action-btn admin-action-btn-success">Remove Verification</button>
+                    </form>
+                    {% endif %}
+                    <form action="/admin/suspend-user/{{ user.id }}/" method="post" style="display:inline;">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button class="admin-action-btn admin-action-btn-warning">Suspend user</button>
+                    </form>
+                    <form action="/admin/ban-user/{{ user.id }}/" method="post" style="display:inline;">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button class="admin-action-btn admin-action-btn-danger">Ban user</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="admin-user-card">
+                <h3>Profile information</h3>
+                <div class="admin-user-meta">
+                    <span><strong>Email:</strong> {{ user.email }}</span>
+                    <span><strong>Gender:</strong> {{ user.gender }}</span>
+                    <span><strong>Location:</strong> {{ state.name if state else 'Not set' }}</span>
+                    <span><strong>Bio:</strong> {{ user.bio or 'No bio added yet.' }}</span>
+                </div>
+            </div>
+
+            <div class="admin-user-card">
+                <h3>Account status</h3>
+                <div class="admin-user-meta">
+                    <span><strong>Verification:</strong> {{ user.verified_status }}</span>
+                    <span><strong>Account created:</strong> {{ user.joined_at.strftime('%b %d, %Y') if user.joined_at else 'N/A' }}</span>
+                    <span><strong>Profile picture:</strong> {{ user.profile_pic }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% include "admin/admin_footer.html" %}

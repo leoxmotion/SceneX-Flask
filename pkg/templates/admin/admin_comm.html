@@ -1,0 +1,39 @@
+{% include "admin/admin_header.html" %}
+
+<main class="col-lg-7 offset-lg-2 admin-main">
+    <div class="admin-page-shell">
+        <div class="admin-page-header">
+            <div>
+                <p class="eyebrow">Community management</p>
+                <h1>Communities</h1>
+                <p class="admin-subtitle">Review and oversee the communities created on the platform.</p>
+            </div>
+            <a href="/admin/dashboard/" class="btn btn-outline-light admin-pill-btn">Back to dashboard</a>
+        </div>
+
+        <div class="admin-panel">
+            <div class="section-head-row">
+                <h3>All communities</h3>
+                <span class="admin-badge">{{ communities|length }} communities</span>
+            </div>
+
+            {% if communities %}
+            <div class="community-grid">
+                {% for community in communities %}
+                <div class="community-card-modern">
+                    <div class="community-avatar-modern"></div>
+                    <div>
+                        <h4>{{ community.name }}</h4>
+                        <p>{{ community.description[:120] }}{% if community.description|length > 120 %}...{% endif %}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="admin-empty">No communities found.</div>
+            {% endif %}
+        </div>
+    </div>
+</main>
+
+{% include "admin/admin_footer.html" %}

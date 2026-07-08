@@ -1,0 +1,177 @@
+{% include "user/header.html" %}
+
+
+         
+
+                <!--Feed-->
+                <section class="col-lg-7 offset-lg-2 feed">
+                    <div class="page-header">
+                        <div>
+                            <!-- <h1>Your Scene</h1> -->
+                            <h1>Welcome, {{ user.username }}</h1>
+                            <p>What's happening around you right now.</p>
+                        </div>
+                        {% include 'user/alert.html' %}
+                    </div>
+
+                    <!-- Post Composer -->
+                    <form class="composer" method="post" id="composer">
+                         {{ postform.csrf_token() }}
+                        <!-- Top row: avatar + text input -->
+                        <div class="composer-top">
+                            <div class="avatar">
+                                <img src="/static/uploads/{{ user.profile_pic }}" alt="profile pic">
+                            </div>
+                           
+                            {{ postform.content(placeholder="What's happening in your scene?",
+                                class_="composer-input", id="composerInput") }}
+                        </div>
+
+                        <!-- Event attach strip (shows after clicking Attach Event) -->
+                        <div class="composer-event-strip" id="composerEventStrip" style="display:none;">
+                            <div class="attached-event">
+                                <i class="fa-solid fa-bolt"></i>
+                                
+                                {{ postform.event_id(class_="composer-event-strip ") }}
+                            </div>
+                        </div>
+
+                        
+                        <!-- Media preview area -->
+                        <div class="media-preview-row" id="mediaPreviewRow" style="display:none;"></div>
+
+                        <!-- Bottom toolbar -->
+                        <div class="composer-toolbar">
+
+                            <div class="composer-tools">
+
+                                <!-- Attach event -->
+                                <button class="tool-btn" type="button" id="attachEventBtn" title="Attach Event">
+                                    <i class="fa-regular fa-calendar-plus"></i>
+                                    <span>Event</span>
+                                </button>
+
+                                <!-- Upload image -->
+                                <button class="tool-btn" type="button" id="uploadImageBtn" title="Add Image">
+                                    <i class="fa-regular fa-image"></i>
+                                    <span>Photo</span>
+                                </button>
+                                
+                                {{ postform.media( id="imageInput", style="display:none;" ) }}
+
+                                <!-- Upload video -->
+                              {#  <button class="tool-btn" type="button" id="uploadVideoBtn" title="Add Video" onclick="document.getElementById('videoInput').click()">
+                                    <i class="fa-solid fa-video"></i>
+                                    <span>Video</span>
+                                </button> 
+                                <input type="file" id="videoInput" accept="video/*" style="display:none;">
+                                #}
+                            </div> 
+
+                           {# <button class="composer-post-btn" id="composerPostBtn" disabled>Post</button> #}
+                            {{ postform.submit(class_='composer-post-btn', id="composerPostBtn") }}
+
+                        </div>
+
+                    </form>
+                    {% for p in posts %}
+                        <div class="post-card">
+
+                            <div class="post-event">
+                                <div class="row">
+                                    <div class="col-12 text-center event-pill">
+                                        <div>
+                                            <i class="fa-solid fa-bolt"></i>
+                                            {{ p.event.name }}
+                                        </div>
+
+                                        <div class="event-meta">
+                                            {% if p.event.address %}
+                                            <span>
+                                                <i class="fa-solid fa-location-dot"></i>
+                                                {{ p.event.address }}
+                                            </span>
+                                            {% endif %}
+                                            <span>
+                                                <i class="fa-regular fa-clock"></i>
+                                                {{ p.event.event_start.strftime("%a, %b %d, %Y") }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="post-header">
+                                <div class="post-user-info">
+                                    <div class="avatar">
+                                        <img src="{{ url_for('static', filename='uploads/' ~ p.creator.profile_pic) }}"
+                                        alt="">
+                                    </div>
+
+                                    <div class="px-3">
+                                        <h4 class="post-username"><a href="/profile/{{ p.creator.id }}">@{{ p.creator.username }}</a></h4>
+                                        <span class="post-time">{{ p.created_at }}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p class="post-text">
+                                {{ p.content }}
+                            </p>
+
+                            {% if p.media %}
+                            <div class="post-image">
+                                <img src="{{ url_for('static', filename='uploads/' ~ p.media) }}"
+                                    class="img-fluid"
+                                    alt="">
+                            </div>
+                            {% endif %}
+
+                            <div class="post-footer">
+                                <div class="post-actions">
+
+                                    <button class="like-btn" data-post-id="{{ p.id }}">
+                                        {% if p.id in liked_post_ids %}
+                                            <i class="fa-solid fa-heart" style="color:#ef4444"></i>
+                                        {% else %}
+                                            <i class="fa-regular fa-heart"></i>
+                                        {% endif %}
+                                        <span>{{ p.likes|length }}</span>
+                                    </button>
+
+                                    <button
+                                        class="comment-btn"
+                                        data-url="{{ url_for('comments', id=p.id) }}">
+                                        <i class="fa-regular fa-comment"></i>
+                                        <span>{{ p.comments|length }}</span>
+                                    </button>
+
+                                    
+
+                                    <a href="/comments/{{ p.id }}/"
+                                    id="openComment{{ p.id }}"
+                                    style="display:none;"></a>
+
+                                </div>
+
+                                <button
+    class="post-event-footer view-event-btn"
+    data-url="{{ url_for('creator_view_event', id=p.event.id) }}">
+
+    <i class="fa-regular fa-calendar"></i>
+    View Event
+
+</button>
+
+                                
+
+                            </div>
+
+                        </div>
+                    {% endfor %}
+
+                </section>
+
+
+{% set sidebar_mode = 'feed' %}
+{% include "user/footer.html" %}

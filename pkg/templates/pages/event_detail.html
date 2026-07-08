@@ -1,0 +1,512 @@
+{% include "user/header.html" %}
+
+            <!-- MAIN -->
+            <section class="col-lg-7 offset-lg-2 event-detail-page">
+
+                <!-- BACK + ACTIONS ROW -->
+                <div class="ed-topbar">
+                    <a href="discover.html" class="back-link">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        Back
+                    </a>
+                    <div class="ed-topbar-actions">
+                        <button class="ed-icon-btn" id="shareBtn" title="Share Event">
+                            <i class="fa-solid fa-share-nodes"></i>
+                        </button>
+                        <button class="ed-icon-btn" id="saveBtn" title="Save Event">
+                            <i class="fa-regular fa-bookmark"></i>
+                        </button>
+                        <button class="ed-icon-btn" id="moreBtn" title="More Options">
+                            <i class="fa-solid fa-ellipsis"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- HERO IMAGE -->
+                <div class="ed-hero">
+                    <img src="images/party1.jpg" alt="Lagos Soundwave Festival" onerror="this.style.display='none'">
+                    <div class="ed-hero-overlay">
+                        <span class="ed-live-badge">
+                            <span class="ed-live-dot"></span>
+                            TONIGHT
+                        </span>
+                        <span class="ed-category-badge">
+                            <i class="fa-solid fa-music"></i>
+                            Music
+                        </span>
+                    </div>
+                </div>
+
+                <!-- EVENT TITLE BLOCK -->
+                <div class="ed-title-block">
+                    <div class="ed-title-main">
+                        <h1 class="ed-title">Lagos Soundwave Festival</h1>
+                        <div class="ed-organiser-row">
+                            <div class="ed-organiser-avatar">
+                                <img src="images/dp1.jpg" alt="" onerror="this.style.display='none'">
+                            </div>
+                            <span>Hosted by</span>
+                            <a href="profile.html" class="ed-organiser-name">@leoxmotion</a>
+                            <span class="creator-badge">Creator</span>
+                        </div>
+                    </div>
+
+                    <!-- RSVP BLOCK -->
+                    <div class="ed-rsvp-block">
+                        <!-- <div class="ed-attendee-stack">
+                            <div class="mini-avatar" style="background:#22d3ee;"></div>
+                            <div class="mini-avatar" style="background:#9b5cf6;"></div>
+                            <div class="mini-avatar" style="background:#f59e0b;"></div>
+                            <div class="mini-avatar" style="background:#ef4444;"></div>
+                        </div> -->
+                        <span class="ed-attendee-count">2.4k going</span>
+                        <button class="ed-rsvp-btn" id="rsvpBtn" type="button">
+                            <i class="fa-solid fa-bolt"></i>
+                            RSVP Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- KEY DETAILS STRIP -->
+                <div class="ed-details-strip">
+                    <div class="ed-detail-item">
+                        <div class="ed-detail-icon">
+                            <i class="fa-regular fa-calendar"></i>
+                        </div>
+                        <div class="ed-detail-text">
+                            <span class="ed-detail-label">Date</span>
+                            <span class="ed-detail-value">Friday, May 30, 2026</span>
+                        </div>
+                    </div>
+                    <div class="ed-detail-item">
+                        <div class="ed-detail-icon">
+                            <i class="fa-regular fa-clock"></i>
+                        </div>
+                        <div class="ed-detail-text">
+                            <span class="ed-detail-label">Time</span>
+                            <span class="ed-detail-value">8:00 PM</span>
+                        </div>
+                    </div>
+                    <div class="ed-detail-item">
+                        <div class="ed-detail-icon">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+                        <div class="ed-detail-text">
+                            <span class="ed-detail-label">Location</span>
+                            <span class="ed-detail-value">Landmark Beach, Victoria Island</span>
+                        </div>
+                    </div>
+                    <div class="ed-detail-item">
+                        <div class="ed-detail-icon">
+                            <i class="fa-solid fa-ticket"></i>
+                        </div>
+                        <div class="ed-detail-text">
+                            <span class="ed-detail-label">Ticket</span>
+                            <span class="ed-detail-value">₦5,000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TABS -->
+                <div class="ed-tabs">
+                    <button class="ed-tab active-ed-tab" data-tab="about">About</button>
+                    <button class="ed-tab" data-tab="posts">Posts</button>
+                    <button class="ed-tab" data-tab="attendees">Attendees</button>
+                    <button class="ed-tab" data-tab="location">Location</button>
+                </div>
+
+                <!-- TAB: ABOUT -->
+                <div class="ed-tab-content active-ed-content" id="ed-tab-about">
+
+                    <!-- DESCRIPTION -->
+                    <div class="ed-section">
+                        <h3 class="ed-section-title">About this Event</h3>
+                        <p class="ed-description" id="edDescription">
+                            The biggest Afrobeats celebration Lagos has seen this year. Lagos Soundwave Festival brings together the hottest artists, DJs, and creatives for a night of culture, music, and pure energy at Landmark Beach.
+                        </p>
+                        <p class="ed-description">
+                            Expect live performances, immersive art installations, food vendors, and an atmosphere that captures everything that makes Lagos the cultural capital of Africa. This is not just a concert -- it is an experience.
+                        </p>
+                        <button class="ed-read-more-btn" id="readMoreBtn" type="button">
+                            Read more <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+                        <div class="ed-full-description" id="edFullDesc" style="display:none;">
+                            <p class="ed-description">
+                                Doors open at 7PM. The main stage kicks off at 8PM sharp. VIP tables available -- contact the organiser directly for bookings. Dress code is smart casual. No outside drinks. All ages welcome before 10PM, 18+ after.
+                            </p>
+                            <p class="ed-description">
+                                This event is fully licensed and security approved. Emergency services will be on standby. Parking is available at the Landmark complex.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- LINEUP -->
+                    <div class="ed-section">
+                        <h3 class="ed-section-title">Lineup</h3>
+                        <div class="ed-lineup">
+                            <div class="ed-lineup-item">
+                                <div class="ed-lineup-avatar" style="background:#3b7ef8;">
+                                    <i class="fa-solid fa-microphone"></i>
+                                </div>
+                                <div class="ed-lineup-info">
+                                    <span class="ed-lineup-name">Burna Boy</span>
+                                    <span class="ed-lineup-role">Headliner</span>
+                                </div>
+                                <span class="ed-lineup-badge headliner-badge">Headliner</span>
+                            </div>
+                            <div class="ed-lineup-item">
+                                <div class="ed-lineup-avatar" style="background:#9b5cf6;">
+                                    <i class="fa-solid fa-microphone"></i>
+                                </div>
+                                <div class="ed-lineup-info">
+                                    <span class="ed-lineup-name">Seyi Vibes</span>
+                                    <span class="ed-lineup-role">Main Act</span>
+                                </div>
+                                <!-- <span class="ed-lineup-badge">Main Act</span> -->
+                            </div>
+                            <div class="ed-lineup-item">
+                                <div class="ed-lineup-avatar" style="background:#f59e0b;">
+                                    <i class="fa-solid fa-headphones"></i>
+                                </div>
+                                <div class="ed-lineup-info">
+                                    <span class="ed-lineup-name">DJ Neptune</span>
+                                    <span class="ed-lineup-role">DJ</span>
+                                </div>
+                                <!-- <span class="ed-lineup-badge">Opening</span> -->
+                            </div>
+                            <div class="ed-lineup-item">
+                                <div class="ed-lineup-avatar" style="background:#22d3ee;">
+                                    <i class="fa-solid fa-headphones"></i>
+                                </div>
+                                <div class="ed-lineup-info">
+                                    <span class="ed-lineup-name">Preacha</span>
+                                    <span class="ed-lineup-role">Live Band</span>
+                                </div>
+                                <!-- <span class="ed-lineup-badge">Supporting</span> -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAGS -->
+                    <div class="ed-section">
+                        <h3 class="ed-section-title">Tags</h3>
+                        <div class="ed-tags">
+                            <span class="ed-tag">#Afrobeats</span>
+                            <span class="ed-tag">#Lagos</span>
+                            <span class="ed-tag">#LiveMusic</span>
+                            <span class="ed-tag">#Nightlife</span>
+                            <span class="ed-tag">#LandmarkBeach</span>
+                            <span class="ed-tag">#VictoriaIsland</span>
+                        </div>
+                    </div>
+
+                    <!-- ORGANISER CARD -->
+                    <div class="ed-section">
+                        <h3 class="ed-section-title">Organiser</h3>
+                        <div class="ed-organiser-card">
+                            <div class="ed-org-avatar">
+                                <img src="images/dp1.jpg" alt="" onerror="this.style.display='none'">
+                            </div>
+                            <div class="ed-org-info">
+                                <h4>Leo / Preacha</h4>
+                                <span>@leoxmotion · 48 events hosted</span>
+                            </div>
+                            <div class="ed-org-actions">
+                                <a href="profile.html" class="ed-org-btn">
+                                    View Profile
+                                </a>
+                                <a href="messages.html" class="ed-org-btn ed-org-msg-btn">
+                                    <i class="fa-regular fa-message"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- TAB: POSTS -->
+                <div class="ed-tab-content" id="ed-tab-posts">
+                    <div class="ed-section">
+                        <h3 class="ed-section-title">Event Posts</h3>
+                        <p class="ed-section-sub">Posts from the community linked to this event</p>
+
+                        <!-- POST CARD -->
+                        <div class="post-card">
+                            <div class="post-event">
+                                <div class="row">
+                                    <div class="col-12 text-center event-pill">
+                                        <div class="">
+                                            <i class="fa-solid fa-bolt"></i>
+                                            Lagos Soundwave Festival
+                                        </div>
+                                        <div class="event-meta">
+                                            <span><i class="fa-solid fa-location-dot"></i> Landmark Beach</span>
+                                            
+                                            <span><i class="fa-regular fa-clock"></i> Fri 8PM</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="post-header">
+                                <div class="row align-center">
+                                <div class="post-user-info">
+                                    <div class="avatar">
+                                        <img src="images/dp2.jpg" alt="profile pic">
+                                    </div>
+                                    <div class="px-3">
+                                        <h5 class="post-username">@lagospadi</h5>
+                                            <span class="post-time">
+                                                <i class="fa-regular fa-clock"></i> 5h ago
+                                            </span>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+
+                            <p class="post-text">
+                                Seyi Vibes is coming to Lagos!
+                            </p>
+                            <div class="post-image">
+                                <img src="images/party3.jpg" alt="">
+                            </div>
+                            <div class="post-footer">
+                            <div class="post-actions">
+                                {% if p is defined %}
+                                <button class="like-btn" data-post-id="{{ p.id }}">
+                                    {% if liked_post_ids is defined and p.id in liked_post_ids %}
+                                        <i class="fa-solid fa-heart" style="color:#ef4444"></i>
+                                    {% else %}
+                                        <i class="fa-regular fa-heart"></i>
+                                    {% endif %}
+                                    <span>{{ p.likes|length }}</span>
+                                </button>
+                                {% else %}
+                                <button class="like-btn"><i class="fa-regular fa-heart"></i><span>2</span></button>
+                                {% endif %}
+                                <button class="comment-btn"><i class="fa-regular fa-comment"></i><span>4</span></button>
+                                <button class="share-btn"><i class="fa-solid fa-share"></i><span>7</span></button>
+                            </div>
+
+                            <button class="post-event-footer">
+                                    <i class="fa-regular fa-calendar"></i>
+                                    View Event
+                            
+                            </button>
+                            
+                        </div>
+                        <div class="post-comment d-flex align-items-center gap-2 mt-2">
+                            <input 
+                                type="text" 
+                                placeholder="Add a comment..." 
+                                class="form-control comment-input"
+                            >
+
+                            <button class="btn btn-warning comment-btn">
+                                Post
+                            </button>
+                        </div>
+                        </div>
+
+                    <div class="post-card">
+                            <div class="post-event">
+                                <div class="row">
+                                    <div class="col-12 text-center event-pill">
+                                        <div class="">
+                                            <i class="fa-solid fa-bolt"></i>
+                                            Lagos Soundwave Festival
+                                        </div>
+                                        <div class="event-meta">
+                                            <span><i class="fa-solid fa-location-dot"></i> Landmark Beach</span>
+                                            
+                                            <span><i class="fa-regular fa-clock"></i> Fri 8PM</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="post-header">
+                                <div class="row align-center">
+                                <div class="post-user-info">
+                                    <div class="avatar">
+                                        <img src="images/dp2.jpg" alt="profile pic">
+                                    </div>
+                                    <div class="px-3">
+                                        <h5 class="post-username">@lagospadi</h5>
+                                            <span class="post-time">
+                                                <i class="fa-regular fa-clock"></i> 5h ago
+                                            </span>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+
+                            <p class="post-text">
+                                Seyi Vibes is coming to Lagos!
+                            </p>
+                            <div class="post-image">
+                                <img src="images/party3.jpg" alt="">
+                            </div>
+                            <div class="post-footer">
+                            <div class="post-actions">
+                                {% if p is defined %}
+                                <button class="like-btn" data-post-id="{{ p.id }}">
+                                    {% if liked_post_ids is defined and p.id in liked_post_ids %}
+                                        <i class="fa-solid fa-heart" style="color:#ef4444"></i>
+                                    {% else %}
+                                        <i class="fa-regular fa-heart"></i>
+                                    {% endif %}
+                                    <span>{{ p.likes|length }}</span>
+                                </button>
+                                {% else %}
+                                <button class="like-btn"><i class="fa-regular fa-heart"></i><span>2</span></button>
+                                {% endif %}
+                                <button class="comment-btn"><i class="fa-regular fa-comment"></i><span>4</span></button>
+                                <button class="share-btn"><i class="fa-solid fa-share"></i><span>7</span></button>
+                            </div>
+
+                            <button class="post-event-footer">
+                                    <i class="fa-regular fa-calendar"></i>
+                                    View Event
+                            
+                            </button>
+                            
+                        </div>
+                        <div class="post-comment d-flex align-items-center gap-2 mt-2">
+                            <input 
+                                type="text" 
+                                placeholder="Add a comment..." 
+                                class="form-control comment-input"
+                            >
+
+                            <button class="btn btn-warning comment-btn">
+                                Post
+                            </button>
+                        </div>
+                        </div>
+
+                        <!-- LOAD MORE -->
+                        <div class="load-more-wrap">
+                            <button class="load-more-btn">
+                                Load More Posts
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB: ATTENDEES -->
+                <div class="ed-tab-content" id="ed-tab-attendees">
+                    <div class="ed-section">
+                        <div class="ed-attendees-header">
+                            <h3 class="ed-section-title">2,400+ Going</h3>
+                            <!-- <div class="search-bar" style="flex:1; max-width:18rem; height:2.75rem; margin:0;">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <input type="text" placeholder="Search attendees...">
+                            </div> -->
+                        </div>
+
+                        <div class="ed-attendees-grid">
+                            <div class="ed-attendee-card">
+                                <div class="ed-att-avatar" style="background:#22d3ee;">
+                                    <img src="images/dp1.jpg" alt="" onerror="this.style.display='none'">
+                                </div>
+                                <span class="ed-att-name">@harrison</span>
+                                <button class="follow-small-btn">Follow</button>
+                            </div>
+                            <div class="ed-attendee-card">
+                                <div class="ed-att-avatar" style="background:#9b5cf6;">
+                                    <img src="images/dp2.jpg" alt="" onerror="this.style.display='none'">
+                                </div>
+                                <span class="ed-att-name">@lagospadi</span>
+                                <button class="follow-small-btn">Follow</button>
+                            </div>
+                            <div class="ed-attendee-card">
+                                <div class="ed-att-avatar" style="background:#f59e0b;"></div>
+                                <span class="ed-att-name">@seunscene</span>
+                                <button class="follow-small-btn">Follow</button>
+                            </div>
+                            <div class="ed-attendee-card">
+                                <div class="ed-att-avatar" style="background:#ef4444;"></div>
+                                <span class="ed-att-name">@alicia_lagos</span>
+                                <button class="follow-small-btn">Follow</button>
+                            </div>
+                            <div class="ed-attendee-card">
+                                <div class="ed-att-avatar" style="background:#22d3ee;"></div>
+                                <span class="ed-att-name">@tunde_creates</span>
+                                <button class="follow-small-btn">Follow</button>
+                            </div>
+                            <div class="ed-attendee-card">
+                                <div class="ed-att-avatar" style="background:#10b981;"></div>
+                                <span class="ed-att-name">@chioma_v</span>
+                                <button class="follow-small-btn">Follow</button>
+                            </div>
+                            <div class="ed-attendee-card">
+                                <div class="ed-att-avatar" style="background:#3b7ef8;"></div>
+                                <span class="ed-att-name">@adekunle_x</span>
+                                <button class="follow-small-btn">Follow</button>
+                            </div>
+                            <div class="ed-attendee-card">
+                                <div class="ed-att-avatar" style="background:#f59e0b;"></div>
+                                <span class="ed-att-name">@nkechi.wav</span>
+                                <button class="follow-small-btn">Follow</button>
+                            </div>
+                        </div>
+
+                        <div class="load-more-wrap">
+                            <button class="load-more-btn">
+                                Load More Attendees
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB: LOCATION -->
+                <div class="ed-tab-content" id="ed-tab-location">
+                    <div class="ed-section">
+                        <h3 class="ed-section-title">Event Location</h3>
+
+                        <!-- MAP PLACEHOLDER -->
+                        <div class="ed-map-placeholder">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                            <p>Landmark Beach, Victoria Island, Lagos</p>
+                            <a
+                                href="https://maps.google.com/?q=Landmark+Beach+Victoria+Island+Lagos"
+                                target="_blank"
+                                class="ed-map-link-btn"
+                            >
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                Open in Google Maps
+                            </a>
+                        </div>
+
+                        <!-- ADDRESS DETAILS -->
+                        <div class="ed-address-card">
+                            <div class="ed-address-row">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <div>
+                                    <span class="ed-detail-label">Full Address</span>
+                                    <span class="ed-detail-value">Landmark Beach Resort, Water Corporation Drive, Victoria Island, Lagos</span>
+                                </div>
+                            </div>
+                            <div class="ed-address-row">
+                                <i class="fa-solid fa-car"></i>
+                                <div>
+                                    <span class="ed-detail-label">Parking</span>
+                                    <span class="ed-detail-value">Available at Landmark Complex. Enter via Water Corporation Drive.</span>
+                                </div>
+                            </div>
+                            <div class="ed-address-row">
+                                <i class="fa-solid fa-bus"></i>
+                                <div>
+                                    <span class="ed-detail-label">Public Transport</span>
+                                    <span class="ed-detail-value">BRT to VI, then ride-share to Landmark Beach.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+            {% set sidebar_mode = 'event' %}
+{% include 'user/footer.html' %}

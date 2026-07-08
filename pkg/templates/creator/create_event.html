@@ -1,0 +1,308 @@
+{% include 'user/header.html' %}
+
+            <!--Feed-->
+            <section class="col-lg-7 offset-lg-2 ce-page">
+                
+                <div class="ce-topbar">
+                    <a href="home.html" class="back-link">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </a>
+
+                    <h2>Create Event</h2>
+
+                    <button class="ce-publish-btn">
+                        Publish
+                    </button>
+                </div>
+                {% include 'user/alert.html' %}
+                
+
+                <form id="eventForm" class="ce-form" action="" method="post" enctype="multipart/form-data">
+                    {{ eventform.csrf_token() }}
+                    <!-- COVER -->
+                   <div class="ce-cover-upload" id="ceCover">
+                        
+                        <div class="ce-cover-overlay">
+                            <button class="ep-media-btn">
+                                <i class="fa-solid fa-camera"></i>
+                                {{ eventform.banner(placeholder="add Event") }}
+                            </button>
+                        </div> 
+                    </div>
+
+                    <!-- DETAILS -->
+                    <div class="ce-card">
+
+                        <p>Event Name</p>
+                        {{ eventform.name(class_="ce-input", placeholder="Afro Rave Lagos") }}
+
+                        <p>Description</p>
+                        {{ eventform.description(class="ce-textarea",
+                            placeholder="Tell people about your event...") }}
+
+                    </div>
+
+                    <!-- CATEGORY -->
+                    <div class="ce-card">
+
+                        <p>Category</p>
+
+                        <div >
+
+                            {{ eventform.cat_id(class_="ce-chip") }}
+                            
+                            
+
+                        </div>
+
+                    </div>
+                    <div class="ce-card">
+
+                        <p>Community (Optional)</p>
+
+                        <div >
+
+                            {{ eventform.comm_id(class_="ce-chip") }}
+                            
+
+                        </div>
+
+                    </div>
+
+                    <!-- DATE -->
+                    <div class="ce-card">
+
+                        <div class="ce-grid">
+
+                            <div>
+                                <p>Event Start</p>
+                                {{ eventform.event_start(class_='ce-input') }}
+                                {% for error in eventform.event_start.errors %}
+                                <p class="text-danger">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+
+                            <div>
+                                <p>Event End</p>
+                                {{ eventform.event_end(class_='ce-input') }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- LOCATION -->
+                    <div class="ce-card">
+                        <h3>Location</h3>
+                        <p>Address</p>
+
+                        {{ eventform.address(class_="ce-input",
+                            placeholder="Landmark Beach") }}
+
+                        <p>Google Map Link</p>
+
+                        {{ eventform.map_link(class_="ce-input",
+                            placeholder="google.map.link") }}
+
+                        <div class="ce-grid">
+                            
+                            <div>
+                            <p>State</p>
+
+                            {{ eventform.state_id(class_="ce-input",
+                                placeholder="Lagos State", id="state") }}
+                            </div>
+
+                            <div>
+                            <p>Local Government</p>
+
+                            {{ eventform.lga_id(class_="ce-input",
+                                placeholder="Ikeja", id="lga") }}
+                            </div>
+                        </div>
+                    </div>
+
+                    {{ eventform.submit(class_="ce-secondary-btn") }}
+
+                    
+                </form>
+                
+
+
+            </section>
+
+
+            <div class="col-3 right-sidebar">
+                <div class="ce-card event-preview-card">
+
+                    <h3>Event Preview</h3>
+
+                    <div class="preview-cover">
+                        <img
+                            src="images/default-event.jpg"
+                            id="previewCover"
+                            alt="Event Cover"
+                        >
+                    </div>
+
+                    <div class="preview-content">
+
+                        <span class="preview-category" id="previewCategory">
+                            Music
+                        </span>
+
+                        <h4 id="previewTitle">
+                            Your Event Title
+                        </h4>
+
+                        <div class="preview-meta">
+
+                            <p>
+                                <i class="fa-solid fa-calendar"></i>
+                                <span id="previewDate">
+                                    Select a date
+                                </span>
+                            </p>
+
+                            <p>
+                                <i class="fa-solid fa-location-dot"></i>
+                                <span id="previewVenue">
+                                    Select a venue
+                                </span>
+                            </p>
+
+                        </div>
+
+                        <div class="preview-tags">
+
+                            <span>#YourTag</span>
+                            <span>#Event</span>
+
+                        </div>
+
+                        <div class="preview-lineup">
+
+                            <h6>Lineup</h6>
+
+                            <ul id="previewLineup">
+                                <li>No performers added yet</li>
+                            </ul>
+
+                        </div>
+
+                        <div class="preview-tickets">
+
+                            <div class="ticket-preview-row">
+                                <span>Free RSVP</span>
+                                <strong id="previewFree">
+                                    0
+                                </strong>
+                            </div>
+
+                            <div class="ticket-preview-row">
+                                <span>Regular</span>
+                                <strong id="previewRegular">
+                                    ₦0
+                                </strong>
+                            </div>
+
+                            <div class="ticket-preview-row">
+                                <span>VIP</span>
+                                <strong id="previewVip">
+                                    ₦0
+                                </strong>
+                            </div>
+
+                            <div class="ticket-preview-row">
+                                <span>Table</span>
+                                <strong id="previewTable">
+                                    ₦0
+                                </strong>
+                            </div>
+
+                        </div>
+
+                        <button class="preview-btn">
+                            Preview Event Page
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="widget">
+                    <h3>Suggested Creators</h3>
+                    <div class="creator-list">
+                        <div class="creator-item">
+                            <div class="creator-av" style="background:#22d3ee"></div>
+                            <div class="creator-info">
+                                <p>@harrison</p>
+                                <span>340 followers</span>
+                            </div>
+                            <button class="follow-small-btn">Follow</button>
+                        </div>
+                        <div class="creator-item">
+                            <div class="creator-av" style="background:#9b5cf6"></div>
+                            <div class="creator-info">
+                                <p>@lagospadi</p>
+                                <span>1.2k followers</span>
+                            </div>
+                            <button class="follow-small-btn">Follow</button>
+                        </div>
+                        <div class="creator-item">
+                            <div class="creator-av" style="background:#f59e0b"></div>
+                            <div class="creator-info">
+                                <p>@seunscene</p>
+                                <span>820 followers</span>
+                            </div>
+                            <button class="follow-small-btn">Follow</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.bundle.js"></script>
+    <script src="/static/js/scenequery.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            $('.ce-secondary-btn').click(function(event){
+                event.preventDefault()
+                form = document.getElementById('eventForm')
+                data2send = new FormData(form)
+                
+                $.ajax({
+                    url: '/create_event/',
+                    type: 'POST',
+                    data: data2send,
+                    success: function(resp){
+                        alert('Event created successfully')
+                        document.location.href='/creator/events/'
+                    },
+                    error: function(err){console.log(err)}
+                })
+            });
+            // $('#state').change(function(){
+            //     alert('you touched me!')
+            //     var stateId = $(this).val();
+            //     var data = {state_id: stateId, csrf_token: 'csrf_token()'}
+            //     alert(data)
+            //     $.ajax({
+            //         url: '/state-lgas/',
+            //         type: 'POST',
+            //         data: data,
+            //         success: function(rsp){
+            //             alert(rsp)
+            //         },
+            //         error: function(err){console.log(err)}
+            //     })
+            // })
+        })
+    </script>
+</body>
+</html>

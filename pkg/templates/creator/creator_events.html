@@ -1,0 +1,162 @@
+{% include "user/header.html" %}
+
+      
+
+                <section class="col-lg-7 offset-lg-2 notifications-page">
+
+                    <!-- HEADER -->
+
+                    <div class="notif-top">
+
+                        <div>
+
+                            <h1>My Events</h1>
+
+                            <p>
+                                Stay updated with your events activity.
+                            </p>
+                            {% include 'user/alert.html' %}
+                        </div>
+
+                        
+                        
+
+                    </div>
+                    
+                    <div class="" id="tab-events">
+                        {% if events %}
+                        <div class="events-section-label">Pending</div>
+                        <div class="row event-grid">
+                            {% for event in events %}
+                            {% if creator.id == user.id %}
+                            {% if event.status == 'pending' %}
+                            <div class="col-md-6 mb-3" data-category="{{ event.category.name }}">
+                                <div class="all-event-card">
+                                    <div class="all-event-image">
+                                        <img src="/static/uploads/{{ event.banner }}" alt="" onerror="this.style.display='none'">
+                                        <span class="event-badge">{{ event.category.name }}</span>
+                                        <span class="event-time-badge">{{ event.status }}</span>
+                                    </div>
+                                    <div class="all-event-body">
+                                        <h3>{{ event.name }}</h3>
+                                        <div class="all-event-meta">
+                                            <span><i class="fa-solid fa-location-dot"></i> {{ event.address }}</span>
+                                            {% if event.event_start %}
+                                            <span><i class="fa-regular fa-calendar"></i> {{ event.event_start.strftime("%a, %B %d %Y") }}</span>
+                                            
+                                            <span><i class="fa-regular fa-clock"></i> {{ event.event_start.strftime("%I:%M %p") }}</span>
+                                            {% endif %}
+                                        </div>
+                                        <div class="all-event-footer">
+                                            <div class="attendees">
+                                                <div class="mini-avatar"></div>
+                                                <div class="mini-avatar"></div>
+                                                <div class="mini-avatar"></div>
+                                                <span>0 going</span>
+                                            </div>
+                                            <button class="rsvp-btn viewBtn" data-view-event="{{ event.id }}">
+                                                View Event
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                            {% endif %}
+                            {% endif %}
+                            {% endfor %}
+                           
+                        </div>
+
+                        <div class="events-section-label" style="margin-top:16px">Approved</div>
+                        <div class="row event-grid">
+                            
+                            {% for event in events %}
+                            {% if creator.id == user.id %}
+                            {% if event.status == 'approved' %}
+                            <div class="col-md-6 mb-3" data-category="{{ event.category.name }}">
+                                <div class="all-event-card">
+                                    <div class="all-event-image">
+                                        <img src="/static/uploads/{{ event.banner }}" alt="" onerror="this.style.display='none'">
+                                        <span class="event-badge">{{ event.category.name }}</span>
+                                        <span class="event-time-badge">{{ event.status }}</span>
+                                    </div>
+                                    <div class="all-event-body">
+                                        <h3>{{ event.name }}</h3>
+                                        <div class="all-event-meta">
+                                            <span><i class="fa-solid fa-location-dot"></i> {{ event.address }}</span>
+                                            <span><i class="fa-regular fa-calendar"></i> {{ event.event_start.strftime("%a, %B %d %Y") }}</span>
+                                            <span><i class="fa-regular fa-clock"></i> {{ event.event_start.strftime("%I:%M %p") }}</span>
+                                        </div>
+                                        <div class="all-event-footer">
+                                            <div class="attendees">
+                                                <div class="mini-avatar"></div>
+                                                <div class="mini-avatar"></div>
+                                                <div class="mini-avatar"></div>
+                                                <span>0 going</span>
+                                            </div>
+                                            <button class="rsvp-btn viewBtn" onclick="document.getElementById('viewEvent{{event.id}}').click()">
+                                                    View Event
+                                            </button>
+                                            <a href="/creator/view-event/{{ event.id }}/" id="viewEvent{{event.id}}" style="display:none"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% endif %}
+                            {% endfor %}
+                            
+                        </div>
+
+                        <div class="events-section-label" style="margin-top:16px">Rejected</div>
+                        <div class="row event-grid">
+                            {% for event in events %}
+                            {% if creator.id == user.id %}
+                            {% if event.status == 'rejected' %}
+                            <div class="col-md-6 mb-3" data-category="{{ event.category.name }}">
+                                <div class="all-event-card">
+                                    <div class="all-event-image">
+                                        <img src="/static/uploads/{{ event.banner }}" alt="" onerror="this.style.display='none'">
+                                        <span class="event-badge">{{ event.category.name }}</span>
+                                        <span class="event-time-badge">{{ event.status }}</span>
+                                    </div>
+                                    <div class="all-event-body">
+                                        <h3>{{ event.name }}</h3>
+                                        <div class="all-event-meta">
+                                            <span><i class="fa-solid fa-location-dot"></i> {{ event.address }}</span>
+                                            <span><i class="fa-regular fa-calendar"></i> {{ event.event_start.strftime("%a, %B %d %Y") }}</span>
+                                            <span><i class="fa-regular fa-clock"></i> {{ event.event_start.strftime("%I:%M %p") }}</span>
+                                        </div>
+                                        <div class="all-event-footer">
+                                            <div class="attendees">
+                                                <div class="mini-avatar"></div>
+                                                <div class="mini-avatar"></div>
+                                                <div class="mini-avatar"></div>
+                                                <span>0 going</span>
+                                            </div>
+                                            <button class="rsvp-btn viewBtn" onclick="document.getElementById('viewEvent{{event.id}}').click()">
+                                                    View Event
+                                            </button>
+                                            <a href="/creator/view-event/{{ event.id }}/" id="viewEvent{{event.id}}" style="display:none"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            {% endif %}
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <h3>You have not created any events</h3>
+                        {% endif %}
+                    </div>
+                    
+
+
+
+                </section>
+
+
+{% include 'user/footer.html' %}

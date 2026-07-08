@@ -1,0 +1,262 @@
+Your template has a few issues that will cause unexpected behavior when looping through multiple posts.
+
+### 1. Duplicate IDs (Major Issue)
+
+Inside the loop, every post generates:
+
+```html
+<a href="/comments/" id="openComment" style="display:none;"></a>
+<a href="/creator/view-event/{{ event.id }}/" id="viewEvent" style="display:none;"></a>
+```
+
+HTML IDs **must be unique**. Since you're inside `{% for p in posts %}`, every iteration creates another `openComment` and `viewEvent`.
+
+Instead, use the post ID:
+
+```html
+<a href="/comments/{{ p.id }}/" id="openComment{{ p.id }}" style="display:none;"></a>
+
+<a href="/creator/view-event/{{ event.id }}/"
+   id="viewEvent{{ p.id }}"
+   style="display:none;"></a>
+```
+
+Then update the buttons:
+
+```html
+<button class="comment-btn"
+        onclick="document.getElementById('openComment{{ p.id }}').click()">
+    <i class="fa-regular fa-comment"></i><span>4</span>
+</button>
+
+<button class="post-event-footer"
+        onclick="document.getElementById('viewEvent{{ p.id }}').click()">
+    <i class="fa-regular fa-calendar"></i>
+    View Event
+</button>
+```
+
+---
+
+### 2. Event and Creator Variables
+
+Inside your loop you're using:
+
+```jinja
+{{ event.name }}
+{{ creator.username }}
+```
+
+This only works if **all posts belong to the same event and creator**.
+
+Usually a post has its own relationships, so you'd use:
+
+```jinja
+{{ p.event.name }}
+{{ p.event.address }}
+{{ p.creator.username }}
+{{ p.creator.profile_pic }}
+```
+
+Example:
+
+```html
+<img src="/static/uploads/{{ p.creator.profile_pic }}" alt="profile pic">
+
+<h5 class="post-username">
+    @{{ p.creator.username }}
+</h5>
+```
+
+---
+
+### 3. Media Might Be Empty
+
+If some posts don't contain an image, this:
+
+```html
+<img src="/static/uploads/{{ p.media }}">
+```
+
+will produce a broken image.
+
+Wrap it:
+
+```jinja
+{% if p.media %}
+<div class="post-image">
+    <img src="/static/uploads/{{ p.media }}" class="img-fluid" alt="">
+</div>
+{% endif %}
+```
+
+---
+
+### 4. "5h ago" is Hardcoded
+
+Currently:
+
+```html
+5h ago
+```
+
+If you have a timestamp:
+
+```jinja
+{{ p.created_at }}
+```
+
+or a helper that formats relative time, use that instead.
+
+---
+
+### 5. Comments Link
+
+Right now it is:
+
+```html
+href="/comments/"
+```
+
+You'll probably want the comments for the specific post:
+
+```html
+href="/comments/{{ p.id }}/"
+```
+
+or
+
+```html
+href="{{ url_for('comments', post_id=p.id) }}"
+```
+
+---
+
+### 6. Use `url_for()` Instead of Hardcoding
+
+Instead of:
+
+```html
+<img src="/static/uploads/{{ p.media }}">
+```
+
+use:
+
+```jinja
+<img src="{{ url_for('static', filename='uploads/' ~ p.media) }}">
+```
+
+It's more portable.
+
+---
+
+## Cleaned-Up Version
+
+```jinja
+{% for p in posts %}
+<div class="post-card">
+
+    <div class="post-event">
+        <div class="row">
+            <div class="col-12 text-center event-pill">
+                <div>
+                    <i class="fa-solid fa-bolt"></i>
+                    {{ p.event.name }}
+                </div>
+
+                <div class="event-meta">
+                    <span>
+                        <i class="fa-solid fa-location-dot"></i>
+                        {{ p.event.address }}
+                    </span>
+
+                    <span>
+                        <i class="fa-regular fa-clock"></i>
+                        {{ p.event.event_start.strftime("%A, %B %d, %Y") }}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-header">
+        <div class="post-user-info">
+            <div class="avatar">
+                <img src="{{ url_for('static', filename='uploads/' ~ p.creator.profile_pic) }}"
+                     alt="">
+            </div>
+
+            <div class="px-3">
+                <h5 class="post-username">@{{ p.creator.username }}</h5>
+                <span class="post-time">{{ p.created_at }}</span>
+            </div>
+        </div>
+    </div>
+
+    <p class="post-text">
+        {{ p.content }}
+    </p>
+
+    {% if p.media %}
+    <div class="post-image">
+        <img src="{{ url_for('static', filename='uploads/' ~ p.media) }}"
+             class="img-fluid"
+             alt="">
+    </div>
+    {% endif %}
+
+    <div class="post-footer">
+        <div class="post-actions">
+
+            {% if p is defined %}
+            <button class="like-btn" data-post-id="{{ p.id }}">
+                {% if liked_post_ids is defined and p.id in liked_post_ids %}
+                    <i class="fa-solid fa-heart" style="color:#ef4444"></i>
+                {% else %}
+                    <i class="fa-regular fa-heart"></i>
+                {% endif %}
+                <span>{{ p.likes|length }}</span>
+            </button>
+            {% else %}
+            <button class="like-btn">
+                <i class="fa-regular fa-heart"></i>
+                <span>2</span>
+            </button>
+            {% endif %}
+
+            <button class="comment-btn"
+                    onclick="document.getElementById('openComment{{ p.id }}').click()">
+                <i class="fa-regular fa-comment"></i>
+                <span>4</span>
+            </button>
+
+            <button class="share-btn">
+                <i class="fa-solid fa-share"></i>
+                <span>7</span>
+            </button>
+
+            <a href="/comments/{{ p.id }}/"
+               id="openComment{{ p.id }}"
+               style="display:none;"></a>
+
+        </div>
+
+        <button class="post-event-footer"
+                onclick="document.getElementById('viewEvent{{ p.id }}').click()">
+            <i class="fa-regular fa-calendar"></i>
+            View Event
+        </button>
+
+        <a href="/creator/view-event/{{ p.event.id }}/"
+           id="viewEvent{{ p.id }}"
+           style="display:none;"></a>
+
+    </div>
+
+</div>
+{% endfor %}
+```
+
+This version avoids duplicate IDs, safely handles posts without images, and assumes each post has `creator` and `event` relationships, which is the more scalable Flask/SQLAlchemy pattern.
+
+                                    <img src="{{ url_for('static', filename='uploads/{{p.media}}') }}" alt="profile pic">                                

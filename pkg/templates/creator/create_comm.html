@@ -1,0 +1,102 @@
+{% include 'user/header.html' %}
+            
+
+            <div class="col-lg-7 offset-lg-2 ce-page">
+
+                <div class="ce-topbar">
+                    <h2>Create Community</h2>
+
+                    <button class="ce-publish-btn">
+                        Create Community
+                    </button>
+                </div>
+
+                <div class="ce-layout">
+
+                    <!-- FORM -->
+
+                    <form id="commForm" class="ce-form" action="" method="post" enctype="multipart/form-data">
+
+                        <!-- COVER -->
+                        {{ commform.csrf_token() }}
+                        <div class="ce-card">
+
+                            <h3>Community Branding</h3>
+
+                            <div class="ce-cover-upload" id="ceCover">
+                        
+                                <div class="ce-cover-overlay">
+                                    <button class="ep-media-btn">
+                                        <i class="fa-solid fa-camera"></i>
+                                        {{ commform.banner(placeholder="add Community") }}
+                                    </button>
+                                </div> 
+                            </div>
+
+                        </div>
+
+                        <!-- BASIC INFO -->
+
+                        <div class="ce-card">
+
+                            <h3>Basic Information</h3>
+
+                            <p>Community Name</p>
+                            {{ commform.name(class_="ce-input", placeholder="Community Name") }}
+                            <p>Description</p>
+                            {{ commform.description(class="ce-textarea",
+                            placeholder="Tell people about your community...") }}
+
+                        </div>
+
+                        <!-- CATEGORY -->
+
+                        <div class="ce-card">
+
+                        <p>Category</p>
+
+                        <div >
+
+                            {{ commform.cat_id(class_="ce-chip border-light") }}
+                            
+
+                        </div>
+
+                    </div>
+
+                        <!-- TAGS -->
+                        {#
+                        <div class="ce-card">
+
+                            <h3>Community Tags</h3>
+
+                            <input
+                                type="text"
+                                class="ce-input"
+                                placeholder="#Afrobeats #Creatives #Networking"
+                            >
+
+                        </div>#}
+
+
+                        
+
+                    </form>
+
+                    <!-- PREVIEW -->
+
+                    <div class="ce-sidebar">
+
+                        
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+
+      {% set sidebar_mode = 'community_form' %}
+      {% include 'user/footer.html' %}

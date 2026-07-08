@@ -1,0 +1,53 @@
+<div class="col-3 right-sidebar">
+                    <div class="widget ">
+                        <h3>Platform Overview</h3>
+                        <div class="trending-list">
+                            <div class="trending-item">
+                                <div>
+                                    <h4>Users</h4>
+                                    <p>{{ stats.users_count }}</p>
+                                </div>
+                            </div>
+                            <div class="trending-item">
+                                <div>
+                                    <h4>Events</h4>
+                                    <p>{{ stats.events_count }}</p>
+                                </div>
+                            </div>
+                            <div class="trending-item">
+                                <div>
+                                    <h4>Communities</h4>
+                                    <p>{{ stats.communities_count }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="widget">
+                        <h3>Quick Actions</h3>
+                        <div class="creator-list">
+                            <div class="creator-item d-flex justify-between">
+                                <span>Review new events</span>
+                                <a class="edit-cat-btn" href="/admin/all-events/">Open</a>
+                            </div>
+                            <div class="creator-item d-flex justify-between">
+                                <span>Manage communities</span>
+                                <a class="edit-cat-btn" href="/admin/communities/">Open</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                </div>
+            </div>
+        </div>
+
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.bundle.js"></script>
+    <script src="/static/js/scenequery.js"></script>
+    {% block customjs %}
+    {% endblock %}
+  
+</body>
+</html>

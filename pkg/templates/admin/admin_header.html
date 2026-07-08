@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scenex - {{ title }}</title>
+    <link rel="stylesheet" href="/static/css/style2.css">
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/animate.min.css">
+    <link rel="stylesheet" href="/static/fontawesome/css/all.min.css">
+
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Syne:wght@800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        <div class="app-shell">
+            <div class="container-fluid">
+                
+            <nav class="mobile-top-nav">
+
+                <button class="sidebar-toggle-btn" id="sidebarToggle">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <!-- Logo stays centre -->
+                <a href="/home/" class="mobile-nav-logo">SceneX Admin</a>
+
+                <!-- Right actions say as they are -->
+                <div class="mobile-nav-actions">
+                    <a href="/notifications/" class="mobile-nav-icon notif-icon">
+                        <i class="fa-solid fa-bell"></i>
+                        <span class="notif-dot"></span>
+                    </a>
+                    <a href="/profile/" class="mobile-nav-avatar">
+                        <img src="/static/images/dp1.jpg" alt="" onerror="this.style.display='none'">
+                    </a>
+                </div>
+
+            </nav>
+               
+            </div>
+
+
+               <div class="container-fluid">
+                <div class="row">
+                <aside class="col-lg-2 col-6 sidebar" id="sidebar">
+                    <div class="sidebar-logo">SceneX<br>Admin</div>
+                    
+                    <nav class="sidebar-nav">
+                        <a href="/admin/dashboard/" class="{{ 'active-nav' if current_page == 'dashboard' else '' }}">
+                            <i class="fa-solid fa-house"></i>
+                            Dashboard
+                        </a>
+
+                        <a href="/admin/users/" class="{{ 'active-nav' if current_page == 'users' else '' }}">
+                            <i class="fa-solid fa-users"></i>
+                            Users
+                        </a>
+
+                        <a href="/admin/all-events/" class="{{ 'active-nav' if current_page == 'events' else '' }}">
+                            <i class="fa-solid fa-calendar-days"></i>
+                            Events
+                        </a>
+
+                        <a href="/admin/communities/" class="{{ 'active-nav' if current_page == 'communities' else '' }}">
+                            <i class="fa-solid fa-user-group"></i>
+                            Communities
+                        </a>
+
+                        <a href="/admin/event-categories/" class="{{ 'active-nav' if current_page == 'categories' else '' }}">
+                            <i class="fa-solid fa-tags"></i>
+                            Categories
+                        </a>
+                        <a href="#">
+                            <i class="fa-solid fa-sliders"></i>
+                            Settings
+                        </a>
+                        <a href="#">
+                            <i class="fa-regular fa-bell"></i>
+                            Alerts
+                        </a>
+
+                        <!-- <button class="btn btn-primary full-btn" onclick="document.getElementById('createEvent').click()">
+                            <i class="fa-regular fa-calendar-plus"></i>
+                            Create Event
+                            <a href="/create_event/" style="display: none;" id="createEvent"></a>
+                        </button> -->
+                        
+                         <button class="btn btn-danger full-btn"  onclick="document.getElementById('logOut').click()">
+                            <span>
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            Log Out
+                            </span>
+                            <a href="/admin/logout/" style="display: none;" id="logOut"></a>
+                        </button>
+
+                    </nav>
+
+                    
+                </aside>
+
+            
+
+                

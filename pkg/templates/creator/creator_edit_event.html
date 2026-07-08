@@ -1,0 +1,128 @@
+{% include 'user/header.html' %}
+
+            <!--Feed-->
+            <section class="col-lg-7 offset-lg-2 ce-page">
+                <!-- {% include 'user/alert.html' %} -->
+                <div class="ce-topbar">
+                    <a href="/creator/view-event/{{ event.id }}/" class="back-link">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </a>
+
+                    <h2>Edit Event</h2>
+
+                    <button class="ce-secondary-btn">
+                        Save Changes
+                    </button>
+                </div>
+
+                
+
+                <form id="eventForm" class="ce-form" action="" action="{{ url_for('creator_edit_event', id=event.id) }}" method="post" enctype="multipart/form-data">
+                    {{ eventform.csrf_token() }}
+                    <!-- COVER -->
+                   <div class="ce-cover-upload" id="ceCover">
+                        <img src="/static/uploads/{{ event.banner }}" alt="">
+                        <div class="ce-cover-overlay">
+                            <button class="ep-media-btn">
+                                <i class="fa-solid fa-camera"></i>
+                                {{ eventform.banner(placeholder="add Event") }}
+                            </button>
+                        </div> 
+                    </div>
+
+                    <!-- DETAILS -->
+                    <div class="ce-card">
+
+                        <p>Event Name</p>
+                        {{ eventform.name(class_="ce-input") }}
+                        
+
+                        <p>Description</p>
+                        {{ eventform.description(class="ce-textarea",
+                            placeholder="Tell people about your event...") }}
+
+                    </div>
+
+                    <!-- CATEGORY -->
+                    <div class="ce-card">
+
+                        <p>Category</p>
+
+                        <div >
+
+                            {{ eventform.cat_id(class_="ce-chip") }}
+                            
+
+                        </div>
+
+                    </div>
+
+                    <!-- DATE -->
+                    <div class="ce-card">
+
+                        <div class="ce-grid">
+
+                            <div>
+                                <p>Event Start</p>
+                                {{ eventform.event_start(class_='ce-input') }}
+                            </div>
+
+                            <div>
+                                <p>Event End</p>
+                                {{ eventform.event_end(class_='ce-input') }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- LOCATION -->
+                    <div class="ce-card">
+                        <h3>Location</h3>
+                        <p>Address</p>
+
+                        {{ eventform.address(class_="ce-input",
+                            placeholder="Landmark Beach") }}
+
+                        <p>Google Map Link</p>
+
+                        {{ eventform.map_link(class_="ce-input",
+                            placeholder="google.map.link") }}
+
+                        <div class="ce-grid">
+                            
+                            <div>
+                            <p>State</p>
+
+                            {{ eventform.state_id(class_="ce-input",
+                                placeholder="Lagos State") }}
+                            </div>
+
+                            <div>
+                            <p>Local Government</p>
+
+                            {{ eventform.lga_id(class_="ce-input",
+                                placeholder="Ikeja") }}
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    {{ eventform.submit(class_="ce-secondary-btn") }}
+
+                    
+                </form>
+
+            </section>
+
+
+            {% set sidebar_mode = 'event_form' %}
+            {% include 'user/partials/sidebar/right_sidebar.html' %}
+            
+            </div>
+        </div>
+    </div>
+
+{% include 'user/footer.html' %}
+</body>
+</html>

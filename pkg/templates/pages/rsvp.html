@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SceneX - Get Tickets</title>
+
+    <link rel="stylesheet" href="style2.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="fontawesome/css/all.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=Syne:wght@800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        <div class="app-shell">
+            <div class="container-fluid">
+                
+            <nav class="mobile-top-nav">
+
+                <button class="sidebar-toggle-btn" id="sidebarToggle">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <!-- Logo stays centre -->
+                <a href="home.html" class="mobile-nav-logo">SceneX</a>
+
+                <!-- Right actions say as they are -->
+                <div class="mobile-nav-actions">
+                    <a href="notifications.html" class="mobile-nav-icon notif-icon">
+                        <i class="fa-solid fa-bell"></i>
+                        <span class="notif-dot"></span>
+                    </a>
+                    <a href="profile.html" class="mobile-nav-avatar">
+                        <img src="images/dp1.jpg" alt="" onerror="this.style.display='none'">
+                    </a>
+                </div>
+
+            </nav>
+                
+            </div>
+
+
+            <div class="container-fluid">
+                <div class="row">
+                <aside class="col-lg-2 col-6 sidebar" id="sidebar">
+                    <div class="sidebar-logo">SceneX</div>
+                    
+                    <nav class="sidebar-nav">
+                        <a href="home.html">
+                            <i class="fa-solid fa-house"></i>
+                            Home
+                        </a>
+
+                        <a href="discover.html" class="active-nav">
+                            <i class="fa-regular fa-compass"></i>
+                            Discover
+                        </a>
+
+                        <a href="notifications.html">
+                            <i class="fa-solid fa-bell"></i>
+                            Notifications
+                        </a>
+
+                        <a href="communities.html">
+                            <i class="fa-solid fa-user-group"></i>
+                            Communities
+                        </a>
+
+                        <!-- <a href="messages.html">
+                            <i class="fa-brands fa-facebook-messenger"></i>
+                            Messages
+                        </a> -->
+                        <a href="profile.html">
+                            <i class="fa-regular fa-user"></i>
+                            Profile
+                        </a>
+
+                        <button class="btn btn-primary full-btn">
+                            <i class="fa-regular fa-calendar-plus"></i>
+                            Create Event
+                        </button>
+                    </nav>
+
+                    
+                </aside>
+
+            <!-- MAIN -->
+            <section class="col-md-7 offset-md-2 rsvp-page">
+
+                <!-- TOP BAR -->
+                <div class="rsvp-topbar">
+                    <a href="event-detail.html" class="back-link">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        Back to Event
+                    </a>
+                    <span class="rsvp-topbar-title">Get Tickets</span>
+                    <div style="width:5rem;"></div>
+                </div>
+
+                <!-- EVENT SUMMARY STRIP -->
+                <div class="rsvp-event-strip">
+                    <div class="rsvp-event-thumb">
+                        <img src="images/party1.jpg" alt="" onerror="this.style.display='none'">
+                    </div>
+                    <div class="rsvp-event-info">
+                        <h3>Lagos Soundwave Festival</h3>
+                        <div class="rsvp-event-meta">
+                            <span><i class="fa-regular fa-calendar"></i> Fri, May 30, 2026</span>
+                            <span><i class="fa-regular fa-clock"></i> 8:00 PM</span>
+                            <span><i class="fa-solid fa-location-dot"></i> Landmark Beach, VI</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP INDICATOR -->
+                <div class="rsvp-steps">
+                    <div class="rsvp-step active-step" id="step-indicator-1">
+                        <div class="rsvp-step-num">1</div>
+                        <span>Select Tickets</span>
+                    </div>
+                    <div class="rsvp-step-line"></div>
+                    <div class="rsvp-step" id="step-indicator-2">
+                        <div class="rsvp-step-num">2</div>
+                        <span>Your Details</span>
+                    </div>
+                    <div class="rsvp-step-line"></div>
+                    <div class="rsvp-step" id="step-indicator-3">
+                        <div class="rsvp-step-num">3</div>
+                        <span>Payment</span>
+                    </div>
+                    <div class="rsvp-step-line"></div>
+                    <div class="rsvp-step" id="step-indicator-4">
+                        <div class="rsvp-step-num">4</div>
+                        <span>Confirm</span>
+                    </div>
+                </div>
+
+                <!-- ================================ -->
+                <!-- STEP 1: SELECT TICKETS -->
+                <!-- ================================ -->
+                <div class="rsvp-step-content" id="rsvp-step-1">
+
+                    <h2 class="rsvp-section-heading">Choose Your Tickets</h2>
+                    <p class="rsvp-section-sub">Select ticket type and quantity</p>
+
+                    <!-- TICKET CARDS -->
+                    <div class="rsvp-tickets-list">
+
+                        <!-- FREE RSVP -->
+                        <div class="rsvp-ticket-card" data-ticket="free" data-price="0">
+                            <div class="rsvp-ticket-left">
+                                <div class="rsvp-ticket-icon free-icon">
+                                    <i class="fa-solid fa-star"></i>
+                                </div>
+                                <div class="rsvp-ticket-info">
+                                    <div class="rsvp-ticket-name-row">
+                                        <h4>Free RSVP</h4>
+                                        <span class="rsvp-ticket-badge free-badge">Free</span>
+                                    </div>
+                                    <p>Reserve your spot. Entry not guaranteed after capacity.</p>
+                                    <span class="rsvp-ticket-avail">
+                                        <i class="fa-solid fa-circle" style="color:#22c55e;font-size:0.4375rem;"></i>
+                                        Unlimited spots
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="rsvp-ticket-right">
+                                <span class="rsvp-ticket-price">Free</span>
+                                <div class="rsvp-qty-control">
+                                    <button class="rsvp-qty-btn" onclick="changeQty('free', -1)">
+                                        <i class="fa-solid fa-minus"></i>
+                                    </button>
+                                    <span class="rsvp-qty-num" id="qty-free">0</span>
+                                    <button class="rsvp-qty-btn" onclick="changeQty('free', 1)">
+                                        <i class="fa-solid fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- REGULAR -->
+                        <div class="rsvp-ticket-card" data-ticket="regular" data-price="5000">
+                            <div class="rsvp-ticket-left">
+                                <div class="rsvp-ticket-icon regular-icon">
+                                    <i class="fa-solid fa-ticket"></i>
+                                </div>
+                                <div class="rsvp-ticket-info">
+                                    <div class="rsvp-ticket-name-row">
+                                        <h4>Regular</h4>
+                                        <span class="rsvp-ticket-badge regular-badge">Popular</span>
+                                    </div>
+                                    <p>General admission. Access to main stage and food vendors.</p>
+                                    <span class="rsvp-ticket-avail">
+                                        <i class="fa-solid fa-circle" style="color:#22c55e;font-size:0.4375rem;"></i>
+                                        340 spots left
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="rsvp-ticket-right">
+                                <span class="rsvp-ticket-price">₦5,000</span>
+                                <div class="rsvp-qty-control">
+                                    <button class="rsvp-qty-btn" onclick="changeQty('regular', -1)">
+                                        <i class="fa-solid fa-minus"></i>
+                                    </button>
+                                    <span class="rsvp-qty-num" id="qty-regular">0</span>
+                                    <button class="rsvp-qty-btn" onclick="changeQty('regular', 1)">
+                                        <i class="fa-solid fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- VIP -->
+                        <div class="rsvp-ticket-card rsvp-ticket-vip" data-ticket="vip" data-price="15000">
+                            <div class="rsvp-ticket-vip-glow"></div>
+                            <div class="rsvp-ticket-left">
+                                <div class="rsvp-ticket-icon vip-icon">
+                                    <i class="fa-solid fa-crown"></i>
+                                </div>
+                                <div class="rsvp-ticket-info">
+                                    <div class="rsvp-ticket-name-row">
+                                        <h4>VIP</h4>
+                                        <span class="rsvp-ticket-badge vip-badge">VIP</span>
+                                    </div>
+                                    <p>Priority entry, exclusive lounge access, complimentary drinks, and meet & greet opportunity.</p>
+                                    <span class="rsvp-ticket-avail">
+                                        <i class="fa-solid fa-circle" style="color:#f59e0b;font-size:0.4375rem;"></i>
+                                        Only 28 spots left
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="rsvp-ticket-right">
+                                <span class="rsvp-ticket-price">₦15,000</span>
+                                <div class="rsvp-qty-control">
+                                    <button class="rsvp-qty-btn" onclick="changeQty('vip', -1)">
+                                        <i class="fa-solid fa-minus"></i>
+                                    </button>
+                                    <span class="rsvp-qty-num" id="qty-vip">0</span>
+                                    <button class="rsvp-qty-btn" onclick="changeQty('vip', 1)">
+                                        <i class="fa-solid fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TABLE -->
+                        <div class="rsvp-ticket-card rsvp-ticket-sold-out" data-ticket="table" data-price="80000">
+                            <div class="rsvp-ticket-left">
+                                <div class="rsvp-ticket-icon table-icon">
+                                    <i class="fa-solid fa-champagne-glasses"></i>
+                                </div>
+                                <div class="rsvp-ticket-info">
+                                    <div class="rsvp-ticket-name-row">
+                                        <h4>Table Reservation</h4>
+                                        <span class="rsvp-ticket-badge sold-badge">Sold Out</span>
+                                    </div>
+                                    <p>Reserved table for up to 6 guests. Includes bottle service and premium catering.</p>
+                                    <span class="rsvp-ticket-avail" style="color:rgba(240,240,248,0.3);">
+                                        <i class="fa-solid fa-circle" style="color:#ef4444;font-size:0.4375rem;"></i>
+                                        Sold out
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="rsvp-ticket-right">
+                                <span class="rsvp-ticket-price" style="color:rgba(240,240,248,0.3);">₦80,000</span>
+                                <button class="rsvp-notify-btn">
+                                    <i class="fa-solid fa-bell"></i>
+                                    Notify me
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- ORDER SUMMARY -->
+                    <div class="rsvp-summary" id="rsvpSummary" style="display:none;">
+                        <h3 class="rsvp-summary-title">Order Summary</h3>
+                        <div class="rsvp-summary-items" id="summaryItems"></div>
+                        <div class="rsvp-summary-divider"></div>
+                        <div class="rsvp-summary-row">
+                            <span>Subtotal</span>
+                            <span id="summarySubtotal">₦0</span>
+                        </div>
+                        <div class="rsvp-summary-row">
+                            <span>Service fee (5%)</span>
+                            <span id="summaryFee">₦0</span>
+                        </div>
+                        <div class="rsvp-summary-divider"></div>
+                        <div class="rsvp-summary-row rsvp-summary-total">
+                            <span>Total</span>
+                            <span id="summaryTotal">₦0</span>
+                        </div>
+                    </div>
+
+                    <button class="rsvp-next-btn" id="nextStep1" onclick="goToStep(2)" disabled>
+                        Continue
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+                </div>
+
+                <!-- ================================ -->
+                <!-- STEP 2: YOUR DETAILS -->
+                <!-- ================================ -->
+                <div class="rsvp-step-content" id="rsvp-step-2" style="display:none;">
+
+                    <h2 class="rsvp-section-heading">Your Details</h2>
+                    <p class="rsvp-section-sub">This information will appear on your ticket</p>
+
+                    <div class="rsvp-form">
+
+                        <div class="rsvp-field-row">
+                            <div class="rsvp-field">
+                                <label>First Name</label>
+                                <input type="text" class="rsvp-input" id="firstName" placeholder="Leo">
+                            </div>
+                            <div class="rsvp-field">
+                                <label>Last Name</label>
+                                <input type="text" class="rsvp-input" id="lastName" placeholder="Adedeji">
+                            </div>
+                        </div>
+
+                        <div class="rsvp-field">
+                            <label>Email Address</label>
+                            <input type="email" class="rsvp-input" id="emailAddress" placeholder="you@email.com">
+                            <span class="rsvp-field-hint">Your ticket confirmation will be sent here</span>
+                        </div>
+
+                        <div class="rsvp-field">
+                            <label>Phone Number</label>
+                            <div class="rsvp-phone-wrap">
+                                <span class="rsvp-phone-code">+234</span>
+                                <input type="tel" class="rsvp-input rsvp-phone-input" id="phoneNumber" placeholder="080 0000 0000">
+                            </div>
+                        </div>
+
+                        <div class="rsvp-field">
+                            <label>Special Requests <span style="color:rgba(240,240,248,0.35);font-weight:400;">(Optional)</span></label>
+                            <textarea class="rsvp-input rsvp-textarea" id="specialRequests" placeholder="Dietary requirements, accessibility needs, etc..." rows="3"></textarea>
+                        </div>
+
+                        <!-- TERMS -->
+                        <label class="rsvp-checkbox-row">
+                            <input type="checkbox" id="termsCheck">
+                            <span class="rsvp-checkbox-custom"></span>
+                            <span class="rsvp-checkbox-label">
+                                I agree to the <a href="#">Terms & Conditions</a> and <a href="#">Refund Policy</a>
+                            </span>
+                        </label>
+
+                        <label class="rsvp-checkbox-row">
+                            <input type="checkbox" id="marketingCheck">
+                            <span class="rsvp-checkbox-custom"></span>
+                            <span class="rsvp-checkbox-label">
+                                Send me updates about this event and similar events on SceneX
+                            </span>
+                        </label>
+
+                    </div>
+
+                    <div class="rsvp-btn-row">
+                        <button class="rsvp-back-btn" onclick="goToStep(1)">
+                            <i class="fa-solid fa-arrow-left"></i>
+                            Back
+                        </button>
+                        <button class="rsvp-next-btn" id="nextStep2" onclick="goToStep(3)">
+                            Continue to Payment
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                </div>
+
+                <!-- ================================ -->
+                <!-- STEP 3: PAYMENT -->
+                <!-- ================================ -->
+                <div class="rsvp-step-content" id="rsvp-step-3" style="display:none;">
+
+                    <h2 class="rsvp-section-heading">Payment</h2>
+                    <p class="rsvp-section-sub">Secure payment powered by Paystack</p>
+
+                    <!-- PAYMENT METHODS -->
+                    <div class="rsvp-payment-methods">
+                        <button class="rsvp-pay-method active-pay-method" data-method="card">
+                            <i class="fa-regular fa-credit-card"></i>
+                            Card
+                        </button>
+                        <button class="rsvp-pay-method" data-method="transfer">
+                            <i class="fa-solid fa-building-columns"></i>
+                            Bank Transfer
+                        </button>
+                        <button class="rsvp-pay-method" data-method="ussd">
+                            <i class="fa-solid fa-mobile-screen"></i>
+                            USSD
+                        </button>
+                    </div>
+
+                    <!-- CARD FORM -->
+                    <div class="rsvp-card-form" id="payMethodCard">
+                        <div class="rsvp-field">
+                            <label>Card Number</label>
+                            <div class="rsvp-card-input-wrap">
+                                <input type="text" class="rsvp-input" id="cardNumber" placeholder="0000  0000  0000  0000" maxlength="19">
+                                <div class="rsvp-card-icons">
+                                    <i class="fa-brands fa-cc-visa" style="color:#1a1f71;"></i>
+                                    <i class="fa-brands fa-cc-mastercard" style="color:#eb001b;"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rsvp-field-row">
+                            <div class="rsvp-field">
+                                <label>Expiry Date</label>
+                                <input type="text" class="rsvp-input" id="cardExpiry" placeholder="MM / YY" maxlength="7">
+                            </div>
+                            <div class="rsvp-field">
+                                <label>CVV</label>
+                                <div class="rsvp-card-input-wrap">
+                                    <input type="text" class="rsvp-input" id="cardCvv" placeholder="123" maxlength="4">
+                                    <i class="fa-solid fa-circle-info" style="color:rgba(240,240,248,0.3);font-size:0.875rem;" title="3-digit code on the back of your card"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rsvp-field">
+                            <label>Cardholder Name</label>
+                            <input type="text" class="rsvp-input" id="cardName" placeholder="Name on card">
+                        </div>
+
+                        <div class="rsvp-secure-note">
+                            <i class="fa-solid fa-lock"></i>
+                            Your payment is secured with 256-bit SSL encryption via Paystack
+                        </div>
+                    </div>
+
+                    <!-- BANK TRANSFER FORM -->
+                    <div class="rsvp-card-form" id="payMethodTransfer" style="display:none;">
+                        <div class="rsvp-transfer-info">
+                            <p>After clicking Pay, you will receive a unique account number to transfer to. Your ticket will be issued once payment is confirmed.</p>
+                        </div>
+                    </div>
+
+                    <!-- USSD -->
+                    <div class="rsvp-card-form" id="payMethodUssd" style="display:none;">
+                        <div class="rsvp-field">
+                            <label>Select your bank</label>
+                            <select class="rsvp-input rsvp-select" id="ussdBank">
+                                <option value="">-- Choose bank --</option>
+                                <option>GTBank</option>
+                                <option>Access Bank</option>
+                                <option>First Bank</option>
+                                <option>UBA</option>
+                                <option>Zenith Bank</option>
+                                <option>Sterling Bank</option>
+                            </select>
+                        </div>
+                        <div class="rsvp-transfer-info">
+                            <p>A USSD code will be generated after selecting your bank. Dial the code on your phone to complete payment.</p>
+                        </div>
+                    </div>
+
+                    <!-- ORDER RECAP -->
+                    <div class="rsvp-summary" style="margin-top:1.5rem;">
+                        <h3 class="rsvp-summary-title">Payment Summary</h3>
+                        <div class="rsvp-summary-items" id="summaryItems3"></div>
+                        <div class="rsvp-summary-divider"></div>
+                        <div class="rsvp-summary-row rsvp-summary-total">
+                            <span>Total to Pay</span>
+                            <span id="summaryTotal3">₦0</span>
+                        </div>
+                    </div>
+
+                    <div class="rsvp-btn-row">
+                        <button class="rsvp-back-btn" onclick="goToStep(2)">
+                            <i class="fa-solid fa-arrow-left"></i>
+                            Back
+                        </button>
+                        <button class="rsvp-next-btn rsvp-pay-btn" onclick="goToStep(4)">
+                            <i class="fa-solid fa-lock"></i>
+                            Pay Now
+                        </button>
+                    </div>
+
+                </div>
+
+                <!-- ================================ -->
+                <!-- STEP 4: CONFIRMATION -->
+                <!-- ================================ -->
+                <div class="rsvp-step-content" id="rsvp-step-4" style="display:none;">
+
+                    <div class="rsvp-confirm-wrap">
+
+                        <!-- SUCCESS ICON -->
+                        <div class="rsvp-success-icon">
+                            <i class="fa-solid fa-check"></i>
+                        </div>
+
+                        <h2 class="rsvp-confirm-title">You're Going! </h2>
+                        <p class="rsvp-confirm-sub">Your tickets for <strong>Lagos Soundwave Festival</strong> have been confirmed. Check your email for your ticket receipt.</p>
+
+                        <!-- TICKET STUB -->
+                        <div class="rsvp-ticket-stub">
+                            <div class="rsvp-stub-top">
+                                <div class="rsvp-stub-event-thumb">
+                                    <img src="images/party1.jpg" alt="" onerror="this.style.display='none'">
+                                </div>
+                                <div class="rsvp-stub-event-info">
+                                    <h3>Lagos Soundwave Festival</h3>
+                                    <div class="rsvp-event-meta">
+                                        <span><i class="fa-regular fa-calendar"></i> Fri, May 30, 2026</span>
+                                        <span><i class="fa-regular fa-clock"></i> 8:00 PM</span>
+                                        <span><i class="fa-solid fa-location-dot"></i> Landmark Beach, VI</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="rsvp-stub-divider">
+                                <div class="rsvp-stub-notch left"></div>
+                                <div class="rsvp-stub-dots"></div>
+                                <div class="rsvp-stub-notch right"></div>
+                            </div>
+
+                            <div class="rsvp-stub-bottom">
+                                <div class="rsvp-stub-detail">
+                                    <span class="rsvp-stub-label">Ticket Type</span>
+                                    <span class="rsvp-stub-value" id="confirmTicketType">Regular x1</span>
+                                </div>
+                                <div class="rsvp-stub-detail">
+                                    <span class="rsvp-stub-label">Order ID</span>
+                                    <span class="rsvp-stub-value">#SCX-2026-00841</span>
+                                </div>
+                                <div class="rsvp-stub-detail">
+                                    <span class="rsvp-stub-label">Name</span>
+                                    <span class="rsvp-stub-value" id="confirmName">Leo Adedeji</span>
+                                </div>
+                                <div class="rsvp-stub-qr">
+                                    <!-- QR placeholder -->
+                                    <div class="rsvp-qr-box">
+                                        <i class="fa-solid fa-qrcode"></i>
+                                        <span>Scan at entrance</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ACTIONS -->
+                        <div class="rsvp-confirm-actions">
+                            <button class="rsvp-confirm-btn">
+                                <i class="fa-solid fa-download"></i>
+                                Download Ticket
+                            </button>
+                            <button class="rsvp-confirm-btn rsvp-share-confirm-btn">
+                                <i class="fa-solid fa-share-nodes"></i>
+                                Share
+                            </button>
+                        </div>
+
+                        <a href="home.html" class="rsvp-home-link">
+                            Back to Home Feed
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- RIGHT SIDEBAR -->
+            <aside class="col-md-3 right-sidebar">
+                <div class="widget">
+                    <h3>Event Info</h3>
+                    <div class="cd-about-list" style="margin-top:1rem;">
+                        <div class="cd-about-item">
+                            <i class="fa-regular fa-calendar"></i>
+                            <span>Fri, May 30, 2026</span>
+                        </div>
+                        <div class="cd-about-item">
+                            <i class="fa-regular fa-clock"></i>
+                            <span>8:00 PM</span>
+                        </div>
+                        <div class="cd-about-item">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span>Landmark Beach, VI</span>
+                        </div>
+                        <div class="cd-about-item">
+                            <i class="fa-solid fa-users"></i>
+                            <span>2.4k going</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="widget">
+                    <h3>Order Summary</h3>
+                    <div id="sidebarSummary" style="margin-top:1rem;font-size:0.8125rem;color:rgba(240,240,248,0.45);">
+                        No tickets selected yet.
+                    </div>
+                    <div class="rsvp-summary-divider" style="margin:1rem 0;"></div>
+                    <div class="rsvp-summary-row rsvp-summary-total" id="sidebarTotal" style="display:none;">
+                        <span>Total</span>
+                        <span id="sidebarTotalAmount">₦0</span>
+                    </div>
+                </div>
+
+                <div class="widget">
+                    <h3>Need Help?</h3>
+                    <div class="cd-about-list" style="margin-top:1rem;">
+                        <div class="cd-about-item">
+                            <i class="fa-regular fa-envelope"></i>
+                            <span>tickets@scenex.app</span>
+                        </div>
+                        <div class="cd-about-item">
+                            <i class="fa-solid fa-rotate-left"></i>
+                            <span>Refunds within 48hrs of event</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+        </div>
+        </div>
+</div>
+
+<script src="jquery.js"></script>
+<script src="bootstrap/js/bootstrap.bundle.js"></script>
+<script src="scenequery.js"></script>
+<script>
+
+// ================================
+// TICKET DATA
+// ================================
+var tickets = {
+    free:    { name: 'Free RSVP',          price: 0,     qty: 0 },
+    regular: { name: 'Regular',            price: 5000,  qty: 0 },
+    vip:     { name: 'VIP',               price: 15000, qty: 0 },
+    table:   { name: 'Table Reservation', price: 80000, qty: 0 }
+};
+
+// ================================
+// QTY CONTROLS
+// ================================
+function changeQty(type, change) {
+    if (type === 'table') return; // sold out
+
+    var t = tickets[type];
+    t.qty = Math.max(0, Math.min(10, t.qty + change));
+    $('#qty-' + type).text(t.qty);
+
+    // highlight selected card
+    var card = $('[data-ticket="' + type + '"]');
+    if (t.qty > 0) {
+        card.addClass('selected-ticket');
+    } else {
+        card.removeClass('selected-ticket');
+    }
+
+    updateSummary();
+}
+
+// ================================
+// UPDATE SUMMARY
+// ================================
+function updateSummary() {
+    var subtotal = 0;
+    var hasTickets = false;
+    var itemsHtml = '';
+    var sidebarHtml = '';
+
+    $.each(tickets, function(key, t) {
+        if (t.qty > 0) {
+            var lineTotal = t.price * t.qty;
+            subtotal += lineTotal;
+            hasTickets = true;
+
+            var priceStr = t.price === 0 ? 'Free' : '₦' + t.price.toLocaleString();
+            var lineTotalStr = t.price === 0 ? 'Free' : '₦' + lineTotal.toLocaleString();
+
+            itemsHtml += '<div class="rsvp-summary-row">' +
+                '<span>' + t.name + ' x' + t.qty + '</span>' +
+                '<span>' + lineTotalStr + '</span>' +
+                '</div>';
+
+            sidebarHtml += '<div style="display:flex;justify-content:space-between;margin-bottom:0.375rem;">' +
+                '<span>' + t.name + ' x' + t.qty + '</span>' +
+                '<span>' + lineTotalStr + '</span>' +
+                '</div>';
+        }
+    });
+
+    var fee = Math.round(subtotal * 0.05);
+    var total = subtotal + fee;
+
+    if (hasTickets) {
+        $('#rsvpSummary').show();
+        $('#summaryItems').html(itemsHtml);
+        $('#summarySubtotal').text('₦' + subtotal.toLocaleString());
+        $('#summaryFee').text('₦' + fee.toLocaleString());
+        $('#summaryTotal').text('₦' + total.toLocaleString());
+
+        // step 3 summary
+        $('#summaryItems3').html(itemsHtml);
+        $('#summaryTotal3').text('₦' + total.toLocaleString());
+
+        // sidebar
+        $('#sidebarSummary').html(sidebarHtml);
+        $('#sidebarTotal').show();
+        $('#sidebarTotalAmount').text('₦' + total.toLocaleString());
+
+        $('#nextStep1').prop('disabled', false);
+    } else {
+        $('#rsvpSummary').hide();
+        $('#sidebarSummary').html('<span style="color:rgba(240,240,248,0.45);font-size:0.8125rem;">No tickets selected yet.</span>');
+        $('#sidebarTotal').hide();
+        $('#nextStep1').prop('disabled', true);
+    }
+}
+
+// ================================
+// STEP NAVIGATION
+// ================================
+function goToStep(step) {
+    $('.rsvp-step-content').hide();
+    $('#rsvp-step-' + step).show();
+
+    // update step indicators
+    $('.rsvp-step').removeClass('active-step completed-step');
+    for (var i = 1; i < step; i++) {
+        $('#step-indicator-' + i).addClass('completed-step');
+    }
+    $('#step-indicator-' + step).addClass('active-step');
+
+    // scroll to top of main content
+    $('.rsvp-page').scrollTop(0);
+    window.scrollTo(0, 0);
+}
+
+// ================================
+// PAYMENT METHOD TOGGLE
+// ================================
+$('.rsvp-pay-method').on('click', function() {
+    $('.rsvp-pay-method').removeClass('active-pay-method');
+    $(this).addClass('active-pay-method');
+
+    var method = $(this).data('method');
+    $('.rsvp-card-form').hide();
+    $('#payMethod' + method.charAt(0).toUpperCase() + method.slice(1)).show();
+});
+
+// ================================
+// CARD NUMBER FORMATTING
+// ================================
+$('#cardNumber').on('input', function() {
+    var val = $(this).val().replace(/\D/g, '').substring(0, 16);
+    var formatted = val.match(/.{1,4}/g);
+    $(this).val(formatted ? formatted.join('  ') : '');
+});
+
+$('#cardExpiry').on('input', function() {
+    var val = $(this).val().replace(/\D/g, '').substring(0, 4);
+    if (val.length >= 2) {
+        val = val.substring(0, 2) + ' / ' + val.substring(2);
+    }
+    $(this).val(val);
+});
+
+</script>
+
+</body>
+</html>

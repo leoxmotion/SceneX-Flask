@@ -1,0 +1,353 @@
+
+.syne-<uniquifier> {
+  font-family: "Syne", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;
+}
+
+.dm-sans-<uniquifier> {
+  font-family: "DM Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;
+}
+
+Background
+--black:    #060608   (page bg)
+--deep:     #0d0d12   (section bg, cards)
+--surface:  #12121a   (elevated surfaces)
+--surface2: #020202   (inputs, pills, chips)
+
+Accent
+--blue:     #3b7ef8   (primary CTA, links, active states)
+--purple:   #9b5cf6   (gradient partner, highlights)
+--cyan:     #22d3ee   (live indicators, success, badges)
+
+Text
+--text:     #f0f0f8   (primary)
+--muted:    rgba(240,240,248,0.45)  (secondary text)
+--faint:    rgba(240,240,248,0.12)  (placeholders, disabled)
+
+Border
+--border:   rgba(255,255,255,0.07)  (all dividers and card borders)
+
+
+
+
+
+.sidebar {
+    position: sticky;
+    top: 6.25rem; /* 100px */
+    height: fit-content;
+    padding: 1.5rem 1rem;
+}
+
+
+.sidebar-logo, .navbar-brand {
+    font-size: 2rem;
+    font-family: "Syne", sans-serif;
+    font-weight: 800;
+    display: block;
+    margin-bottom: 2rem;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.sidebar-nav a {
+    padding: 0.875rem;
+    border-radius: 0.875rem;
+    text-decoration: none;
+    color: rgba(240,240,248,0.45);
+    font-size: 0.9375rem;
+    transition: background 0.2s;
+}
+
+.sidebar-nav a:hover {
+    background-color: #12121a;
+    color: #f0f0f8;
+}
+
+.active-nav {
+    background: #12121a;
+    color: white !important;
+}
+
+.full-btn {
+    width: 100%;
+    margin-top: 1.875rem; /* 30px */
+}
+
+
+/* ================================
+   RIGHT SIDEBAR & WIDGETS
+   ================================ */
+
+.right-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    position: sticky;
+    top: 1.5rem;
+    padding: 1.5rem 1rem;
+    height: fit-content;
+}
+
+
+Looking through the page, these are the interactions that would need JavaScript/jQuery and what each one would do.
+
+### 1. Mobile Sidebar Toggle
+
+**Elements**
+
+* `#sidebarToggle`
+* `#sidebar`
+* `#sidebarOverlay`
+
+**Function**
+
+* Open sidebar when hamburger button is clicked.
+* Close sidebar when overlay is clicked.
+* Add/remove classes like `.sidebar-open`.
+
+---
+
+### 2. Post Composer Input
+
+**Elements**
+
+* `#composerInput`
+* `#composerPostBtn`
+
+**Function**
+
+* Enable/disable Post button based on whether text exists.
+* Character count (if you add one later).
+* Auto-expand textarea if you convert the input to a textarea.
+
+---
+
+### 3. Attach Event Button
+
+**Elements**
+
+* `#attachEventBtn`
+* `#eventSearchWrap`
+
+**Function**
+
+* Show/hide the event search dropdown.
+* Toggle active state of the button.
+
+---
+
+### 4. Event Search
+
+**Elements**
+
+* `#eventSearchInput`
+* `#eventSearchResults`
+
+**Function**
+
+* Filter available events as user types.
+* Display matching events.
+* Handle event selection.
+
+---
+
+### 5. Event Selection
+
+**Elements**
+
+* Event result items
+* `#attachedEventName`
+* `#composerEventStrip`
+
+**Function**
+
+* Insert selected event into the attached-event strip.
+* Hide search results after selection.
+
+---
+
+### 6. Remove Attached Event
+
+**Elements**
+
+* `#removeEventBtn`
+
+**Function**
+
+* Remove selected event.
+* Reset "No event selected".
+* Hide event strip.
+
+---
+
+### 7. Image Upload
+
+**Elements**
+
+* `#uploadImageBtn`
+* `#imageInput`
+* `#mediaPreviewRow`
+
+**Function**
+
+* Trigger file picker.
+* Preview selected images.
+* Allow image removal before posting.
+
+---
+
+### 8. Video Upload
+
+**Elements**
+
+* `#uploadVideoBtn`
+* `#videoInput`
+* `#mediaPreviewRow`
+
+**Function**
+
+* Trigger file picker.
+* Preview selected video.
+* Allow removal before posting.
+
+---
+
+### 9. Media Preview Management
+
+**Elements**
+
+* `#mediaPreviewRow`
+
+**Function**
+
+* Add previews dynamically.
+* Remove specific media items.
+* Hide preview area when empty.
+
+---
+
+### 10. Post Submission
+
+**Elements**
+
+* `#composerPostBtn`
+
+**Function**
+
+* Validate post.
+* Gather text, media, and attached event.
+* Send data to backend.
+* Clear composer after success.
+
+---
+
+### 11. Like Button
+
+**Elements**
+
+* `.like-btn`
+
+**Function**
+
+* Toggle liked state.
+* Change icon.
+* Increase/decrease count.
+
+---
+
+### 12. Comment Button
+
+**Elements**
+
+* `.comment-btn`
+
+**Function**
+
+* Redirect to comments page.
+* Pass post ID if connected to backend.
+
+---
+
+### 13. Share Button
+
+**Elements**
+
+* `.share-btn`
+
+**Function**
+
+* Open share menu.
+* Copy link.
+* Share through Web Share API.
+
+---
+
+### 14. View Event Button
+
+**Elements**
+
+* `.post-event-footer`
+
+**Function**
+
+* Open corresponding event page.
+* Pass event ID.
+
+---
+
+### 15. Follow Buttons
+
+**Elements**
+
+* `.follow-small-btn`
+
+**Function**
+
+* Toggle between Follow and Following.
+* Update follower count if needed.
+
+---
+
+### 16. Notifications Indicator
+
+**Elements**
+
+* `.notif-dot`
+
+**Function**
+
+* Show/hide notification badge.
+* Update unread count from backend.
+
+---
+
+### 17. Image Error Handling
+
+**Elements**
+
+* Avatar images
+
+**Function**
+
+* Replace broken images with default avatars instead of hiding them.
+
+---
+
+For the current SceneX home page, the most important jQuery features are:
+
+1. Sidebar toggle.
+2. Event attachment/search.
+3. Image/video uploads with previews.
+4. Like/Follow toggles.
+5. Post submission.
+
+Everything else can be added later as the backend grows.

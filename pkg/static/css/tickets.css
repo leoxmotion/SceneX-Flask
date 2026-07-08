@@ -1,0 +1,123 @@
+/* SCENEX Ticket Management styles - scoped to creator ticket page */
+
+.creator-ticket-page {
+  padding-top: 1rem;
+}
+
+.creator-ticket-page .page-header {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+  margin-bottom:1.25rem;
+}
+
+.creator-ticket-page .page-header .title-wrap h1 {
+  font-size:1.5rem;
+  margin:0 0 0.25rem 0;
+}
+.creator-ticket-page .page-header .title-wrap p {
+  margin:0;
+  color:rgba(240,240,248,0.6);
+  font-size:0.95rem;
+}
+
+/* Glass card for form */
+.ticket-form-card .ce-card {
+  background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.04);
+  border-radius:12px;
+  padding:1.25rem;
+  margin-top: 1rem;
+  box-shadow:0 6px 18px rgba(2,6,23,0.45);
+}
+
+/* Form layout */
+.ticket-form-card .form-grid {
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:1rem;
+  margin-bottom:1rem;
+}
+.ticket-form-card .form-grid .ce-input,
+.ticket-form-card .form-grid .ce-textarea {
+  width:100%;
+}
+
+.creator-ticket-form-actions {
+  display:flex;
+  gap:0.75rem;
+  justify-content:flex-end;
+  margin-top:0.5rem;
+}
+
+/* Ticket list card */
+.ticket-list-card {
+  margin-top:1rem;
+  background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
+  border:1px solid rgba(255,255,255,0.03);
+  border-radius:12px;
+  padding:1rem;
+}
+
+#ticketCardsWrapper {
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap:1rem;
+  margin-top:0.75rem;
+}
+
+.ticket-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border:1px solid rgba(255,255,255,0.04);
+  border-radius:12px;
+  padding:1rem;
+  display:flex;
+  flex-direction:column;
+  gap:0.75rem;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.ticket-card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(2,6,23,0.5); }
+
+.ticket-card .ticket-card-header {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.ticket-card .ticket-card-header h4 { margin:0; font-size:1.1rem; }
+.ticket-card .ticket-category { padding:0.35rem 0.6rem; border-radius:999px; font-size:0.78rem; }
+
+/* Status pill */
+.ticket-card .ticket-card-status { font-size:0.78rem; padding:0.25rem 0.6rem; border-radius:999px; }
+.ticket-card .ticket-card-status.active { background: rgba(34,211,238,0.08); color:#22d3ee; border:1px solid rgba(34,211,238,0.12); }
+.ticket-card .ticket-card-status.inactive{ background: rgba(255,255,255,0.02); color:rgba(240,240,248,0.6); border:1px solid rgba(255,255,255,0.02);} 
+
+/* Price prominent */
+.ticket-card .ticket-price { font-size:1.35rem; font-weight:700; }
+
+/* Info grid */
+.ticket-info-grid { display:grid; grid-template-columns: repeat(2, 1fr); gap:0.5rem; }
+.ticket-info-item { display:flex; flex-direction:column; }
+.ticket-info-item .label { font-size:0.75rem; color:rgba(240,240,248,0.55); }
+.ticket-info-item .value { font-size:1rem; font-weight:600; }
+
+.ticket-card .ticket-card-description p { margin:0; color:rgba(240,240,248,0.7); font-size:0.95rem; }
+
+.ticket-card .ticket-card-actions { display:flex; gap:0.5rem; justify-content:flex-end; }
+.ticket-card .btn { padding:0.45rem 0.6rem; }
+.ticket-card .btn i { margin-right:0.35rem; }
+
+/* Empty state */
+.empty-state { text-align:center; padding:2rem; border-radius:12px; background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005)); border:1px dashed rgba(255,255,255,0.03); }
+.empty-state h4 { margin:0 0 0.5rem 0; }
+.empty-state p { margin:0 0 1rem 0; color:rgba(240,240,248,0.6); }
+
+/* Responsive */
+@media (max-width: 992px) {
+  #ticketCardsWrapper { grid-template-columns: 1fr; }
+  .ticket-form-card .form-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 576px) {
+  .creator-ticket-page .page-header { flex-direction:column; align-items:flex-start; }
+}

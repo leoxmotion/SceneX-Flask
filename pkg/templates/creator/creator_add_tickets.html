@@ -1,0 +1,122 @@
+{% include 'user/header.html' %}
+<link rel="stylesheet" href="/static/css/tickets.css">
+
+            <section class="col-lg-7 offset-lg-2 creator-ticket-page">
+                <div class="ce-topbar">
+                    <div class="page-header">
+                        <div class="title-wrap">
+                            <h1>Ticket Management</h1>
+                            <p class="text-muted">Manage ticket types, pricing and availability for <strong>{{ event.name }}</strong>.</p>
+                        </div>
+                        <div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ticket-management-header">
+                    <div>
+                        <h3>Ticket Management</h3>
+                        <p class="text-white">Manage all ticket types for this event without leaving the page.</p>
+                    </div>
+                    <button
+    type="button"
+    class="btn btn-primary toggle-ticket-form-btn">
+    <i class="fa-solid fa-ticket"></i>
+    &nbsp; Add Ticket
+</button>
+                </div>
+
+                <div id="ticketFormContainer" class="ticket-form-card" style="display:none;">
+                    <form id="ticketForm" method="post" action="{{ url_for('add_event_ticket', event_id=event.id) }}">
+                        {{ ticketform.csrf_token() }}
+                        {{ ticketform.ticket_id() }}
+                        <div class="ce-card">
+                            <div class="ce-grid form-grid">
+                                <div>
+                                    <p>Ticket Name</p>
+                                    {{ ticketform.name(class_='ce-input') }}
+                                </div>
+                                <div>
+                                    <p>Category</p>
+                                    {{ ticketform.category(class_='ce-input', id='ticketCategory') }}
+                                </div>
+                            </div>
+
+                            <div class="ce-grid form-grid">
+                                <div>
+                                    <p>Description</p>
+                                    {{ ticketform.description(class_='ce-textarea') }}
+                                </div>
+                                <div class="form-field" id="priceField">
+                                    <p>Price</p>
+                                    {{ ticketform.price(class_='ce-input', id='ticketPrice') }}
+                                </div>
+                            </div>
+
+                            <div class="ce-grid form-grid">
+                                <div>
+                                    <p>Quantity</p>
+                                    {{ ticketform.quantity(class_='ce-input') }}
+                                </div>
+                                <div>
+                                    <p>Maximum Per Order</p>
+                                    {{ ticketform.max_per_order(class_='ce-input') }}
+                                </div>
+                            </div>
+
+                            <div class="ce-grid form-grid">
+                                <div>
+                                    <p>Sales Start</p>
+                                    {{ ticketform.sales_start(class_='ce-input') }}
+                                </div>
+                                <div>
+                                    <p>Sales End</p>
+                                    {{ ticketform.sales_end(class_='ce-input') }}
+                                </div>
+                            </div>
+
+                            <div class="ce-grid form-grid" id="seatsPerTicketGroup">
+                                <div>
+                                    <p id="seatsPerTicketLabel">Seats Per Ticket</p>
+                                    {{ ticketform.seats_per_ticket(class_='ce-input') }}
+                                </div>
+                            </div>
+
+                            <div class="creator-ticket-form-actions">
+                                <button type="submit" id="saveTicketBtn" class="btn btn-primary">Add Ticket</button>
+                                <button type="button" id="cancelTicketEditBtn" class="btn btn-secondary" style="display:none;">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="ce-card ticket-list-card" id="ticketListContainer">
+                    <h3>Existing Tickets</h3>
+                    <div id="ticketCardsWrapper">
+                        {% if tickets %}
+                            {% for ticket in tickets %}
+                                {% include 'creator/partials/ticket_card.html' with context %}
+                            {% endfor %}
+                        {% else %}
+                            <div class="empty-state">
+                                <div style="font-size:40px; color:rgba(240,240,248,0.6);"><i class="fa-solid fa-ticket"></i></div>
+                                <h4>No tickets yet</h4>
+                                <p>Tickets let people purchase access to your event. Create your first ticket to get started.</p>
+                                <button class="btn btn-outline-primary" id="createTicketBtn" type="button">Create Ticket</button>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
+
+          
+            {% include 'user/partials/sidebar/right_sidebar.html' %}
+
+        </div>
+    </div>
+</div>
+
+{% include 'user/footer.html' %}
+</body>
+</html>
