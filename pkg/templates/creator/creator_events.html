@@ -28,7 +28,7 @@
                         <div class="events-section-label">Pending</div>
                         <div class="row event-grid">
                             {% for event in events %}
-                            {% if creator.id == user.id %}
+                            {% if event.creator.id == user.id %}
                             {% if event.status == 'pending' %}
                             <div class="col-md-6 mb-3" data-category="{{ event.category.name }}">
                                 <div class="all-event-card">
@@ -72,7 +72,7 @@
                         <div class="row event-grid">
                             
                             {% for event in events %}
-                            {% if creator.id == user.id %}
+                            {% if event.creator.id == user.id %}
                             {% if event.status == 'approved' %}
                             <div class="col-md-6 mb-3" data-category="{{ event.category.name }}">
                                 <div class="all-event-card">
@@ -112,7 +112,7 @@
                         <div class="events-section-label" style="margin-top:16px">Rejected</div>
                         <div class="row event-grid">
                             {% for event in events %}
-                            {% if creator.id == user.id %}
+                            {% if event.creator.id == user.id %}
                             {% if event.status == 'rejected' %}
                             <div class="col-md-6 mb-3" data-category="{{ event.category.name }}">
                                 <div class="all-event-card">

@@ -24,7 +24,9 @@
                             
                             
                             {%else%}
-                            <button class="btn-follow">Follow</button>
+                            <form action="{{ url_for('follow_user', user_id=user_deets.id) }}" method="POST">
+                                <button type="submit" class="btn-follow">{% if is_following %}Unfollow{% else %}Follow{% endif %}</button>
+                            </form>
                             
                             {% endif %}
                         </div>
@@ -60,33 +62,34 @@
                                 <strong>{{ events|length }}</strong>
                                 <span>Events</span>
                             </div>
-                        {#
+                        
                             <div class="stat-item">
-                                <strong>2.1k</strong>
-                                <span>Followers</span>
+                                <strong>{{ follower_count }}</strong>
+                                <span><a href="{{ url_for('followers_list', id=user_deets.id) }}">Followers</a></span>
                             </div>
                             <div class="stat-item">
-                                <strong>340</strong>
-                                <span>Following</span>
+                                <strong>{{ following_count }}</strong>
+                                <span><a href="{{ url_for('following_list', id=user_deets.id) }}">Following</a></span>
                             </div>
-                            #}
                         </div>
                         {#
+                        
                         <div class="interest-tags">
                             <span class="interest-tag">#Afrobeats</span>
                             <span class="interest-tag">#Nightlife</span>
                             <span class="interest-tag">#Tech</span>
                             <span class="interest-tag">#Design</span>
                             <span class="interest-tag">#Music</span>
-                        </div> #}
+                        </div> 
                     </div>
                 </div>
+                #}
 
                 <!-- TABS -->
                 <div class="profile-tabs">
                     <button class="profile-tab active-tab" data-tab="posts">Posts</button>
                     <button class="profile-tab" data-tab="events">Events</button>
-                    {#<button class="profile-tab" data-tab="communities">Communities</button>#}
+                    <!-- <button class="profile-tab" data-tab="communities">Communities</button> -->
                     <button class="profile-tab" data-tab="media">Media</button>
                 </div>
 
@@ -97,7 +100,7 @@
                 {% if posts %}
                     {% for p in posts %}
                     
-                        {% if p.creator.id == user_deets.id %}
+
                             <div class="post-card">
 
                                 {% if p.event != None %}
@@ -204,7 +207,6 @@
 
                             </div>
 
-                        {% endif %}
                     
                     {% endfor %}
                 {% else %}
@@ -218,7 +220,7 @@
                     <div class="events-section-label">Hosting</div>
                     <div class="row event-grid">
                         {% for event in events %}
-                    {% if creator.id == user_deets.id %}
+                        {% if event.creator_id == user_deets.id %}
                         <div class="col-md-6 mb-3" data-category="{{ event.category.name }}">
                                 <div class="all-event-card">
                                     <div class="all-event-image">
@@ -290,7 +292,7 @@
                 </div>
 
                 <!-- COMMUNITIES TAB -->
-                 {#
+                {#
                 <div class="tab-content" id="tab-communities">
                     {% for c in comms %}
                     <div class="community-card">
@@ -309,13 +311,13 @@
                 <div class="tab-content" id="tab-media">
                     <div class="media-grid">
                         {% for p in posts %}
-                        {% if creator.id==user_deets.id %}
+
                         {% if p.media %}
                         <div class="media-tile"><img src="{{ url_for('static', filename='uploads/' ~ p.media) }}"
                                     class="img-fluid"
                                     alt=""></div>
                         {% endif %}
-                        {% endif %}
+                      
                         {% endfor %}
                     
                     </div>

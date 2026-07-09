@@ -46,8 +46,9 @@
 
                     <!-- COMMUNITY CARD: LARGE -->
                      {% if communities %}
-                     {% if creator.id == user.id %}
+                    
                      {% for c in communities %}
+                      {% if c.creator.id == user.id %}
                     <div class="comm-card comm-card-joined dis-comm">
                         <div class="comm-card-banner">
                             <img src="/static/uploads/{{c.banner}}" alt="">
@@ -87,8 +88,9 @@
                             </div>
                         </div>
                     </div>
-                    {% endfor %}
                     {% endif %}
+                    {% endfor %}
+                    
                     {% endif %}
 
                     

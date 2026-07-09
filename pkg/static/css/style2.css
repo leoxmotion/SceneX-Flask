@@ -135,7 +135,7 @@ body {
    ================================ */
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: "Syne", sans-serif;
+    font-family: "Palanquin Dark", sans-serif;
     font-weight: 800;
     color: var(--text-primary) !important;
 }
@@ -192,7 +192,7 @@ span {
 }
 
 .sidebar-logo {
-    font-family: "Syne", sans-serif;
+    font-family: "Palanquin Dark", sans-serif;
     font-weight: 800;
     font-size: 1.75rem;
     color: var(--text-primary);
@@ -801,6 +801,58 @@ span {
     border-color: rgba(96,165,250,0.25);
 }
 
+/* Community post card — distinct visual treatment */
+.community-post-card {
+    border-left: 3px solid rgba(139, 92, 246, 0.7);
+    background: linear-gradient(135deg, rgba(139,92,246,0.04) 0%, var(--bg-card) 100%);
+}
+
+.community-post-card:hover {
+    border-left-color: rgba(139, 92, 246, 1);
+    border-color: rgba(139, 92, 246, 0.4);
+}
+
+.community-post-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: rgba(167, 139, 250, 0.9);
+    background: rgba(139, 92, 246, 0.12);
+    border: 1px solid rgba(139, 92, 246, 0.25);
+    border-radius: 999px;
+    padding: 0.2rem 0.625rem;
+    margin-bottom: 0.75rem;
+    width: fit-content;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.community-post-label a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+.community-post-label a:hover {
+    color: #c4b5fd;
+    text-decoration: underline;
+}
+
+.community-post-label i {
+    font-size: 0.65rem;
+}
+
+.post-comment-count {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.875rem;
+    color: rgba(240,240,248,0.5);
+}
+
+
 
 .post-header {
     display: flex;
@@ -833,7 +885,7 @@ span {
 }
 
 .post-username {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Palanquin Dark', sans-serif;
     font-size: 0.9375rem;
     font-weight: 600;
     color: var(--text-primary);
@@ -1406,7 +1458,7 @@ span {
 }
 
 .profile-name {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Palanquin Dark', sans-serif;
     font-size: 1.375rem;
     font-weight: 800;
     color: var(--text-primary);
@@ -1470,7 +1522,7 @@ span {
 }
 
 .stat-item strong {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Palanquin Dark', sans-serif;
     font-size: 1.25rem;
     font-weight: 800;
     color: var(--text-primary);
@@ -1802,7 +1854,7 @@ span {
 }
 
 .trending-num {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Palanquin Dark', sans-serif;
     font-size: 0.75rem;
     color: rgba(240,240,248,0.2);
     min-width: 1.25rem;
@@ -2796,7 +2848,7 @@ span {
 }
 
 .mobile-nav-logo {
-    font-family: "Syne", sans-serif;
+    font-family: "Palanquin Dark", sans-serif;
     font-weight: 800;
     font-size: 1.375rem;
     color: var(--text-primary);
@@ -4080,7 +4132,7 @@ span {
 }
 
 .convo-name {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Palanquin Dark', sans-serif;
     font-size: 0.9rem;
     font-weight: 600;
     color: var(--text-primary);
@@ -5837,7 +5889,7 @@ span {
 }
 
 .ep-preview-name {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Palanquin Dark', sans-serif;
     font-size: 0.8125rem;
     font-weight: 800;
     color: var(--text-primary);
@@ -6169,7 +6221,7 @@ span {
 }
 
 .ed-title {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Palanquin Dark', sans-serif;
     font-size: 1.75rem;
     font-weight: 800;
     color: var(--text-primary);
@@ -6476,7 +6528,7 @@ span {
 }
 
 .ed-lineup-name {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Palanquin Dark', sans-serif;
     font-size: 0.9375rem;
     font-weight: 700;
     color: var(--text-primary);
@@ -6814,7 +6866,7 @@ span {
 }
 
 .ed-similar-name {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Palanquin Dark', sans-serif;
     font-size: 0.8125rem;
     font-weight: 700;
     color: var(--text-primary);
@@ -6942,7 +6994,7 @@ display: block;
 }
 
 a.navbar-brand{
-	font-family: "Syne", sans-serif;
+	font-family: "Palanquin Dark", sans-serif;
     text-align: center;
 }
 .name{
@@ -7148,7 +7200,7 @@ ul.navbar-nav a:hover{
 }
 
 .cd-name {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Palanquin Dark', sans-serif;
     font-size: 1.5rem;
     font-weight: 800;
     color: var(--text-primary);
@@ -7187,7 +7239,7 @@ ul.navbar-nav a:hover{
 }
 
 .cd-stat strong {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Palanquin Dark', sans-serif;
     font-size: 1.125rem;
     font-weight: 800;
     color: var(--text-primary);
@@ -7354,7 +7406,7 @@ ul.navbar-nav a:hover{
 }
 
 .cd-member-name {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Palanquin Dark', sans-serif;
     font-size: 0.875rem;
     font-weight: 600;
     color: var(--text-primary);
@@ -7505,7 +7557,7 @@ ul.navbar-nav a:hover{
 }
 
 .cm-topbar-title {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Palanquin Dark', sans-serif;
     font-size: 1rem;
     font-weight: 800;
     color: var(--text-primary);
@@ -7591,7 +7643,7 @@ ul.navbar-nav a:hover{
 }
 
 .cm-count-label {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Palanquin Dark', sans-serif;
     font-size: 0.9375rem;
     font-weight: 700;
     color: var(--text-primary);
@@ -7691,7 +7743,7 @@ ul.navbar-nav a:hover{
 }
 
 .cm-username {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Palanquin Dark', sans-serif;
     font-size: 0.875rem;
     font-weight: 700;
     color: var(--text-primary);
@@ -7911,7 +7963,7 @@ ul.navbar-nav a:hover{
 }
 
 .cm-linked-name {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Palanquin Dark', sans-serif;
     font-size: 0.875rem;
     font-weight: 700;
     color: var(--text-primary);

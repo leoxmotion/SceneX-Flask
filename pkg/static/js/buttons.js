@@ -63,8 +63,9 @@ $(document).on("click", "#createCommBtn", function () {
     window.location.href = "/create_community/";
 });
 
-$(document).on("click", ".ed-rsvp-btn", function () {
-    window.location.href = "/rsvp/";
+$(document).on("click", ".buy-ticket", function () {
+    const eventId = $(this).data("event-id");
+    window.location.href = "/rsvp/" + eventId + "/";
 });
 
 $(document).on("click", ".viewCommBtn", function () {

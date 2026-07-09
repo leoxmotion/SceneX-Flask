@@ -319,10 +319,36 @@ def admin_reject_event(id):
     
 @app.post('/admin/delete-event/<int:id>/')
 def admin_delete_event(id):
+    if session.get('adminonline') is None:
+        flash('You must be logged in to view this page', category='errormsg')
+        return redirect(url_for('adminlogin'))
     event = Event.query.get_or_404(id)
-
     db.session.delete(event)
     db.session.commit()
     flash('Event removed successfully', category='success')
     return redirect('/admin/all-events/')
+
+
+@app.post('/admin/toggle-trending-event/<int:id>/')
+def admin_toggle_trending_event(id):
+    if session.get('adminonline') is None:
+        flash('You must be logged in to view this page', category='errormsg')
+        return redirect(url_for('adminlogin'))
+    event = Event.query.get_or_404(id)
+    event.is_trending = not event.is_trending
+    db.session.commit()
+    flash('Trending status updated', category='success')
+    return redirect(request.referrer or url_for('admin_events'))
+
+
+@app.post('/admin/toggle-trending-community/<int:id>/')
+def admin_toggle_trending_community(id):
+    if session.get('adminonline') is None:
+        flash('You must be logged in to view this page', category='errormsg')
+        return redirect(url_for('adminlogin'))
+    community = Community.query.get_or_404(id)
+    community.is_trending = not community.is_trending
+    db.session.commit()
+    flash('Trending status updated', category='success')
+    return redirect(request.referrer or url_for('admin_communities'))
 

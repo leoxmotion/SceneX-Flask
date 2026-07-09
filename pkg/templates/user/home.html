@@ -75,7 +75,15 @@
 
                     </form>
                     {% for p in posts %}
-                        <div class="post-card">
+                        <div class="post-card{% if p.post_type == 'community' %} community-post-card{% endif %}">
+
+                            {# Community badge #}
+                            {% if p.post_type == 'community' and p.community %}
+                            <div class="community-post-label">
+                                <i class="fa-solid fa-users"></i>
+                                <a href="{{ url_for('comm_detail', id=p.community.id) }}">{{ p.community.name }}</a>
+                            </div>
+                            {% endif %}
 
                             {% if p.event != None %}
                             <div class="post-event">
@@ -132,6 +140,7 @@
                             <div class="post-footer">
                                 <div class="post-actions">
 
+                                    {% if p.post_type == 'regular' %}
                                     <button class="like-btn" data-post-id="{{ p.id }}">
                                         {% if p.id in liked_post_ids %}
                                             <i class="fa-solid fa-heart" style="color:#ef4444"></i>
@@ -148,11 +157,16 @@
                                         <span>{{ p.comments|length }}</span>
                                     </button>
 
-                                    
-
                                     <a href="/comments/{{ p.id }}/"
                                     id="openComment{{ p.id }}"
                                     style="display:none;"></a>
+                                    {% else %}
+                                    {# Community posts: show comment count only (no like/comment action yet) #}
+                                    <span class="post-comment-count">
+                                        <i class="fa-regular fa-comment"></i>
+                                        {{ p.comments|length }}
+                                    </span>
+                                    {% endif %}
 
                                 </div>
 

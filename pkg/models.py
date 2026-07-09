@@ -38,6 +38,8 @@ class User(db.Model):
     created_communities = db.relationship('Community', back_populates='creator', lazy='select')
     community_memberships = db.relationship('CommunityMember', back_populates='user', cascade='all, delete-orphan', lazy='select')
     event_attendances = db.relationship('EventAttendees', back_populates='user', cascade='all, delete-orphan', lazy='select')
+    following = db.relationship('Follow', foreign_keys='Follow.follower_id', back_populates='follower', cascade='all, delete-orphan', lazy='select')
+    followers = db.relationship('Follow', foreign_keys='Follow.followed_id', back_populates='followed', cascade='all, delete-orphan', lazy='select')
 
 
 class State(db.Model):
@@ -76,6 +78,7 @@ class Event(db.Model):
     status = db.Column(db.Enum('pending','approved', 'rejected'), server_default='pending')
     visibility = db.Column(db.Enum('public', 'private'), server_default='public')
     created_at = db.Column(db.DateTime(), default=datetime.utcnow)  
+    is_trending = db.Column(db.Boolean, nullable=False, server_default='0')
 
     creator = db.relationship('User', back_populates='events', lazy='select')
     state = db.relationship('State', back_populates='events', lazy='select')
@@ -251,6 +254,7 @@ class Community(db.Model):
     cat_id = db.Column(db.Integer, db.ForeignKey('event_category.id'))
     created_at = db.Column(db.DateTime(), default=datetime.utcnow)  
     verified_status = db.Column(db.Enum('verified', 'not verified'), server_default='not verified')
+    is_trending = db.Column(db.Boolean, nullable=False, server_default='0')
 
     creator = db.relationship('User', back_populates='created_communities', lazy='select')
     category = db.relationship('EventCategory', back_populates='communities', lazy='select')
@@ -309,6 +313,42 @@ class CommunityComment(db.Model):
 
     member = db.relationship('CommunityMember', back_populates='comments', lazy='select')
     post = db.relationship('CommunityPost', back_populates='comments', lazy='select')
+
+
+class Follow(db.Model):
+    __tablename__ = 'follow'
+
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    follower_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    followed_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    created_at = db.Column(db.DateTime(), default=datetime.utcnow)
+
+    __table_args__ = (
+        db.UniqueConstraint('follower_id', 'followed_id', name='ux_follow_follower_followed'),
+    )
+
+    follower = db.relationship('User', foreign_keys=[follower_id], back_populates='following')
+    followed = db.relationship('User', foreign_keys=[followed_id], back_populates='followers')
+
+
+class Notification(db.Model):
+    __tablename__ = 'notification'
+
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    recipient_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    actor_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    type = db.Column(db.Enum('like', 'comment', 'follow', 'event_join', 'community_invite', name='notif_type'), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id', ondelete='CASCADE'), nullable=True)
+    event_id = db.Column(db.Integer, db.ForeignKey('event.id', ondelete='CASCADE'), nullable=True)
+    community_id = db.Column(db.Integer, db.ForeignKey('community.id', ondelete='CASCADE'), nullable=True)
+    is_read = db.Column(db.Boolean, nullable=False, server_default='0')
+    created_at = db.Column(db.DateTime(), default=datetime.utcnow)
+
+    recipient = db.relationship('User', foreign_keys=[recipient_id])
+    actor = db.relationship('User', foreign_keys=[actor_id])
+    post = db.relationship('Post')
+    event = db.relationship('Event')
+    community = db.relationship('Community')
     
 
     
