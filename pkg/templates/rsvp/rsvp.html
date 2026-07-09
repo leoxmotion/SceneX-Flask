@@ -1,91 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SceneX - Get Tickets</title>
-
-    <link rel="stylesheet" href="style2.css">
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="fontawesome/css/all.min.css">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=Syne:wght@800&display=swap" rel="stylesheet">
-</head>
-<body>
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
-        <div class="app-shell">
-            <div class="container-fluid">
-                
-            <nav class="mobile-top-nav">
-
-                <button class="sidebar-toggle-btn" id="sidebarToggle">
-                    <i class="fa-solid fa-bars"></i>
-                </button>
-
-                <!-- Logo stays centre -->
-                <a href="home.html" class="mobile-nav-logo">SceneX</a>
-
-                <!-- Right actions say as they are -->
-                <div class="mobile-nav-actions">
-                    <a href="notifications.html" class="mobile-nav-icon notif-icon">
-                        <i class="fa-solid fa-bell"></i>
-                        <span class="notif-dot"></span>
-                    </a>
-                    <a href="profile.html" class="mobile-nav-avatar">
-                        <img src="images/dp1.jpg" alt="" onerror="this.style.display='none'">
-                    </a>
-                </div>
-
-            </nav>
-                
-            </div>
-
-
-            <div class="container-fluid">
-                <div class="row">
-                <aside class="col-lg-2 col-6 sidebar" id="sidebar">
-                    <div class="sidebar-logo">SceneX</div>
-                    
-                    <nav class="sidebar-nav">
-                        <a href="home.html">
-                            <i class="fa-solid fa-house"></i>
-                            Home
-                        </a>
-
-                        <a href="discover.html" class="active-nav">
-                            <i class="fa-regular fa-compass"></i>
-                            Discover
-                        </a>
-
-                        <a href="notifications.html">
-                            <i class="fa-solid fa-bell"></i>
-                            Notifications
-                        </a>
-
-                        <a href="communities.html">
-                            <i class="fa-solid fa-user-group"></i>
-                            Communities
-                        </a>
-
-                        <!-- <a href="messages.html">
-                            <i class="fa-brands fa-facebook-messenger"></i>
-                            Messages
-                        </a> -->
-                        <a href="profile.html">
-                            <i class="fa-regular fa-user"></i>
-                            Profile
-                        </a>
-
-                        <button class="btn btn-primary full-btn">
-                            <i class="fa-regular fa-calendar-plus"></i>
-                            Create Event
-                        </button>
-                    </nav>
-
-                    
-                </aside>
+{% include "user/header.html" %}
 
             <!-- MAIN -->
             <section class="col-md-7 offset-md-2 rsvp-page">
@@ -623,9 +536,9 @@
         </div>
 </div>
 
-<script src="jquery.js"></script>
-<script src="bootstrap/js/bootstrap.bundle.js"></script>
-<script src="scenequery.js"></script>
+<script src="/static/js/jquery.js"></script>
+<script src="/static/bootstrap/js/bootstrap.bundle.js"></script>
+<script src="/static/js/scenequery.js"></script>
 <script>
 
 // ================================

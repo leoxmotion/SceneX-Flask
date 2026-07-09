@@ -501,8 +501,3 @@ def toggle_join_community(comm_id):
 
 
 
-
-
-@app.route('/rsvp/')
-def rsvp():
-    return render_template('user/rsvp.html', title="RSVP")

@@ -30,4 +30,4 @@ def create_app():
    
 app = create_app()
 
-from pkg import user_routes, admin_routes, creator_routes, ticket_routes, forms
+from pkg import user_routes, admin_routes, creator_routes, ticket_routes, forms, rsvp_routes

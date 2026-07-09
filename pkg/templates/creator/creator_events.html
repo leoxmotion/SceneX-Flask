@@ -55,7 +55,7 @@
                                                 <span>0 going</span>
                                             </div>
                                             <button class="rsvp-btn viewBtn" data-view-event="{{ event.id }}">
-                                                View Event
+                                                    View Event
                                             </button>
                                         </div>
                                     </div>
@@ -95,7 +95,7 @@
                                                 <div class="mini-avatar"></div>
                                                 <span>0 going</span>
                                             </div>
-                                            <button class="rsvp-btn viewBtn" onclick="document.getElementById('viewEvent{{event.id}}').click()">
+                                            <button class="rsvp-btn viewBtn" data-view-event="{{ event.id }}">
                                                     View Event
                                             </button>
                                             <a href="/creator/view-event/{{ event.id }}/" id="viewEvent{{event.id}}" style="display:none"></a>
@@ -135,7 +135,7 @@
                                                 <div class="mini-avatar"></div>
                                                 <span>0 going</span>
                                             </div>
-                                            <button class="rsvp-btn viewBtn" onclick="document.getElementById('viewEvent{{event.id}}').click()">
+                                           <button class="rsvp-btn viewBtn" data-view-event="{{ event.id }}">
                                                     View Event
                                             </button>
                                             <a href="/creator/view-event/{{ event.id }}/" id="viewEvent{{event.id}}" style="display:none"></a>

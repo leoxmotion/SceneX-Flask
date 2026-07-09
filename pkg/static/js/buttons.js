@@ -63,6 +63,10 @@ $(document).on("click", "#createCommBtn", function () {
     window.location.href = "/create_community/";
 });
 
+$(document).on("click", ".ed-rsvp-btn", function () {
+    window.location.href = "/rsvp/";
+});
+
 $(document).on("click", ".viewCommBtn", function () {
     const commId = $(this).data("comm-id");
     window.location.href = "/comm_detail/" + commId + "/";
