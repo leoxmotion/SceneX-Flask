@@ -5,7 +5,7 @@ from flask import render_template, request, abort, redirect, url_for, flash, ses
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from pkg import app, csrf
-from pkg.forms import LoginForm, EventForm, CommForm, PostForm
+from pkg.forms import LoginForm, EventForm, CommForm, PostForm, CommPostForm
 from pkg.models import db
 from pkg.models import User, Event, EventCategory, EventLineup, State, Lga, Community, Post, CommunityPost, CommunityMember, CommunityComment, EventTicket, Like
 
@@ -192,6 +192,7 @@ def creator_edit_event(id):
                     event.cat_id=cat_id 
                     event.event_start=event_start
                     event.event_end=event_end
+                    event.banner=event.banner
 
             
                 db.session.commit()
@@ -280,18 +281,22 @@ def comm_detail(id):
         events = Event.query.all()
         postform= PostForm()
         postform.event_id.choices = [(s.id, s.name) for s in events]
-        category = EventCategory.query.filter(EventCategory.id==Community.cat_id).first()
-        admin = User.query.filter(User.id==Community.creator_id).first()
+        category = EventCategory.query.filter(EventCategory.id==comm.cat_id).first()
+        admin = User.query.filter(User.id==comm.creator_id).first()
         posts = CommunityPost.query.filter(CommunityPost.comm_id==comm.id).order_by(CommunityPost.created_at.desc()).all()
         event = Event.query.filter(Event.id==CommunityPost.event_id).first()
-        creator = User.query.filter(User.id==Community.creator_id).first()
+        creator = User.query.filter(User.id==comm.creator_id).first()
+        member = CommunityMember.query.filter_by(
+                        user_id=user_ide,
+                        comm_id=comm.id
+                    ).first()
         
         
         joined = CommunityMember.query.filter_by(
             user_id=session["useronline"],
             comm_id=comm.id
         ).first() is not None
-        return render_template('creator/comm_detail.html', title="Community Details", user=user, category=category, creator=creator, comm=comm, current_page='communities', posts=posts, event=event, admin=admin, postform=postform, joined=joined)
+        return render_template('creator/comm_detail.html', title="Community Details", user=user, category=category, creator=creator, comm=comm, current_page='communities', posts=posts, event=event, admin=admin, postform=postform, joined=joined, member=member)
                 
          
         
@@ -305,8 +310,8 @@ def create_comm_post(id):
         
         if request.method == 'GET':
             user_id = session.get('useronline')
-            user = User.query.get(id)
-            postform= PostForm()
+            user = User.query.get(user_id)
+            postform= CommPostForm()
             events = Event.query.all()
             postform.event_id.choices = [(s.id, s.name) for s in events]
             comm = Community.query.get_or_404(id)
@@ -315,14 +320,24 @@ def create_comm_post(id):
             
         else:
             user_id = session.get('useronline')
-            postform= PostForm()
+            postform= CommPostForm()
             comm = Community.query.get_or_404(id)
+
+            
             if postform:
                 
                 content = postform.content.data
                 media = postform.media.data
                 event_id = postform.event_id.data
                 comm_id=comm.id
+                member = CommunityMember.query.filter_by(
+                        user_id=user_id,
+                        comm_id=comm.id
+                    ).first()
+
+                if member is None:
+                    flash("Join the community before posting.")
+                    return redirect(url_for("comm_detail", id=comm.id))
                 
                 
                 if media:
@@ -333,14 +348,18 @@ def create_comm_post(id):
                     upload_path = os.path.join('pkg/static/uploads', filename)
                     media.save(upload_path)
                     
-                    post = CommunityPost(member_id=user_id,comm_id=comm_id, content=content, media=filename, event_id=event_id)
+                    
+                    
+                    post = CommunityPost(user_id=user_id,comm_id=comm_id, content=content, media=filename, event_id=event_id)
                 else:
-                    post = CommunityPost(member_id=user_id, comm_id=comm_id, content=content, event_id=event_id)
+                    post = CommunityPost(user_id=user_id, comm_id=comm_id, content=content, event_id=event_id)
                 
                 db.session.add(post)
                 db.session.commit()
                 flash('Post Created Successfully')
                 return redirect(url_for('comm_detail', id=comm_id))
+            else:
+                print(postform.errors)
         
     else:
         flash('You must be logged in to view this page', category='errormsg')

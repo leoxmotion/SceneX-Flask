@@ -19,8 +19,10 @@
                         </div>
                         <div class="profile-actions">
                             {% if session['useronline']==user_deets.id %}
-                            <button class="btn-outline-profile" id="editProfileBtn">Edit Profile</button>
+                            <button class="btn-outline-profile" id="editProfileBtn" data-url="{{ url_for('edit_profile') }}">Edit Profile</button>
                             <a href="/edit-profile/" id="editProfile" style="display: none;"></a>
+                            
+                            
                             {%else%}
                             <button class="btn-follow">Follow</button>
                             
@@ -58,6 +60,7 @@
                                 <strong>{{ events|length }}</strong>
                                 <span>Events</span>
                             </div>
+                        {#
                             <div class="stat-item">
                                 <strong>2.1k</strong>
                                 <span>Followers</span>
@@ -66,7 +69,7 @@
                                 <strong>340</strong>
                                 <span>Following</span>
                             </div>
-                            
+                            #}
                         </div>
                         {#
                         <div class="interest-tags">
@@ -83,7 +86,7 @@
                 <div class="profile-tabs">
                     <button class="profile-tab active-tab" data-tab="posts">Posts</button>
                     <button class="profile-tab" data-tab="events">Events</button>
-                    <button class="profile-tab" data-tab="communities">Communities</button>
+                    {#<button class="profile-tab" data-tab="communities">Communities</button>#}
                     <button class="profile-tab" data-tab="media">Media</button>
                 </div>
 
@@ -97,29 +100,31 @@
                         {% if p.creator.id == user_deets.id %}
                             <div class="post-card">
 
-                                <div class="post-event">
-                                    <div class="row">
-                                        <div class="col-12 text-center event-pill">
-                                            <div>
-                                                <i class="fa-solid fa-bolt"></i>
-                                                {{ p.event.name }}
-                                            </div>
+                                {% if p.event != None %}
+                            <div class="post-event">
+                                <div class="row">
+                                    <div class="col-12 text-center event-pill">
+                                        <div>
+                                            <i class="fa-solid fa-bolt"></i>
+                                            {{ p.event.name }}
+                                        </div>
 
-                                            <div class="event-meta">
-                                                {% if p.event.address %}
-                                                <span>
-                                                    <i class="fa-solid fa-location-dot"></i>
-                                                    {{ p.event.address }}
-                                                </span>
-                                                {% endif %}
-                                                <span>
-                                                    <i class="fa-regular fa-clock"></i>
-                                                    {{ p.event.event_start.strftime("%a, %b %d, %Y") }}
-                                                </span>
-                                            </div>
+                                        <div class="event-meta">
+                                            {% if p.event.address %}
+                                            <span>
+                                                <i class="fa-solid fa-location-dot"></i>
+                                                {{ p.event.address }}
+                                            </span>
+                                            {% endif %}
+                                            <span>
+                                                <i class="fa-regular fa-clock"></i>
+                                                {{ p.event.event_start.strftime("%a, %b %d, %Y") }}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            {% endif %}
 
                                 <div class="post-header">
                                     <div class="post-user-info">
@@ -166,28 +171,30 @@
                                         </button>
                                         {% endif %}
 
-                                        <button class="comment-btn" data-open-comment="{{ p.id }}">
-                                            <i class="fa-regular fa-comment"></i>
-                                            <span>
-                                            {{ p.comments|length }}
-                                        </span>
-                                        </button>
+                                        <button
+                                        class="comment-btn"
+                                        data-url="{{ url_for('comments', id=p.id) }}">
+                                        <i class="fa-regular fa-comment"></i>
+                                        <span>{{ p.comments|length }}</span>
+                                    </button>
 
-                                        <button class="share-btn">
-                                            <i class="fa-solid fa-share"></i>
-                                            <span>7</span>
-                                        </button>
-
+                                        
                                         <a href="/comments/{{ p.id }}/"
                                         id="openComment{{ p.id }}"
                                         style="display:none;"></a>
 
                                     </div>
 
-                                    <button class="post-event-footer" data-view-event="{{ p.id }}">
-                                        <i class="fa-regular fa-calendar"></i>
-                                        View Event
-                                    </button>
+                                    {% if p.event != None %}
+                                <button
+                                    class="post-event-footer view-event-btn"
+                                    data-url="{{ url_for('creator_view_event', id=p.event.id) }}">
+
+                                    <i class="fa-regular fa-calendar"></i>
+                                    View Event
+
+                                </button>
+                                {% endif %}
 
                                     <a href="/creator/view-event/{{ p.event.id }}/"
                                     id="viewEvent{{ p.id }}"
@@ -246,7 +253,7 @@
 
                         
                     </div>
-
+                    {#
                     <div class="events-section-label" style="margin-top:16px">Attended</div>
                     <div class="row event-grid">
                         <div class="col-md-6">
@@ -279,11 +286,13 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> #}
                 </div>
 
                 <!-- COMMUNITIES TAB -->
+                 {#
                 <div class="tab-content" id="tab-communities">
+                    {% for c in comms %}
                     <div class="community-card">
                         <div class="community-avatar"></div>
                         <div class="community-info">
@@ -292,23 +301,9 @@
                         </div>
                         <button class="join-btn">Joined</button>
                     </div>
-                    <div class="community-card">
-                        <div class="community-avatar" style="background:#9b5cf6"></div>
-                        <div class="community-info">
-                            <h3>Afrobeats Producers</h3>
-                            <p>1.8k members</p>
-                        </div>
-                        <button class="join-btn">Joined</button>
-                    </div>
-                    <div class="community-card">
-                        <div class="community-avatar" style="background:#f59e0b"></div>
-                        <div class="community-info">
-                            <h3>Lagos Tech Scene</h3>
-                            <p>6.1k members</p>
-                        </div>
-                        <button class="join-btn">Joined</button>
-                    </div>
-                </div>
+                    {% endfor %}
+                    
+                </div>#}
 
                 <!-- MEDIA TAB -->
                 <div class="tab-content" id="tab-media">

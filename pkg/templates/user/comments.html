@@ -16,6 +16,7 @@
                 
                         <div class="post-card">
 
+                            {% if p.event != None %}
                             <div class="post-event">
                                 <div class="row">
                                     <div class="col-12 text-center event-pill">
@@ -39,6 +40,7 @@
                                     </div>
                                 </div>
                             </div>
+                            {% endif %}
 
                             <div class="post-header">
                                 <div class="post-user-info">
@@ -90,10 +92,6 @@
                                         <span>{{ p.comments|length }}</span>
                                     </button>
 
-                                    <button class="share-btn">
-                                        <i class="fa-solid fa-share"></i>
-                                        <span>7</span>
-                                    </button>
 
                                     <a href="/comments/{{ p.id }}/"
                                     id="openComment{{ p.id }}"
@@ -101,16 +99,16 @@
 
                                 </div>
 
-                                <button class="post-event-footer"
-                                        onclick="document.getElementById('viewEvent{{ p.id }}').click()">
+                                {% if p.event != None %}
+                                <button
+                                    class="post-event-footer view-event-btn"
+                                    data-url="{{ url_for('creator_view_event', id=p.event.id) }}">
+
                                     <i class="fa-regular fa-calendar"></i>
                                     View Event
+
                                 </button>
-
-                                <a href="/creator/view-event/{{ p.event.id }}/"
-                                id="viewEvent{{ p.id }}"
-                                style="display:none;"></a>
-
+                                {% endif %}
                             </div>
                             <form class="cm-reply-input-bar mt-2" method="post" id="commentInput">
                                     <span class="cm-reply-to">@{{user.username}}</span>
@@ -154,17 +152,17 @@
                                 </div>
                                 <p class="cm-text">{{ cm.comment }}</p>
                             </div>
-                            <div class="cm-actions">
+                            {#<div class="cm-actions">
                                 <button class="cm-like-btn like-btn" data-id="cm-1">
                                     <i class="fa-regular fa-heart"></i>
                                     <span>0</span>
                                 </button>
                                 <button class="cm-reply-trigger" data-username="{{ cm.user.username }}">
-                                    Reply
+                                    Reply 
                                 </button>
                                 <span class="cm-action-time"></span>
                             </div>
-                        
+                            #}
                             
                         </div>
                     </div>

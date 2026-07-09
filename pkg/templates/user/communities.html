@@ -13,7 +13,8 @@
                         <i class="fa-solid fa-plus"></i>
                         New Community
                     </button>
-                    <a href="/create_community/" id="createComm" style="display:none;"></a>
+
+                    
                 </div>
 
                 <!-- SEARCH BAR -->
@@ -24,6 +25,7 @@
                 </div>
 
                 <!-- CATEGORY PILLS -->
+                 {#
                 <div class="category-row" style="margin-bottom:2rem;">
                     <button class="category-pill active-pill all-categories">All</button>
                     <button class="category-pill">Music</button>
@@ -33,13 +35,13 @@
                     <button class="category-pill">Fashion</button>
                     <button class="category-pill">Sports</button>
                     <button class="category-pill">Food</button>
-                </div>
+                </div>#}
 
                 <!-- YOUR COMMUNITIES -->
                 <div class="comm-section">
                     <div class="section-top">
                         <h2>Your Communities</h2>
-                        <a href="/communities/my_communities/">See All</a>
+                        <!-- <a href="/communities/my_communities/">See All</a> -->
                     </div>
 
                     <!-- COMMUNITY CARD: LARGE -->
@@ -58,9 +60,9 @@
                                 <div class="comm-card-info">
                                     <h3 class="commName">{{ c.name }}</h3>
                                     <p>
-                                        <span><i class="fa-solid fa-users"></i> 4.2k members</span>
-                                        <span><i class="fa-solid fa-bolt"></i> 12 events</span>
-                                        <span><i class="fa-regular fa-comment"></i> 240 posts</span>
+                                        <span><i class="fa-solid fa-users"></i>{{ c.members|length }}</span>
+                                        
+                                        <span><i class="fa-regular fa-comment"></i> {{ c.posts|length }} posts</span>
                                     </p>
                                 </div>
                                 <button class="joined-btn">
@@ -96,7 +98,7 @@
                 <div class="comm-section">
                     <div class="section-top">
                         <h2>Discover Communities</h2>
-                        <a href="/communities/all_communities/">See All</a>
+                        <!-- <a href="/communities/all_communities/">See All</a> -->
                     </div>
 
                     <div class="row g-3">
@@ -113,9 +115,10 @@
                                     <div class="comm-discover-info">
                                         <h3 class="commName">{{ c.name }}</h3>
                                         <p>
-                                            <span><i class="fa-solid fa-users"></i> 6.1k</span>
-                                            <span><i class="fa-solid fa-bolt"></i> 18 events</span>
-                                        </p>
+                                        <span><i class="fa-solid fa-users"></i>{{ c.members|length }}</span>
+                                        
+                                        <span><i class="fa-regular fa-comment"></i> {{ c.posts|length }} posts</span>
+                                    </p>
                                         <p class="comm-desc-sm">{{ c.description }}</p>
                                     </div>
                                     <a href="/comm_detail/{{c.id}}/" class="comm-view-btn">
@@ -132,5 +135,5 @@
 
             </section>
 
-{% set sidebar_mode = 'community' %}
+
 {% include 'user/footer.html' %}

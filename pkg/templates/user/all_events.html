@@ -31,7 +31,7 @@
                     </button>
                 </div>
 
-                <!-- CATEGORY PILLS -->
+                <!-- CATEGORY PILLS -->{#
                 <div class="category-row" style="margin-bottom:1rem;">
                     <button class="category-pill active-pill" data-filter="all">All</button>
                     <button class="category-pill" data-filter="music">Music</button>
@@ -41,7 +41,7 @@
                     <button class="category-pill" data-filter="fashion">Fashion</button>
                     <button class="category-pill" data-filter="sports">Sports</button>
                     <button class="category-pill" data-filter="food">Food</button>
-                </div>
+                </div>#}
 
                 
 
@@ -50,7 +50,8 @@
 
                     {% for event in events %}
                     
-                        <div class="col-md-6 mb-3" data-category="{{ event.category.name }}">
+                        {% if event.status == 'approved' %}
+                            <div class="col-md-6 mb-3" data-category="{{ event.category.name }}">
                                 <div class="all-event-card">
                                     <div class="all-event-image">
                                         <img src="/static/uploads/{{ event.banner }}" alt="" onerror="this.style.display='none'">
@@ -72,12 +73,14 @@
                                                 <span>0 going</span>
                                             </div>
                                             <button class="rsvp-btn viewBtn" data-view-event="{{ event.id }}">
-                                                View Event
+                                                    View Event
                                             </button>
+                                            <a href="/creator/view-event/{{ event.id }}/" id="viewEvent{{event.id}}" style="display:none"></a>
                                         </div>
                                     </div>
                                 </div>
-                        </div>
+                            </div>
+                            {% endif %}
 
                     {% endfor %}
 

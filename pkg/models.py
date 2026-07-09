@@ -26,6 +26,7 @@ class User(db.Model):
 
     state = db.relationship('State', back_populates='users', lazy='select')
     events = db.relationship('Event', back_populates='creator', lazy='select')
+    commPosts = db.relationship('CommunityPost', back_populates='user', lazy='select')
     posts = db.relationship('Post', back_populates='creator', lazy='select')
     comments = db.relationship('Comment', back_populates='user', lazy='select')
     likes = db.relationship(
@@ -63,7 +64,7 @@ class Event(db.Model):
     creator_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     name = db.Column(db.String(200), nullable=False)
     description = db.Column(db.Text, nullable=False)
-    banner = db.Column(db.Text)
+    banner = db.Column(db.Text, default='default.jpg')
     address = db.Column(db.String(255))
     lga_id = db.Column(db.Integer, db.ForeignKey('lga.id'))
     state_id = db.Column(db.Integer, db.ForeignKey('state.id'))
@@ -267,7 +268,7 @@ class CommunityMember(db.Model):
 
     user = db.relationship('User', back_populates='community_memberships', lazy='select')
     community = db.relationship('Community', back_populates='members', lazy='select')
-    posts = db.relationship('CommunityPost', back_populates='member', cascade='all, delete-orphan', lazy='select')
+    
     comments = db.relationship('CommunityComment', back_populates='member', cascade='all, delete-orphan', lazy='select')
 
     __table_args__ = (
@@ -277,7 +278,8 @@ class CommunityMember(db.Model):
 
 class CommunityPost(db.Model):
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    member_id = db.Column(db.Integer, db.ForeignKey('community_member.id'), nullable=False)
+    
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     comm_id = db.Column(db.Integer, db.ForeignKey('community.id'))
     content = db.Column(db.Text, nullable=False)
     media = db.Column(db.Text)
@@ -285,7 +287,8 @@ class CommunityPost(db.Model):
 
     created_at = db.Column(db.DateTime(), default=datetime.utcnow)  
 
-    member = db.relationship('CommunityMember', back_populates='posts', lazy='select')
+    
+    user = db.relationship('User', back_populates='commPosts', lazy='select')
     community = db.relationship('Community', back_populates='posts', lazy='select')
     event = db.relationship('Event', back_populates='community_posts', lazy='select')
     comments = db.relationship(

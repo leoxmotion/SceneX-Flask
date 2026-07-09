@@ -18,7 +18,7 @@ class ProfileForm(FlaskForm):
 class EventForm(FlaskForm):
     name = StringField('Event Name', validators=[DataRequired()])
     description = TextAreaField('Event Description', validators=[DataRequired()])
-    banner = FileField('Upload Event Banner',validators=[FileRequired(), FileAllowed(['jpg', 'jpeg', 'png'], 'Images Only')])
+    banner = FileField('Upload Event Banner',validators=[FileAllowed(['jpg', 'jpeg', 'png'], 'Images Only')])
     address = TextAreaField('Event Address')
     map_link = TextAreaField('Google Map Link')
     lga_id = SelectField('Local Government', validators=[DataRequired(message='Local Government is required')], coerce=int)
@@ -41,8 +41,16 @@ class EventForm(FlaskForm):
 class PostForm(FlaskForm):
    
     content = TextAreaField('Event Description', validators=[DataRequired()])
-    media = FileField('Upload Event Banner',validators=[FileRequired(), FileAllowed(['jpg', 'jpeg', 'png'], 'Images Only')])
-    event_id = SelectField('Local Government', validators=[DataRequired()], coerce=int)
+    media = FileField('Upload Event Banner',validators=[FileAllowed(['jpg', 'jpeg', 'png'], 'Images Only')])
+    event_id = SelectField('Event', validators=[DataRequired()], coerce=int)
+    submit = SubmitField('Post')
+    
+    
+class CommPostForm(FlaskForm):
+   
+    content = TextAreaField('Event Description', validators=[DataRequired()])
+    media = FileField('Upload Event Banner',validators=[FileAllowed(['jpg', 'jpeg', 'png'], 'Images Only')])
+    event_id = SelectField('Event', coerce=int)
     submit = SubmitField('Post')
     
 class CommentForm(FlaskForm):

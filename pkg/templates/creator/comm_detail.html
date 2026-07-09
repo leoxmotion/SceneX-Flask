@@ -71,10 +71,10 @@
                                 <strong class="member-count">{{ comm.members|length }}</strong>
                                 <span>Members</span>
                             </div>
-                            <div class="cd-stat">
+                            {#<div class="cd-stat">
                                 <strong>12</strong>
                                 <span>Events</span>
-                            </div>
+                            </div>#}
                             <div class="cd-stat">
                                 <strong>{{ posts|length }}</strong>
                                 <span>Posts</span>
@@ -102,7 +102,9 @@
                 <div class="cd-tab-content active-cd-content" id="cd-tab-feed">
 
                     <!-- COMPOSER -->
-                    <form class="composer" method="post" id="comm">
+                    
+
+                    <form class="composer" method="post" id="comm" data-comm-id="{{ comm.id }}">
                          {{ postform.csrf_token() }}
                         <!-- Top row: avatar + text input -->
                         <div class="composer-top">
@@ -139,7 +141,7 @@
                                 </button>
 
                                 <!-- Upload image -->
-                                <button class="tool-btn" type="button" id="uploadImageBtn" title="Add Image" onclick="document.getElementById('imageInput').click()">
+                                <button class="tool-btn" type="button" id="uploadImageBtn" title="Add Image">
                                     <i class="fa-regular fa-image"></i>
                                     <span>Photo</span>
                                 </button>
@@ -161,11 +163,10 @@
                         </div>
 
                     </form>
-
                     <!-- FEED POSTS -->
                     {% for p in posts %}
                         <div class="post-card">
-
+                            {% if p.event != None %}
                             <div class="post-event">
                                 <div class="row">
                                     <div class="col-12 text-center event-pill">
@@ -189,16 +190,16 @@
                                     </div>
                                 </div>
                             </div>
-
+                            {% endif %}
                             <div class="post-header">
                                 <div class="post-user-info">
                                     <div class="avatar">
-                                        <img src="{{ url_for('static', filename='uploads/' ~ p.member.profile_pic) }}"
+                                        <img src="{{ url_for('static', filename='uploads/' ~ p.user.profile_pic) }}"
                                         alt="">
                                     </div>
 
                                     <div class="px-3">
-                                        <h4 class="post-username"><a href="/profile/{{ p.member.id }}">@{{ p.member.username }}</a></h4>
+                                        <h4 class="post-username"><a href="/profile/{{ p.user.id }}">@{{ p.user.username }}</a></h4>
                                         <span class="post-time">{{ p.created_at }}</span>
                                     </div>
                                 </div>
@@ -219,34 +220,23 @@
                             <div class="post-footer">
                                 <div class="post-actions">
 
-                                    {% if p is defined %}
                                     <button class="like-btn" data-post-id="{{ p.id }}">
-                                        {% if liked_post_ids is defined and p.id in liked_post_ids %}
+                                        {% if p.id in liked_post_ids %}
                                             <i class="fa-solid fa-heart" style="color:#ef4444"></i>
                                         {% else %}
                                             <i class="fa-regular fa-heart"></i>
                                         {% endif %}
                                         <span>{{ p.likes|length }}</span>
                                     </button>
-                                    {% else %}
-                                    <button class="like-btn">
-                                        <i class="fa-regular fa-heart"></i>
-                                        <span>2</span>
-                                    </button>
-                                    {% endif %}
 
-                                    <button class="comment-btn"
-                                            onclick="document.getElementById('openComment{{ p.id }}').click()">
+                                    <button
+                                        class="comment-btn"
+                                        data-url="{{ url_for('comments', id=p.id) }}">
                                         <i class="fa-regular fa-comment"></i>
-                                        <span>
-                                            {{ p.comments|length }}
-                                        </span>
+                                        <span>{{ p.comments|length }}</span>
                                     </button>
 
-                                    <button class="share-btn">
-                                        <i class="fa-solid fa-share"></i>
-                                        <span>{{ p.likes|length }}</span>
-                                    </button>
+                                    
 
                                     <a href="/comments/{{ p.id }}/"
                                     id="openComment{{ p.id }}"
@@ -254,15 +244,18 @@
 
                                 </div>
 
-                                <button class="post-event-footer"
-                                        onclick="document.getElementById('viewEvent{{ p.id }}').click()">
+                                {% if p.event != None %}
+                                <button
+                                    class="post-event-footer view-event-btn"
+                                    data-url="{{ url_for('creator_view_event', id=p.event.id) }}">
+
                                     <i class="fa-regular fa-calendar"></i>
                                     View Event
-                                </button>
 
-                                <a href="/creator/view-event/{{ p.event.id }}/"
-                                id="viewEvent{{ p.id }}"
-                                style="display:none;"></a>
+                                </button>
+                                {% endif %}
+
+                                
 
                             </div>
 

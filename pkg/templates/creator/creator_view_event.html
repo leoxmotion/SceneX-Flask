@@ -58,11 +58,7 @@
                     </div>
 
                     <!-- RSVP BLOCK -->
-                    <div class="ed-rsvp-block">
-                        
-                        <span class="ed-attendee-count">0 going</span>
-                        
-                    </div>
+                    
                 </div>
 
                 <!-- KEY DETAILS STRIP -->
@@ -100,8 +96,15 @@
                             <i class="fa-solid fa-ticket"></i>
                         </div>
                         <div class="ed-detail-text">
-                            <span class="ed-detail-label">Ticket</span>
-                            <span class="ed-detail-value">---</span>
+                            <span class="ed-detail-label">Community</span>
+                            <span class="ed-detail-value">
+                                {% if event.community != None %}
+                                    {{ event.community.name }}
+                                {% else %}
+                                    None
+                                {% endif %}
+
+                            </span>
                         </div>
                     </div>
                 </div>

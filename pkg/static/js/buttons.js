@@ -22,6 +22,12 @@ $(document).on('click', '.edit-event-btn', function () {
 
 });
 
+$(document).on('click', '#editProfileBtn', function () {
+
+    window.location.href = $(this).data('url');
+
+});
+
 $(document).on('click', '.add-ticket-btn', function () {
 
     window.location.href = $(this).data('url');
@@ -51,6 +57,15 @@ $(document).on('click', '.toggle-ticket-form-btn', function () {
 $(document).on("click", ".viewBtn", function () {
     let eventId = $(this).data("view-event");
     window.location.href = "/creator/view-event/" + eventId + "/";
+});
+
+$(document).on("click", "#createCommBtn", function () {
+    window.location.href = "/create_community/";
+});
+
+$(document).on("click", ".viewCommBtn", function () {
+    const commId = $(this).data("comm-id");
+    window.location.href = "/comm_detail/" + commId + "/";
 });
 
 });

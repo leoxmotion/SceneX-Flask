@@ -17,6 +17,29 @@ $(function(){
         });
     });
 
+     $('#commPostBtn').on('click', function(event){
+        event.preventDefault();
+
+        var form = document.getElementById('comm');
+        var myform = new FormData(form);
+        var commId = $('#comm').data('comm-id');
+
+
+        $.ajax({
+            url: '/create-comm-post/' + commId+ '/',
+            type: 'POST',
+            data: myform,
+            processData: false,
+            contentType: false,
+
+            success: function(){
+                document.location.href='/comm_detail/' + commId+ '/';
+            },
+            error: function(err){console.log(err);}
+        });
+    });
+    
+
     $('#sendComment').on('click', function(event){
         event.preventDefault();
         var form = document.getElementById('commentInput');
@@ -52,11 +75,28 @@ $(function(){
         });
     });
 
+    $('.ce-edit-btn').on('click', function(event){
+        event.preventDefault();
+        var form = document.getElementById('commEditForm');
+        var data2send = new FormData(form);
+        let commId = $(this).data("edit-comm");
+        $.ajax({
+            url: '/creator/edit-community/' + commId + '/',
+            type: 'POST',
+            data: data2send,
+            success: function(resp){
+                alert(resp);
+                document.location.href='/creator/communities/';
+            },
+            error: function(err){console.log(err);}
+        });
+    });
+
     $('.ep-save-btn').on('click', function(event){
         event.preventDefault();
         var form = document.getElementById('editForm');
         var data2send = new FormData(form);
-        alert(data2send);
+     
         $.ajax({
             url: '/change-profile/',
             type: 'POST',

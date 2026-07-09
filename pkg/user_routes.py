@@ -115,7 +115,7 @@ def profile(id):
         user_deets = User.query.get(id)
         posts = Post.query.all()
         events = Event.query.all()
-        
+        comms = Community.query.all()
         event = Event.query.filter(Event.id==Post.event_id).first()
         creator = User.query.filter(User.id==Post.creator_id).first()
         state = State.query.filter(User.state_id==State.id).first()
@@ -124,7 +124,7 @@ def profile(id):
             liked_rows = db.session.query(Like.post_id).filter(Like.user_id == user_id).all()
             liked_post_ids = {r[0] for r in liked_rows}
 
-        return render_template('user/profile.html', title="Profile", user_deets=user_deets, state=state, event=event, creator=creator, posts=posts, events=events, current_page='profile', liked_post_ids=liked_post_ids)
+        return render_template('user/profile.html', title="Profile", user_deets=user_deets, state=state, event=event, creator=creator, posts=posts, events=events, current_page='profile', liked_post_ids=liked_post_ids, comms=comms)
     else:
         flash('You must be logged in to view this page', category='errormsg')
         return redirect(url_for('login'))
@@ -191,8 +191,9 @@ def home():
         id = session.get('useronline')
         user = User.query.get(id)
         postform= PostForm()
-        posts = Post.query.filter(Post.event_id==Event.id).order_by(Post.created_at.desc()).all()
+        posts = Post.query.order_by(Post.created_at.desc()).all()
         events = Event.query.all()
+        
         postform.event_id.choices = [(s.id, s.name) for s in events]
         event = Event.query.filter(Event.id==Post.event_id).first()
         creator = User.query.filter(User.id==Post.creator_id).first()

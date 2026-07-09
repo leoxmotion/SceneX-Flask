@@ -6,7 +6,7 @@
                 <div class="ce-topbar">
                     <h2>Edit Community</h2>
 
-                    <button class="ce-edit-btn">
+                    <button class="ce-edit-btn" data-edit-comm="{{ comm.id }}" >
                         Edit Community
                     </button>
                 </div>
@@ -15,7 +15,7 @@
 
                     <!-- FORM -->
 
-                    <form id="commForm" class="ce-form" action="" method="post" enctype="multipart/form-data">
+                    <form id="commEditForm" class="ce-form" action="" method="post" enctype="multipart/form-data">
 
                         <!-- COVER -->
                         {{ commform.csrf_token() }}
@@ -77,7 +77,7 @@
                             >
 
                         </div>#}
-                        <button class="ce-edit-btn">
+                        <button class="ce-edit-btn" data-edit-comm="{{ comm.id }}">
                             Edit Community
                         </button>
 
