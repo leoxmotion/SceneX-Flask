@@ -44,17 +44,17 @@
 
                             <div class="post-header">
                                 <div class="post-user-info">
-                                  
+                                    
                                     <div class="avatar">
-                                        <img src="{{ url_for('static', filename='uploads/' ~ p.creator.profile_pic) }}"
+                                        <img src="{{ url_for('static', filename='uploads/' ~ p.user.profile_pic) }}"
                                         alt="">
                                     </div>
 
                                     <div class="px-3">
-                                        <h4 class="post-username"><a href="/profile/{{ p.creator.id }}">@{{ p.creator.username }}</a></h4>
+                                        <h4 class="post-username"><a href="/profile/{{ p.user.id }}">@{{ p.user.username }}</a></h4>
                                         <span class="post-time">{{ p.created_at }}</span>
                                     </div>
-                                   
+                                    
                                 </div>
                             </div>
 
@@ -112,12 +112,12 @@
                                 </button>
                                 {% endif %}
                             </div>
-                            <form class="cm-reply-input-bar mt-2" method="post" id="commentInput">
+                            <form class="cm-reply-input-bar mt-2" method="post" id="commCommentInput">
                                     <span class="cm-reply-to">@{{user.username}}</span>
                                     {{ commentform.csrf_token() }}
                                     {{ commentform.comment(class_="cm-reply-input", placeholder="Write a reply...", rows=1, id="commentbox") }}
                                     
-                                    <button class="cm-reply-post-btn" type="button" id="sendComment">
+                                    <button class="cm-reply-post-btn" type="button" id="sendCommComment">
                                         <i class="fa-solid fa-paper-plane"></i>
                                         
                                     </button>
@@ -143,13 +143,13 @@
                     <div class="cm-item" id="cm-1">
                         <div class="cm-avatar">
                             <img src="atar">
-                                        <img src="{{ url_for('static', filename='uploads/' ~ cm.user.profile_pic) }}" alt="" onerror="this.style.display='none'">
+                                        <img src="{{ url_for('static', filename='uploads/' ~ cm.member.profile_pic) }}" alt="" onerror="this.style.display='none'">
                         </div>
                         <div class="cm-body">
                             <div class="cm-bubble">
                                 <div class="cm-meta">
                                     
-                                    <span class="cm-username"><a href="/profile/{{ cm.user.id }}">@{{ cm.user.username }}</a></span>
+                                    <span class="cm-username"><a href="/profile/{{ cm.member.user.id }}">@{{ cm.member.user.username }}</a></span>
                                     <span class="cm-time">{{ cm.created_at.strftime("%A, %B %d, %Y at %I:%M %p") }}</span>
                                 </div>
                                 <p class="cm-text">{{ cm.comment }}</p>
@@ -159,7 +159,7 @@
                                     <i class="fa-regular fa-heart"></i>
                                     <span>0</span>
                                 </button>
-                                <button class="cm-reply-trigger" data-username="{{ cm.user.username }}">
+                                <button class="cm-reply-trigger" data-username="{{ cm.member.username }}">
                                     Reply 
                                 </button>
                                 <span class="cm-action-time"></span>

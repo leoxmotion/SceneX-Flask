@@ -162,10 +162,12 @@
                                     style="display:none;"></a>
                                     {% else %}
                                     {# Community posts: show comment count only (no like/comment action yet) #}
-                                    <span class="post-comment-count">
+                                    <button
+                                        class="comment-btn"
+                                        data-url="{{ url_for('comm_comments', id=p.id) }}">
                                         <i class="fa-regular fa-comment"></i>
-                                        {{ p.comments|length }}
-                                    </span>
+                                        <span>{{ p.comments|length }}</span>
+                                    </button>
                                     {% endif %}
 
                                 </div>

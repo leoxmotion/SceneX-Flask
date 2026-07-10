@@ -115,62 +115,40 @@
             <button class="ed-rsvp-btn btn btn-outline-secondary" style="width:100%;" type="button">Preview Community</button>
         </div>
     {% else %}
-        <div class="widget">
-            <h3>Trending Events</h3>
-            <div class="trending-list">
-                <div class="trending-item">
-                    <span class="trending-num">01</span>
-                    <div>
-                        <p>Lagos Soundwave</p>
-                        <span>2.4k going</span>
-                    </div>
-                </div>
-                <div class="trending-item">
-                    <span class="trending-num">02</span>
-                    <div>
-                        <p>Afrotech Summit</p>
-                        <span>980 going</span>
-                    </div>
-                </div>
-                <div class="trending-item">
-                    <span class="trending-num">03</span>
-                    <div>
-                        <p>Rooftop Night</p>
-                        <span>560 going</span>
-                    </div>
+    <div class="widget">
+        <h3>Trending Events</h3>
+        <div class="trending-list">
+            {% for event in default_trending_events %}
+            <div class="trending-item">
+                <span class="trending-num">0{{ loop.index }}</span>
+                <div>
+                    <p>{{ event.name }}</p>
+                    <span>{{ event.attendees|length }} going</span>
                 </div>
             </div>
+            {% else %}
+            <p style="color:rgba(240,240,248,0.4);">No trending events yet.</p>
+            {% endfor %}
         </div>
+    </div>
 
-        <div class="widget">
-            <h3>Suggested Creators</h3>
-            <div class="creator-list">
-                <div class="creator-item">
-                    <div class="creator-av" style="background:#22d3ee"></div>
-                    <div class="creator-info">
-                        <p>@harrison</p>
-                        <span class="follower-small-btn">340</span><span> followers</span>
-                    </div>
-                    <button class="follow-small-btn">Follow</button>
+    <div class="widget">
+        <h3>Suggested Creators</h3>
+        <div class="creator-list">
+            {% for creator in suggested_creators %}
+            <div class="creator-item">
+                <div class="creator-av"><img src="/static/uploads/{{ creator.profile_pic }}" alt="" onerror="this.style.display='none'"></div>
+                <div class="creator-info">
+                    <p>@{{ creator.username }}</p>
+                    <span class="follower-small-btn">{{ creator.followers|length }}</span><span> followers</span>
                 </div>
-                <div class="creator-item">
-                    <div class="creator-av" style="background:#9b5cf6"></div>
-                    <div class="creator-info">
-                        <p>@lagospadi</p>
-                        <span class="follower-small-btn">547</span><span> followers</span>
-                    </div>
-                    <button class="follow-small-btn">Follow</button>
-                </div>
-                <div class="creator-item">
-                    <div class="creator-av" style="background:#f59e0b"></div>
-                    <div class="creator-info">
-                        <p>@seunscene</p>
-                        <span class="follower-small-btn">673</span><span> followers</span>
-                    </div>
-                    <button class="follow-small-btn">Follow</button>
-                </div>
+                <button class="follow-small-btn" data-user-id="{{ creator.id }}">Follow</button>
             </div>
+            {% else %}
+            <p style="color:rgba(240,240,248,0.4);">No suggestions yet.</p>
+            {% endfor %}
         </div>
+    </div>
     {% endif %}
                 </div>
 

@@ -10,7 +10,7 @@ from pkg.forms import LoginForm, PostForm, CommentForm, ProfileForm
 from pkg.models import db
 from pkg.models import (
     User, State, Event, Post, EventCategory, Comment, Community, Like,
-    CommunityMember, CommunityPost, Follow, Notification
+    CommunityMember, CommunityPost, Follow, Notification, CommunityComment
 )
 
 
@@ -496,6 +496,54 @@ def comments(id):
         current_page='home',
         liked_post_ids=liked_post_ids,
     )
+
+@app.route('/community/comments/<int:id>/', methods=['GET', 'POST'])
+def comm_comments(id):
+    if session.get('useronline') is None:
+        flash('You must be logged in to view this page', category='errormsg')
+        return redirect(url_for('login'))
+
+    user_id = session.get('useronline')
+    user = User.query.get_or_404(user_id)
+    member = CommunityMember.query.filter(CommunityMember.user_id==user_id).first()
+    post = CommunityPost.query.get_or_404(id)
+    post.post_type = 'community'
+
+    commentform = CommentForm()
+
+    if commentform.validate_on_submit():
+        comment = CommunityComment(comment=commentform.comment.data, member_id=member.id, post_id=post.id)
+        db.session.add(comment)
+
+        # Notify post creator if it's not the commenter themselves
+        if post.user_id != user_id:
+            notif = Notification(
+                recipient_id=post.user_id,
+                actor_id=user_id,
+                type='comment',
+                post_id=post.id,
+            )
+            db.session.add(notif)
+
+        db.session.commit()
+
+    liked_rows = db.session.query(Like.post_id).filter(Like.user_id == user_id).all()
+    liked_post_ids = {r[0] for r in liked_rows}
+
+    events = Event.query.all()
+
+    return render_template(
+        'user/comm_comments.html',
+        title="Comments",
+        user=user,
+        events=events,
+        p=post,
+        commentform=commentform,
+        comment=post.comments,
+        current_page='home',
+        liked_post_ids=liked_post_ids,
+    )
+
 
 
 # ---------------------------------------------------------------------------

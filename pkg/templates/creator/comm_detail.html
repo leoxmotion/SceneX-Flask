@@ -204,12 +204,12 @@
                             <div class="post-header">
                                 <div class="post-user-info">
                                     <div class="avatar">
-                                        <img src="{{ url_for('static', filename='uploads/' ~ p.creator.profile_pic) }}"
+                                        <img src="{{ url_for('static', filename='uploads/' ~ p.user.profile_pic) }}"
                                         alt="">
                                     </div>
 
                                     <div class="px-3">
-                                        <h4 class="post-username"><a href="/profile/{{ p.creator.id }}">@{{ p.creator.username }}</a></h4>
+                                        <h4 class="post-username"><a href="/profile/{{ p.user.id }}">@{{ p.user.username }}</a></h4>
                                         <span class="post-time">{{ p.created_at }}</span>
                                     </div>
                                 </div>
@@ -252,10 +252,12 @@
                                     style="display:none;"></a>
                                     {% else %}
                                     {# Community posts: show comment count only (no like/comment action yet) #}
-                                    <span class="post-comment-count">
+                                    <button
+                                        class="comment-btn"
+                                        data-url="{{ url_for('comm_comments', id=p.id) }}">
                                         <i class="fa-regular fa-comment"></i>
-                                        {{ p.comments|length }}
-                                    </span>
+                                        <span>{{ p.comments|length }}</span>
+                                    </button>
                                     {% endif %}
 
                                 </div>

@@ -63,13 +63,22 @@
                                 <span>Events</span>
                             </div>
                         
-                            <div class="stat-item">
+                        {#    <div class="stat-item">
                                 <strong>{{ follower_count }}</strong>
                                 <span><a href="{{ url_for('followers_list', id=user_deets.id) }}">Followers</a></span>
                             </div>
                             <div class="stat-item">
                                 <strong>{{ following_count }}</strong>
                                 <span><a href="{{ url_for('following_list', id=user_deets.id) }}">Following</a></span>
+                            </div> #}
+
+                            <div class="stat-item">
+                                <strong>{{ follower_count }}</strong>
+                                <span>Followers</span>
+                            </div>
+                            <div class="stat-item">
+                                <strong>{{ following_count }}</strong>
+                                <span>Following</span>
                             </div>
                         </div>
                         {#

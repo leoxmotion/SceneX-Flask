@@ -59,6 +59,25 @@ $(function(){
         });
     });
 
+    $('#sendCommComment').on('click', function(event){
+        event.preventDefault();
+        var form = document.getElementById('commCommentInput');
+        var myform = new FormData(form);
+
+        $.ajax({
+            url: '/community/comments/' + window.post_id,
+            type: 'POST',
+            data: myform,
+            processData: false,
+            contentType: false,
+            success: function(){
+                document.location.href='/community/comments/' + window.post_id;
+                $('#commentbox').val('');
+            },
+            error: function(err){console.log(err);}
+        });
+    });
+
     $('.ce-publish-btn').on('click', function(event){
         event.preventDefault();
         var form = document.getElementById('commForm');
