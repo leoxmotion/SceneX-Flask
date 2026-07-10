@@ -142,7 +142,7 @@ def profile(id):
 
     all_posts = sorted(posts + comm_posts, key=lambda p: p.created_at, reverse=True)
 
-    events = Event.query.all()
+    events = Event.query.filter_by(creator_id=id).all()
     comms = Community.query.all()
 
     liked_rows = db.session.query(Like.post_id).filter(Like.user_id == user_id).all()
@@ -367,19 +367,21 @@ def notifications():
 
     user_id = session.get('useronline')
     user = User.query.get(user_id)
-    notifs = (Notification.query
-              .filter_by(recipient_id=user_id)
-              .order_by(Notification.created_at.desc())
-              .all())
+    notifs = Notification.query.filter_by(recipient_id=user_id).order_by(Notification.created_at.desc()).all()
     unread_count = sum(1 for n in notifs if not n.is_read)
+    is_following = False
+    if user_id != id:
+        is_following = Follow.query.filter_by(follower_id=user_id, followed_id=user.id).first() is not None
+
 
     return render_template(
         'user/notifications.html',
         title="Notifications",
         current_page='notifications',
         user=user,
-        notifications=notifs,
+        notifs=notifs,
         unread_count=unread_count,
+        is_following=is_following
     )
 
 

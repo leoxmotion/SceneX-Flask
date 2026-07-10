@@ -200,30 +200,7 @@ $(function(){
         });
     });
 
-    // Sidebar visibility on mobile
-    $('#sidebarToggle').on('click', function(){
-        $('#sidebar').toggleClass('sidebar-open');
-        $('#sidebarOverlay').toggleClass('overlay-active');
-    });
 
-    $('#sidebarOverlay').on('click', function(){
-        $('#sidebar').removeClass('sidebar-open');
-        $(this).removeClass('overlay-active');
-    });
-
-    $('#sidebar .sidebar-nav a').on('click', function(){
-        if ($(window).width() <= 768) {
-            $('#sidebar').removeClass('sidebar-open');
-            $('#sidebarOverlay').removeClass('overlay-active');
-        }
-    });
-
-    $(window).on('resize', function(){
-        if ($(window).width() > 768) {
-            $('#sidebar').removeClass('sidebar-open');
-            $('#sidebarOverlay').removeClass('overlay-active');
-        }
-    });
 
     // Global follow widget toggle
     $('.follow-small-btn').on('click', function(){

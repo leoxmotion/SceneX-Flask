@@ -64,14 +64,9 @@
 
                         {% for ticket in tickets %}
                         {% set remaining = (ticket.quantity or 0) - (ticket.sold or 0) %}
-                        {% set sold_out = remaining <= 0 %}
-
-                        <div class="rsvp-ticket-card {% if ticket.category == 'free' %}{% elif sold_out %}rsvp-ticket-sold-out{% elif ticket.category == 'table' %}{% else %}{% endif %}"
-                             data-ticket-id="{{ ticket.id }}"
-                             data-ticket="ticket_{{ ticket.id }}"
-                             data-price="{{ ticket.price | int }}"
-                             data-max="{{ ticket.max_per_order }}">
-
+                        {% set unlimited = (ticket.quantity or 0) == 0 %}
+                        {% set sold_out = (not unlimited) and remaining <= 0 %}
+                        <div class="rsvp-ticket-card {% if sold_out %}rsvp-ticket-sold-out{% endif %}" data-ticket-id="{{ ticket.id }}" data-ticket="ticket_{{ ticket.id }}" data-price="{{ ticket.price | int }}" data-max="{{ ticket.max_per_order }}">
                             <div class="rsvp-ticket-left">
                                 <div class="rsvp-ticket-icon
                                     {% if ticket.category == 'free' %}free-icon
@@ -95,8 +90,8 @@
                                     </div>
                                     {% if ticket.description %}<p>{{ ticket.description }}</p>{% endif %}
                                     <span class="rsvp-ticket-avail" {% if sold_out %}style="color:rgba(240,240,248,0.3);"{% endif %}>
-                                        <i class="fa-solid fa-circle" style="color:{% if sold_out %}#ef4444{% elif remaining <= 20 %}#f59e0b{% else %}#22c55e{% endif %};font-size:0.4375rem;"></i>
-                                        {% if sold_out %}Sold out{% elif ticket.quantity == 0 %}Unlimited spots{% else %}{{ remaining }} spot{{ 's' if remaining != 1 else '' }} left{% endif %}
+                                        <i class="fa-solid fa-circle" style="color:{% if sold_out %}#ef4444{% elif not unlimited and remaining <= 20 %}#f59e0b{% else %}#22c55e{% endif %};font-size:0.4375rem;"></i>
+                                        {% if sold_out %}Sold out{% elif unlimited %}Unlimited spots{% else %}{{ remaining }} spot{{ 's' if remaining != 1 else '' }} left{% endif %}
                                     </span>
                                 </div>
                             </div>
@@ -120,13 +115,13 @@
                                 {% endif %}
                             </div>
                         </div>
+
                         {% else %}
                         <p style="color:rgba(240,240,248,0.4);text-align:center;padding:2rem 0;">
                             No tickets available for this event yet.
                         </p>
                         {% endfor %}
-
-                    </div></div>
+                    </div>
 
                     <!-- ORDER SUMMARY -->
                     <div class="rsvp-summary" id="rsvpSummary" style="display:none;">
@@ -219,7 +214,7 @@
                             <i class="fa-solid fa-arrow-left"></i>
                             Back
                         </button>
-                        <button class="rsvp-next-btn" id="nextStep2" onclick="goToStep(3)">
+                        <button class="rsvp-next-btn" id="nextStep2" onclick="handleStep2Continue()">
                             Continue to Payment
                             <i class="fa-solid fa-arrow-right"></i>
                         </button>
@@ -233,90 +228,16 @@
                 <div class="rsvp-step-content" id="rsvp-step-3" style="display:none;">
 
                     <h2 class="rsvp-section-heading">Payment</h2>
-                    <p class="rsvp-section-sub">Secure payment powered by Paystack</p>
+                    <p class="rsvp-section-sub">You'll be securely redirected to Paystack to complete payment</p>
 
-                    <!-- PAYMENT METHODS -->
-                    <div class="rsvp-payment-methods">
-                        <button class="rsvp-pay-method active-pay-method" data-method="card">
-                            <i class="fa-regular fa-credit-card"></i>
-                            Card
-                        </button>
-                        <button class="rsvp-pay-method" data-method="transfer">
-                            <i class="fa-solid fa-building-columns"></i>
-                            Bank Transfer
-                        </button>
-                        <button class="rsvp-pay-method" data-method="ussd">
-                            <i class="fa-solid fa-mobile-screen"></i>
-                            USSD
-                        </button>
-                    </div>
-
-                    <!-- CARD FORM -->
-                    <div class="rsvp-card-form" id="payMethodCard">
-                        <div class="rsvp-field">
-                            <label>Card Number</label>
-                            <div class="rsvp-card-input-wrap">
-                                <input type="text" class="rsvp-input" id="cardNumber" placeholder="0000  0000  0000  0000" maxlength="19">
-                                <div class="rsvp-card-icons">
-                                    <i class="fa-brands fa-cc-visa" style="color:#1a1f71;"></i>
-                                    <i class="fa-brands fa-cc-mastercard" style="color:#eb001b;"></i>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="rsvp-field-row">
-                            <div class="rsvp-field">
-                                <label>Expiry Date</label>
-                                <input type="text" class="rsvp-input" id="cardExpiry" placeholder="MM / YY" maxlength="7">
-                            </div>
-                            <div class="rsvp-field">
-                                <label>CVV</label>
-                                <div class="rsvp-card-input-wrap">
-                                    <input type="text" class="rsvp-input" id="cardCvv" placeholder="123" maxlength="4">
-                                    <i class="fa-solid fa-circle-info" style="color:rgba(240,240,248,0.3);font-size:0.875rem;" title="3-digit code on the back of your card"></i>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="rsvp-field">
-                            <label>Cardholder Name</label>
-                            <input type="text" class="rsvp-input" id="cardName" placeholder="Name on card">
-                        </div>
-
-                        <div class="rsvp-secure-note">
-                            <i class="fa-solid fa-lock"></i>
-                            Your payment is secured with 256-bit SSL encryption via Paystack
-                        </div>
-                    </div>
-
-                    <!-- BANK TRANSFER FORM -->
-                    <div class="rsvp-card-form" id="payMethodTransfer" style="display:none;">
-                        <div class="rsvp-transfer-info">
-                            <p>After clicking Pay, you will receive a unique account number to transfer to. Your ticket will be issued once payment is confirmed.</p>
-                        </div>
-                    </div>
-
-                    <!-- USSD -->
-                    <div class="rsvp-card-form" id="payMethodUssd" style="display:none;">
-                        <div class="rsvp-field">
-                            <label>Select your bank</label>
-                            <select class="rsvp-input rsvp-select" id="ussdBank">
-                                <option value="">-- Choose bank --</option>
-                                <option>GTBank</option>
-                                <option>Access Bank</option>
-                                <option>First Bank</option>
-                                <option>UBA</option>
-                                <option>Zenith Bank</option>
-                                <option>Sterling Bank</option>
-                            </select>
-                        </div>
-                        <div class="rsvp-transfer-info">
-                            <p>A USSD code will be generated after selecting your bank. Dial the code on your phone to complete payment.</p>
-                        </div>
+                    <div class="rsvp-transfer-info" style="margin-bottom:1.5rem;">
+                        <i class="fa-solid fa-lock" style="margin-right:0.5rem;"></i>
+                        Card, bank transfer, and USSD are all handled on Paystack's secure payment page.
+                        We never see or store your card details.
                     </div>
 
                     <!-- ORDER RECAP -->
-                    <div class="rsvp-summary" style="margin-top:1.5rem;">
+                    <div class="rsvp-summary">
                         <h3 class="rsvp-summary-title">Payment Summary</h3>
                         <div class="rsvp-summary-items" id="summaryItems3"></div>
                         <div class="rsvp-summary-divider"></div>
@@ -379,15 +300,15 @@
                             <div class="rsvp-stub-bottom">
                                 <div class="rsvp-stub-detail">
                                     <span class="rsvp-stub-label">Ticket Type</span>
-                                    <span class="rsvp-stub-value" id="confirmTicketType">Regular x1</span>
+                                    <span class="rsvp-stub-value" id="confirmTicketType">—</span>
                                 </div>
                                 <div class="rsvp-stub-detail">
-                                    <span class="rsvp-stub-label">Order ID</span>
-                                    <span class="rsvp-stub-value">#SCX-2026-00841</span>
+                                    <span class="rsvp-stub-label">Order Reference</span>
+                                    <span class="rsvp-stub-value" id="confirmReference">—</span>
                                 </div>
                                 <div class="rsvp-stub-detail">
                                     <span class="rsvp-stub-label">Name</span>
-                                    <span class="rsvp-stub-value" id="confirmName">Leo Adedeji</span>
+                                    <span class="rsvp-stub-value" id="confirmName">—</span>
                                 </div>
                                 <div class="rsvp-stub-qr">
                                     <!-- QR placeholder -->
@@ -401,14 +322,14 @@
 
                         <!-- ACTIONS -->
                         <div class="rsvp-confirm-actions">
-                            <button class="rsvp-confirm-btn">
+                            <a class="rsvp-confirm-btn" id="downloadTicketBtn" href="#" download>
                                 <i class="fa-solid fa-download"></i>
                                 Download Ticket
-                            </button>
-                            <button class="rsvp-confirm-btn rsvp-share-confirm-btn">
+                            </a>
+                            <!-- <button class="rsvp-confirm-btn rsvp-share-confirm-btn">
                                 <i class="fa-solid fa-share-nodes"></i>
                                 Share
-                            </button>
+                            </button> -->
                         </div>
 
                         <a href="{{ url_for('home') }}" class="rsvp-home-link">
@@ -423,24 +344,24 @@
 
             <!-- RIGHT SIDEBAR -->
             <aside class="col-md-3 right-sidebar">
-                <div class="widget">
+                    <div class="widget">
                     <h3>Event Info</h3>
                     <div class="cd-about-list" style="margin-top:1rem;">
                         <div class="cd-about-item">
                             <i class="fa-regular fa-calendar"></i>
-                            <span>Fri, May 30, 2026</span>
+                            <span>{{ event.event_start.strftime('%a, %b %d, %Y') if event.event_start else 'TBD' }}</span>
                         </div>
                         <div class="cd-about-item">
                             <i class="fa-regular fa-clock"></i>
-                            <span>8:00 PM</span>
+                            <span>{{ event.event_start.strftime('%I:%M %p') if event.event_start else '' }}</span>
                         </div>
                         <div class="cd-about-item">
                             <i class="fa-solid fa-location-dot"></i>
-                            <span>Landmark Beach, VI</span>
+                            <span>{{ event.address or 'TBD' }}</span>
                         </div>
                         <div class="cd-about-item">
                             <i class="fa-solid fa-users"></i>
-                            <span>2.4k going</span>
+                            <span>{{ event.attendees | length }} going</span>
                         </div>
                     </div>
                 </div>
@@ -488,7 +409,8 @@ var EVENT_ID = {{ event.id }};
 var tickets = {
     {% for ticket in tickets %}
     {% set remaining = (ticket.quantity or 0) - (ticket.sold or 0) %}
-    {% if remaining > 0 or ticket.quantity == 0 %}
+    {% set unlimited = (ticket.quantity or 0) == 0 %}
+    {% if unlimited or remaining > 0 %}
     'ticket_{{ ticket.id }}': {
         id: {{ ticket.id }},
         name: {{ ticket.name | tojson }},
@@ -521,14 +443,31 @@ function changeQty(type, change) {
 }
 
 // ================================
+// STEP 2 -> STEP 3 VALIDATION
+// ================================
+function handleStep2Continue() {
+    var email = $('#emailAddress').val();
+    var firstName = $('#firstName').val();
+    var lastName = $('#lastName').val();
+
+    if (!firstName || !lastName || !email) {
+        alert('Please fill in your name and email.');
+        return;
+    }
+    if (!$('#termsCheck').is(':checked')) {
+        alert('Please agree to the Terms & Conditions and Refund Policy to continue.');
+        return;
+    }
+    goToStep(3);
+}
+
+// ================================
 // RSVP SUBMIT
 // ================================
 function submitRsvp() {
     var selections = [];
     $.each(tickets, function(key, t) {
-        if (t.qty > 0) {
-            selections.push({ ticket_id: t.id, qty: t.qty });
-        }
+        if (t.qty > 0) selections.push({ ticket_id: t.id, qty: t.qty });
     });
 
     if (selections.length === 0) {
@@ -536,25 +475,39 @@ function submitRsvp() {
         return;
     }
 
-    var $btn = $('#payNowBtn').prop('disabled', true).text('Processing...');
+    var email = $('#emailAddress').val();
+    if (!email) {
+        alert('Please enter your email in Step 2.');
+        goToStep(2);
+        return;
+    }
+
+    var $btn = $('#payNowBtn').prop('disabled', true).html('Processing...');
 
     $.ajax({
         url: '/rsvp/submit/',
         method: 'POST',
         contentType: 'application/json',
-        data: JSON.stringify({ event_id: EVENT_ID, selections: selections }),
+        data: JSON.stringify({
+            event_id: EVENT_ID,
+            selections: selections,
+            email: email,
+            first_name: $('#firstName').val(),
+            last_name: $('#lastName').val(),
+            phone: $('#phoneNumber').val()
+        }),
         success: function(res) {
-            if (res.success) {
-                goToStep(4);
-                var name = ($('#firstName').val() + ' ' + $('#lastName').val()).trim();
-                if (name) $('#confirmName').text(name);
-                var typeLabels = selections.map(function(s) {
-                    return tickets['ticket_' + s.ticket_id].name + ' x' + s.qty;
-                }).join(', ');
-                $('#confirmTicketType').text(typeLabels);
-            } else {
+            if (!res.success) {
                 alert(res.message || 'RSVP failed. Please try again.');
                 $btn.prop('disabled', false).html('<i class="fa-solid fa-lock"></i> Pay Now');
+                return;
+            }
+            if (res.free) {
+                // No payment needed, go straight to the server for the real confirmation state
+                window.location = '/rsvp/' + EVENT_ID + '/?reference=' + res.reference;
+            } else {
+                // Send the browser to Paystack's own hosted page to enter card details
+                window.location = res.authorization_url;
             }
         },
         error: function(xhr) {
@@ -565,6 +518,30 @@ function submitRsvp() {
         }
     });
 }
+
+// ================================
+// REHYDRATE CONFIRMATION FROM SERVER
+// (needed because a real Paystack redirect is a fresh page load,
+// all in-memory JS state from step 1/2 is gone by the time we land back here)
+// ================================
+$(function() {
+    var params = new URLSearchParams(window.location.search);
+    var reference = params.get('reference');
+    if (!reference) return;
+
+    $.get('/rsvp/order/' + reference + '/', function(res) {
+        if (!res.success) return;
+        var order = res.order;
+        $('#confirmReference').text(order.reference);
+        $('#confirmName').text(order.email);
+        $('#confirmTicketType').text(
+            order.items.map(function(i) { return i.name + ' x' + i.quantity; }).join(', ')
+        );
+        goToStep(4);
+    });
+
+    $('#downloadTicketBtn').attr('href', '/rsvp/ticket/' + reference + '/download/');
+});
 
 // ================================
 // UPDATE SUMMARY
@@ -581,7 +558,6 @@ function updateSummary() {
             subtotal += lineTotal;
             hasTickets = true;
 
-            var priceStr = t.price === 0 ? 'Free' : '₦' + t.price.toLocaleString();
             var lineTotalStr = t.price === 0 ? 'Free' : '₦' + lineTotal.toLocaleString();
 
             itemsHtml += '<div class="rsvp-summary-row">' +
@@ -642,35 +618,6 @@ function goToStep(step) {
     $('.rsvp-page').scrollTop(0);
     window.scrollTo(0, 0);
 }
-
-// ================================
-// PAYMENT METHOD TOGGLE
-// ================================
-$('.rsvp-pay-method').on('click', function() {
-    $('.rsvp-pay-method').removeClass('active-pay-method');
-    $(this).addClass('active-pay-method');
-
-    var method = $(this).data('method');
-    $('.rsvp-card-form').hide();
-    $('#payMethod' + method.charAt(0).toUpperCase() + method.slice(1)).show();
-});
-
-// ================================
-// CARD NUMBER FORMATTING
-// ================================
-$('#cardNumber').on('input', function() {
-    var val = $(this).val().replace(/\D/g, '').substring(0, 16);
-    var formatted = val.match(/.{1,4}/g);
-    $(this).val(formatted ? formatted.join('  ') : '');
-});
-
-$('#cardExpiry').on('input', function() {
-    var val = $(this).val().replace(/\D/g, '').substring(0, 4);
-    if (val.length >= 2) {
-        val = val.substring(0, 2) + ' / ' + val.substring(2);
-    }
-    $(this).val(val);
-});
 
 </script>
 

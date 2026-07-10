@@ -24,7 +24,7 @@
                             
                             
                             {%else%}
-                            <form action="{{ url_for('follow_user', user_id=user_deets.id) }}" method="POST">
+                            <form action="{{ url_for('toggle_follow', user_id=user_deets.id) }}" method="POST">
                                 <button type="submit" class="btn-follow">{% if is_following %}Unfollow{% else %}Follow{% endif %}</button>
                             </form>
                             
@@ -99,11 +99,17 @@
                 <div class="tab-content active-content" id="tab-posts">
                 {% if posts %}
                     {% for p in posts %}
-                    
+                        <div class="post-card{% if p.post_type == 'community' %} community-post-card{% endif %}">
 
-                            <div class="post-card">
+                            {# Community badge #}
+                            {% if p.post_type == 'community' and p.community %}
+                            <div class="community-post-label">
+                                <i class="fa-solid fa-users"></i>
+                                <a href="{{ url_for('comm_detail', id=p.community.id) }}">{{ p.community.name }}</a>
+                            </div>
+                            {% endif %}
 
-                                {% if p.event != None %}
+                            {% if p.event != None %}
                             <div class="post-event">
                                 <div class="row">
                                     <div class="col-12 text-center event-pill">
@@ -129,66 +135,66 @@
                             </div>
                             {% endif %}
 
-                                <div class="post-header">
-                                    <div class="post-user-info">
-                                        <div class="avatar">
-                                            <img src="{{ url_for('static', filename='uploads/' ~ p.creator.profile_pic) }}"
-                        alt="" >
-                                        </div>
+                            <div class="post-header">
+                                <div class="post-user-info">
+                                    <div class="avatar">
+                                        <img src="{{ url_for('static', filename='uploads/' ~ p.creator.profile_pic) }}"
+                                        alt="">
+                                    </div>
 
-                                        <div class="px-3">
-                                            <h5 class="post-username">@{{ p.creator.username }}</h5>
-                                            <span class="post-time">{{ p.created_at }}</span>
-                                        </div>
+                                    <div class="px-3">
+                                        <h4 class="post-username"><a href="/profile/{{ p.creator.id }}">@{{ p.creator.username }}</a></h4>
+                                        <span class="post-time">{{ p.created_at }}</span>
                                     </div>
                                 </div>
+                            </div>
 
-                                <p class="post-text">
-                                    {{ p.content }}
-                                </p>
+                            <p class="post-text">
+                                {{ p.content }}
+                            </p>
 
-                                {% if p.media %}
-                                <div class="post-image">
-                                    <img src="{{ url_for('static', filename='uploads/' ~ p.media) }}"
-                                        class="img-fluid"
-                                        alt="">
-                                </div>
-                                {% endif %}
+                            {% if p.media %}
+                            <div class="post-image">
+                                <img src="{{ url_for('static', filename='uploads/' ~ p.media) }}"
+                                    class="img-fluid"
+                                    alt="">
+                            </div>
+                            {% endif %}
 
-                                <div class="post-footer">
-                                    <div class="post-actions">
+                            <div class="post-footer">
+                                <div class="post-actions">
 
-                                        {% if p is defined %}
-                                        <button class="like-btn" data-post-id="{{ p.id }}">
-                                            {% if liked_post_ids is defined and p.id in liked_post_ids %}
-                                                <i class="fa-solid fa-heart" style="color:#ef4444"></i>
-                                            {% else %}
-                                                <i class="fa-regular fa-heart"></i>
-                                            {% endif %}
-                                            <span>{{ p.likes|length }}</span>
-                                        </button>
+                                    {% if p.post_type == 'regular' %}
+                                    <button class="like-btn" data-post-id="{{ p.id }}">
+                                        {% if p.id in liked_post_ids %}
+                                            <i class="fa-solid fa-heart" style="color:#ef4444"></i>
                                         {% else %}
-                                        <button class="like-btn">
                                             <i class="fa-regular fa-heart"></i>
-                                            <span>2</span>
-                                        </button>
                                         {% endif %}
+                                        <span>{{ p.likes|length }}</span>
+                                    </button>
 
-                                        <button
+                                    <button
                                         class="comment-btn"
                                         data-url="{{ url_for('comments', id=p.id) }}">
                                         <i class="fa-regular fa-comment"></i>
                                         <span>{{ p.comments|length }}</span>
                                     </button>
 
-                                        
-                                        <a href="/comments/{{ p.id }}/"
-                                        id="openComment{{ p.id }}"
-                                        style="display:none;"></a>
+                                    <a href="/comments/{{ p.id }}/"
+                                    id="openComment{{ p.id }}"
+                                    style="display:none;"></a>
+                                    {% else %}
+                                    {# Community posts: show comment count only (no like/comment action yet) #}
+                                    <span class="post-comment-count">
+                                        <i class="fa-regular fa-comment"></i>
+                                        {{ p.comments|length }}
+                                    </span>
+                                    {% endif %}
 
-                                    </div>
+                                </div>
 
-                                    {% if p.event != None %}
+                                {% if p.event != None %}
                                 <button
                                     class="post-event-footer view-event-btn"
                                     data-url="{{ url_for('creator_view_event', id=p.event.id) }}">
@@ -199,15 +205,11 @@
                                 </button>
                                 {% endif %}
 
-                                    <a href="/creator/view-event/{{ p.event.id }}/"
-                                    id="viewEvent{{ p.id }}"
-                                    style="display:none;"></a>
-
-                                </div>
+                                
 
                             </div>
 
-                    
+                        </div>
                     {% endfor %}
                 {% else %}
                         <h3 class="text-white">No Posts Yet</h3>

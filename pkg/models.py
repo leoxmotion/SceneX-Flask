@@ -356,3 +356,32 @@ class Notification(db.Model):
 
 
 
+class TicketOrder(db.Model):
+    __tablename__ = 'ticket_order'
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    event_id = db.Column(db.Integer, db.ForeignKey('event.id'), nullable=False)
+    reference = db.Column(db.String(100), unique=True, nullable=False)
+    email = db.Column(db.String(255), nullable=False)
+    total_amount = db.Column(db.Numeric(10, 2), nullable=False)
+    status = db.Column(db.Enum('pending', 'paid', 'failed', name='order_status'), server_default='pending', nullable=False)
+    created_at = db.Column(db.DateTime(), default=datetime.utcnow)
+    paid_at = db.Column(db.DateTime())
+
+    user = db.relationship('User')
+    event = db.relationship('Event')
+    items = db.relationship('TicketOrderItem', back_populates='order', cascade='all, delete-orphan')
+
+
+class TicketOrderItem(db.Model):
+    __tablename__ = 'ticket_order_item'
+
+    id = db.Column(db.Integer, primary_key=True)
+    order_id = db.Column(db.Integer, db.ForeignKey('ticket_order.id'), nullable=False)
+    ticket_id = db.Column(db.Integer, db.ForeignKey('event_ticket.id'), nullable=False)
+    quantity = db.Column(db.Integer, nullable=False)
+    unit_price = db.Column(db.Numeric(10, 2), nullable=False)
+
+    order = db.relationship('TicketOrder', back_populates='items')
+    ticket = db.relationship('EventTicket')

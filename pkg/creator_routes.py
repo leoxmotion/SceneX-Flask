@@ -92,9 +92,6 @@ def creator_view_event(id):
         user_id = session.get('useronline')
         user = User.query.get(user_id)
         event = Event.query.get_or_404(id)
-        if event.creator_id != user_id:
-            flash('Unauthorized', category='errormsg')
-            return redirect(url_for('creator_events'))
         
         category = EventCategory.query.get(event.cat_id)
         creator = User.query.get(event.creator_id)

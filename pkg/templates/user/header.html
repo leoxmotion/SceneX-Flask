@@ -36,10 +36,10 @@
                             <i class="fa-solid fa-bell"></i>
                             <span class="notif-dot"></span>
                         </a>
-                        {#
+                        
                         <a href="/profile/{{ session.get('useronline') }}/" class="mobile-nav-avatar">
-                            <img src="/static/images/dp1.jpg" alt="" onerror="this.style.display='none'">
-                        </a> #}
+                            <img src="/static/uploads/{{ session[useronline] }}.profile_pic" alt="" onerror="this.style.display='none'">
+                        </a> 
                     </div>
 
                 </nav>
@@ -71,6 +71,11 @@
                         <a href="/creator/events/" class="{% if current_page == 'events' %}active-nav{% endif %}">
                             <i class="fa-regular fa-calendar-days"></i>
                             My Events
+                        </a>
+
+                        <a href="/notifications/" class="{% if current_page == 'notifications' %}active-nav{% endif %}">
+                            <i class="fa-regular fa-bell"></i>
+                            Notifications
                         </a>
                         
                         <a href="/profile/{{ session.get('useronline') }}/" class="{% if current_page == 'profile' %}active-nav{% endif %}">
