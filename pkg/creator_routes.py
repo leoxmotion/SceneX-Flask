@@ -7,7 +7,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from pkg import app, csrf
 from pkg.forms import LoginForm, EventForm, CommForm, PostForm, CommPostForm
 from pkg.models import db
-from pkg.models import User, Event, EventCategory, EventLineup, State, Lga, Community, Post, CommunityPost, CommunityMember, CommunityComment, EventTicket, Like
+from pkg.models import User, Event, EventCategory, EventLineup, State, Lga, Community, Post, CommunityPost, CommunityMember, CommunityComment, EventTicket, Like, TicketOrder
 
 @app.route('/creator/events/')
 def creator_events():
@@ -99,12 +99,14 @@ def creator_view_event(id):
         lga = Lga.query.get(event.lga_id)
         posts = Post.query.filter(Post.event_id==event.id).all()
         tickets = EventTicket.query.filter_by(event_id=event.id).all()
+        orders = TicketOrder.query.filter_by(event_id=event.id, status='paid').order_by(TicketOrder.paid_at.desc()).all()
+        total_tickets_sold = sum(item.quantity for order in orders for item in order.items)
 
         liked_post_ids = set()
         liked_rows = db.session.query(Like.post_id).filter(Like.user_id == user_id).all()
         liked_post_ids = {r[0] for r in liked_rows}
 
-        return render_template('creator/creator_view_event.html', title="View Event", event=event, category=category, creator=creator, state=state, lga=lga, user=user, posts=posts, tickets=tickets, current_page='events', liked_post_ids=liked_post_ids)
+        return render_template('creator/creator_view_event.html', title="View Event", event=event, category=category, creator=creator, state=state, lga=lga, user=user, posts=posts, tickets=tickets, orders=orders, total_tickets_sold=total_tickets_sold, current_page='events', liked_post_ids=liked_post_ids)
     else:
         flash('You must be logged in to view this page', category='errormsg')
         return redirect(url_for('login'))

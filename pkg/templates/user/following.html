@@ -1,0 +1,56 @@
+{% include "user/header.html" %}
+
+            <!-- MAIN -->
+            <main class="col-lg-7 offset-lg-2 profile-main">
+
+                <!-- TOP BAR -->
+                <div class="rsvp-topbar">
+                    <a href="{{ url_for('profile', id=user.id) }}" class="back-link">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        Back to Profile
+                    </a>
+                    <span class="rsvp-topbar-title">{{ user.username }} Follows</span>
+                    <div style="width:5rem;"></div>
+                </div>
+
+                <!-- TAB SWITCHER -->
+                <div class="profile-tabs">
+                    <a href="{{ url_for('followers_list', id=user.id) }}" class="profile-tab">
+                        Followers
+                    </a>
+                    <a href="{{ url_for('following_list', id=user.id) }}" class="profile-tab active-tab">
+                        Following <span class="tab-count">{{ following|length }}</span>
+                    </a>
+                </div>
+
+                <div class="creator-list" style="margin-top:1.5rem;">
+                    {% for followed in following %}
+                    <div class="creator-item">
+                        <a href="{{ url_for('profile', id=followed.id) }}" class="creator-av">
+                            <img src="/static/uploads/{{ followed.profile_pic }}" alt="{{ followed.username }}" onerror="this.style.display='none'">
+                        </a>
+                        <div class="creator-info">
+                            <a href="{{ url_for('profile', id=followed.id) }}" style="text-decoration:none;color:inherit;">
+                                <p>{{ followed.fullname }}</p>
+                                <span>@{{ followed.username }}</span>
+                            </a>
+                        </div>
+                        {% if followed.id != session['useronline'] %}
+                        <form action="{{ url_for('toggle_follow', user_id=followed.id) }}" method="POST" class="follow-inline-form">
+                            <button type="submit" class="follow-small-btn {{ 'following' if followed.id in viewer_following_ids }}">
+                                {{ 'Following' if followed.id in viewer_following_ids else 'Follow' }}
+                            </button>
+                        </form>
+                        {% endif %}
+                    </div>
+                    {% else %}
+                    <p style="color:rgba(240,240,248,0.4);text-align:center;padding:2rem 0;">
+                        Not following anyone yet.
+                    </p>
+                    {% endfor %}
+                </div>
+
+            </main>
+
+            {% set sidebar_mode = 'profile' %}
+{% include "user/footer.html" %}

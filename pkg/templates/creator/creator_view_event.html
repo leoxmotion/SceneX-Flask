@@ -123,7 +123,7 @@
                     <button class="ed-tab active-ed-tab" data-tab="about">About</button>
                     <button class="ed-tab" data-tab="posts">Posts</button>
                     <button class="ed-tab" data-tab="tickets">Tickets</button>
-                  {#  <button class="ed-tab" data-tab="attendees">Attendees</button> #}
+                    <button class="ed-tab" data-tab="attendees">Attendees</button>
                     <button class="ed-tab" data-tab="location">Location</button>
                 </div>
 
@@ -166,6 +166,58 @@
                                     <!-- <p>Click "Add Tickets" to create your first ticket.</p> -->
                                 </div>
                             {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB: ATTENDEES -->
+                <div class="ed-tab-content" id="ed-tab-attendees">
+                    <div class="ed-section">
+                        <h3 class="ed-section-title">Attendees</h3>
+                        {% if is_owner %}
+                        <p class="ed-section-sub">
+                            {{ orders|length }} RSVP{{ 's' if orders|length != 1 else '' }}
+                            &middot;
+                            {{ total_tickets_sold }} ticket{{ 's' if total_tickets_sold != 1 else '' }} sold
+                        </p>
+                        {% else %}
+                        <p class="ed-section-sub">
+                            {{ orders|length }} {{ 'person' if orders|length == 1 else 'people' }} going
+                        </p>
+                        {% endif %}
+
+                        <div class="ed-attendee-list">
+                            {% for order in orders %}
+                            <div class="ed-attendee-row">
+                                <div class="ed-attendee-info">
+                                    <div class="avatar">
+                                        <img src="{{ url_for('static', filename='uploads/' ~ order.user.profile_pic) }}" alt="">
+                                    </div>
+                                    <div class="px-3">
+                                        <a href="{{ url_for('profile', id=order.user.id) }}" class="ed-attendee-name">{{ order.user.fullname }}</a>
+                                        {% if is_owner %}
+                                        <span class="ed-attendee-email">{{ order.email }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                {% if is_owner %}
+                                <div class="ed-attendee-tickets">
+                                    {% for item in order.items %}
+                                    <span class="ed-attendee-ticket-pill">{{ item.ticket.name }} x{{ item.quantity }}</span>
+                                    {% endfor %}
+                                </div>
+                                <div class="ed-attendee-meta">
+                                    <span class="ed-attendee-ref">{{ order.reference }}</span>
+                                    <span class="ed-attendee-date">{{ order.paid_at.strftime('%b %d, %Y') if order.paid_at else '' }}</span>
+                                </div>
+                                {% endif %}
+                            </div>
+                            {% else %}
+                            <div class="empty-state">
+                                <h4>No one has RSVP'd yet.</h4>
+                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
@@ -330,5 +382,3 @@
 
             {% set sidebar_mode = 'event' %}
             {% include 'user/footer.html' %}
-
-

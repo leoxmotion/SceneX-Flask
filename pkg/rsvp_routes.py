@@ -79,7 +79,7 @@ def rsvp_submit():
     try:
         resp = requests.post(
             'https://api.paystack.co/transaction/initialize',
-            headers={'Authorization': f'Bearer sk_test_937d94b9d037534a0187b6a3134bb3bf8190da2e'},
+            headers={'Authorization': f'Bearer {PAYSTACK_SECRET}'},
             json={'email': email, 'amount': int(grand_total * 100), 'reference': reference, 'callback_url': callback_url},
             timeout=15
         ).json()
@@ -116,7 +116,7 @@ def rsvp_verify():
     order = TicketOrder.query.filter_by(reference=reference).first_or_404()
     if order.status != 'paid':
         resp = requests.get(f'https://api.paystack.co/transaction/verify/{reference}',
-                             headers={'Authorization': f'Bearer sk_test_937d94b9d037534a0187b6a3134bb3bf8190da2e'}).json()
+                             headers={'Authorization': f'Bearer {PAYSTACK_SECRET}'}).json()
         data = resp.get('data', {})
         if resp.get('status') and data.get('status') == 'success' and int(data.get('amount', 0)) == int(order.total_amount * 100):
             _fulfil_order(order)

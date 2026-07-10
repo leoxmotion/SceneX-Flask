@@ -63,15 +63,15 @@
                                 <span>Events</span>
                             </div>
                         
-                        {#    <div class="stat-item">
+                          <div class="stat-item">
                                 <strong>{{ follower_count }}</strong>
                                 <span><a href="{{ url_for('followers_list', id=user_deets.id) }}">Followers</a></span>
                             </div>
                             <div class="stat-item">
                                 <strong>{{ following_count }}</strong>
                                 <span><a href="{{ url_for('following_list', id=user_deets.id) }}">Following</a></span>
-                            </div> #}
-
+                            </div> 
+                             {# 
                             <div class="stat-item">
                                 <strong>{{ follower_count }}</strong>
                                 <span>Followers</span>
@@ -79,20 +79,9 @@
                             <div class="stat-item">
                                 <strong>{{ following_count }}</strong>
                                 <span>Following</span>
-                            </div>
+                            </div>#}
                         </div>
-                        {#
                         
-                        <div class="interest-tags">
-                            <span class="interest-tag">#Afrobeats</span>
-                            <span class="interest-tag">#Nightlife</span>
-                            <span class="interest-tag">#Tech</span>
-                            <span class="interest-tag">#Design</span>
-                            <span class="interest-tag">#Music</span>
-                        </div> 
-                    </div>
-                </div>
-                #}
 
                 <!-- TABS -->
                 <div class="profile-tabs">

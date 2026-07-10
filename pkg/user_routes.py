@@ -369,10 +369,7 @@ def notifications():
     user = User.query.get(user_id)
     notifs = Notification.query.filter_by(recipient_id=user_id).order_by(Notification.created_at.desc()).all()
     unread_count = sum(1 for n in notifs if not n.is_read)
-    is_following = False
-    if user_id != id:
-        is_following = Follow.query.filter_by(follower_id=user_id, followed_id=user.id).first() is not None
-
+    
 
     return render_template(
         'user/notifications.html',
@@ -381,7 +378,7 @@ def notifications():
         user=user,
         notifs=notifs,
         unread_count=unread_count,
-        is_following=is_following
+        
     )
 
 
@@ -505,7 +502,10 @@ def comm_comments(id):
 
     user_id = session.get('useronline')
     user = User.query.get_or_404(user_id)
-    member = CommunityMember.query.filter(CommunityMember.user_id==user_id).first()
+    member = CommunityMember.query.filter_by(user_id=user_id, comm_id=post.comm_id).first()
+    if not member:
+        flash('You must join this community to comment', category='errormsg')
+        return redirect(url_for('comm_detail', id=post.comm_id))
     post = CommunityPost.query.get_or_404(id)
     post.post_type = 'community'
 
