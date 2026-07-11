@@ -6,5 +6,12 @@ class GeneralConfig(object):
     PAYSTACK_PUBLIC_KEY = os.environ.get("PAYSTACK_PUBLIC_KEY")
     
 class LiveConfig(GeneralConfig):
-    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL")
+    SQLALCHEMY_DATABASE_URI = (
+        f"mysql+mysqlconnector://"
+        f"{os.getenv('MYSQLUSER')}:"
+        f"{os.getenv('MYSQLPASSWORD')}@"
+        f"{os.getenv('MYSQLHOST')}:"
+        f"{os.getenv('MYSQLPORT')}/"
+        f"{os.getenv('MYSQLDATABASE')}"
+)
     SQLALCHEMY_TRACK_MODIFICATIONS=False
