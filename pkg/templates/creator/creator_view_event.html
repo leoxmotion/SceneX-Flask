@@ -14,8 +14,10 @@
                             <i class="fa-solid fa-share-nodes"></i>
                         </button> -->
                         <div class="menu">
+                        <a href="/creator/events/{{ event.id }}/tickets/">Add Tickets</a>
                         <a href="/creator/edit-event/{{ event.id }}/">Edit Event</a>
                         <a href="/creator/delete-event/{{ event.id }}/">Delete Event</a>
+                        
                         </div>
                         <button class="ed-icon-btn" id="moreBtn" title="More Options">
                             <i class="fa-solid fa-ellipsis"></i>
@@ -31,7 +33,7 @@
                     <img src="/static/uploads/{{ event.banner }}" alt="Lagos Soundwave Festival" onerror="this.style.display='none'">
                     <div class="ed-hero-overlay">
                         <span class="ed-live-badge">
-                            <span class="ed-live-dot"></span>
+                            <span class="ed-live-dot"></span> 
                             {{ event.status }}
                         </span>
                         <span class="ed-category-badge">
@@ -308,10 +310,7 @@
                                         <span>{{ p.comments|length }}</span>
                                     </button>
 
-                                    <button class="share-btn">
-                                        <i class="fa-solid fa-share"></i>
-                                        <span>7</span>
-                                    </button>
+                                    
 
                                     <a href="/comments/{{ p.id }}/"
                                     id="openComment{{ p.id }}"

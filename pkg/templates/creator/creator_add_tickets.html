@@ -19,12 +19,13 @@
                         <h3>Ticket Management</h3>
                         <p class="text-white">Manage all ticket types for this event without leaving the page.</p>
                     </div>
+                    {% include 'creator/alert.html' %}
                     <button
-    type="button"
-    class="btn btn-primary toggle-ticket-form-btn">
-    <i class="fa-solid fa-ticket"></i>
-    &nbsp; Add Ticket
-</button>
+                        type="button"
+                        class="btn btn-primary toggle-ticket-form-btn">
+                        <i class="fa-solid fa-ticket"></i>
+                        &nbsp; Add Ticket
+                    </button>
                 </div>
 
                 <div id="ticketFormContainer" class="ticket-form-card" style="display:none;">
@@ -103,7 +104,7 @@
                                 <div style="font-size:40px; color:rgba(240,240,248,0.6);"><i class="fa-solid fa-ticket"></i></div>
                                 <h4>No tickets yet</h4>
                                 <p>Tickets let people purchase access to your event. Create your first ticket to get started.</p>
-                                <button class="btn btn-outline-primary" id="createTicketBtn" type="button">Create Ticket</button>
+                                <button class="btn btn-outline-primary toggle-ticket-form-btn" id="createTicketBtn" type="button">Create Ticket</button>
                             </div>
                         {% endif %}
                     </div>

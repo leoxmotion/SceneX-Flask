@@ -5,7 +5,7 @@ from pkg.forms import TicketForm
 from pkg.models import db, Event, EventTicket
 
 
-@app.route('/creator/events/<int:event_id>/tickets')
+@app.route('/creator/events/<int:event_id>/tickets/')
 def creator_event_tickets(event_id):
     if session.get('useronline') is None:
         flash('You must be logged in to view this page', category='errormsg')
@@ -21,7 +21,7 @@ def creator_event_tickets(event_id):
     return render_template('creator/creator_add_tickets.html', title='Manage Tickets', event=event, tickets=tickets, ticketform=ticketform, current_page='events')
 
 
-@app.route('/creator/events/<int:event_id>/tickets/add', methods=['POST'])
+@app.route('/creator/events/<int:event_id>/tickets/add/', methods=['POST'])
 def add_event_ticket(event_id):
     if session.get('useronline') is None:
         return jsonify(success=False, error='Authentication required'), 401
@@ -59,7 +59,7 @@ def add_event_ticket(event_id):
     return jsonify(success=False, error='Invalid ticket data', errors=ticketform.errors)
 
 
-@app.route('/creator/tickets/<int:ticket_id>/update', methods=['POST'])
+@app.route('/creator/tickets/<int:ticket_id>/update/', methods=['POST'])
 def update_event_ticket(ticket_id):
     if session.get('useronline') is None:
         return jsonify(success=False, error='Authentication required'), 401
@@ -87,7 +87,7 @@ def update_event_ticket(ticket_id):
     return jsonify(success=False, error='Unable to update ticket', errors=ticketform.errors)
 
 
-@app.route('/creator/tickets/<int:ticket_id>/delete', methods=['POST'])
+@app.route('/creator/tickets/<int:ticket_id>/delete/', methods=['POST'])
 def delete_event_ticket(ticket_id):
     if session.get('useronline') is None:
         return jsonify(success=False, error='Authentication required'), 401

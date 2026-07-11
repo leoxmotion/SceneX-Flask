@@ -15,7 +15,7 @@
                             <p>
                                 Stay updated with your events activity.
                             </p>
-                            {% include 'user/alert.html' %}
+                            {% include 'creator/alert.html' %}
                         </div>
 
                         
@@ -30,6 +30,7 @@
                             {% for event in events %}
                             {% if event.creator.id == user.id %}
                             {% if event.status == 'pending' %}
+                            
                             <div class="col-md-6 mb-3" data-category="{{ event.category.name }}">
                                 <div class="all-event-card">
                                     <div class="all-event-image">

@@ -20,6 +20,7 @@
                 <button class="admin-action-btn admin-action-btn-primary" type="submit">Add category</button>
             </form>
         </div>
+        {% include 'admin/alert.html' %}
 
         <div class="admin-category-grid" style="margin-top: 1rem;">
             {% for category in categories %}

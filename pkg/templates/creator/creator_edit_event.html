@@ -12,7 +12,7 @@
 
                     
                 </div>
-
+                {% include 'creator/alert.html' %}
                 
 
                 <form id="eventForm" class="ce-form" action="" action="{{ url_for('creator_edit_event', id=event.id) }}" method="post" enctype="multipart/form-data">
