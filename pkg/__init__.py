@@ -18,24 +18,7 @@ def create_app():
     migrate = Migrate(app, db)
     csrf.init_app(app)
 
-    with app.app_context():
-        db.create_all()
-        inspector = inspect(db.engine)
-
-        columns = [column['name'] for column in inspector.get_columns('user')]
-        if 'account_status' not in columns:
-            db.session.execute(text("ALTER TABLE user ADD COLUMN account_status VARCHAR(20) NOT NULL DEFAULT 'active'"))
-            db.session.commit()
-
-        event_columns = [column['name'] for column in inspector.get_columns('event')]
-        if 'is_trending' not in event_columns:
-            db.session.execute(text("ALTER TABLE event ADD COLUMN is_trending BOOLEAN NOT NULL DEFAULT 0"))
-            db.session.commit()
-
-        community_columns = [column['name'] for column in inspector.get_columns('community')]
-        if 'is_trending' not in community_columns:
-            db.session.execute(text("ALTER TABLE community ADD COLUMN is_trending BOOLEAN NOT NULL DEFAULT 0"))
-            db.session.commit()
+   
 
     @app.context_processor
     def inject_default_sidebar():
