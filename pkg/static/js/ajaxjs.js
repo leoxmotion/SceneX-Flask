@@ -46,7 +46,7 @@ $(function(){
         var myform = new FormData(form);
 
         $.ajax({
-            url: '/comments/' + window.post_id,
+            url: '/comments/' + window.post_id + '/',
             type: 'POST',
             data: myform,
             processData: false,

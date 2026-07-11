@@ -1,6 +1,7 @@
 from flask import Flask, session
 from flask_wtf import CSRFProtect
 from flask_migrate import Migrate
+from werkzeug.middleware.proxy_fix import ProxyFix
 from sqlalchemy import inspect, text
 
 from pkg.config import LiveConfig
@@ -11,6 +12,12 @@ def create_app():
     from pkg.models import db, Event, Follow, User
 
     app = Flask(__name__, instance_relative_config=True)
+    app.wsgi_app = ProxyFix(
+    app.wsgi_app,
+    x_proto=1,
+    x_host=1
+    )
+    
     app.config.from_pyfile('config.py')
     app.config.from_object(LiveConfig)
 
