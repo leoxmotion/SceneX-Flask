@@ -71,13 +71,13 @@
                     <div class="notif-card unread-notif">
 
                         <div class="notif-avatar">
-                            <img src="images/uploads/{{ n.actor.profile_pic }}" alt="">
+                            <img src="{{ url_for('static', filename='uploads/' ~ n.actor.profile_pic) }}" alt="" onerror="this.style.display='none'">
                         </div>
 
                         <div class="notif-content">
 
                             <p>
-                                <strong>@{{ n.actor.username }}</strong>
+                                <strong>@<a href="/profile/{{ n.actor.id }}/">{{ n.actor.username }}</a></strong>
                                 
                                 {% if n.type == 'follow' %}
                                 followed you.
@@ -97,10 +97,7 @@
                             </span>
 
                         </div>
-                        {% if n.type == 'follow' %}
-                        <form action="{{ url_for('toggle_follow', user_id=user.id) }}" method="POST">
-                                <button type="submit" class="btn-follow">{% if is_following %}Unfollow{% else %}Follow{% endif %}</button>
-                            </form>
+                        {% if n.type == 'follow' %} 
                         {% elif n.type == 'like' %}
                         {% elif n.type == 'comment' %}
                         {% elif n.type == 'event_join' %}
