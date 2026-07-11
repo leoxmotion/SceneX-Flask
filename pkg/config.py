@@ -7,7 +7,7 @@ class GeneralConfig(object):
     
 class LiveConfig(GeneralConfig):
     SQLALCHEMY_DATABASE_URI = (
-        f"mysql+mysqlconnector://"
+        f"mysql+pymysql://"
         f"{os.getenv('MYSQLUSER')}:"
         f"{os.getenv('MYSQLPASSWORD')}@"
         f"{os.getenv('MYSQLHOST')}:"
