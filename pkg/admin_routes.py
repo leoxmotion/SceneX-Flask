@@ -352,3 +352,29 @@ def admin_toggle_trending_community(id):
     flash('Trending status updated', category='success')
     return redirect(request.referrer or url_for('admin_communities'))
 
+
+
+
+@app.get('/admin/all-posts/')
+def admin_posts():
+    if session.get('adminonline') is not None:
+        admin_id = session.get('adminonline')
+        admin_deets = Admin.query.get(admin_id)
+        stats = _build_admin_stats()
+        posts = Post.query.order_by(Post.id.desc()).all()
+        return render_template('admin/admin_posts.html', title='All Posts', admin_deets=admin_deets, stats=stats, posts=posts, current_page='posts')
+    else:
+        flash('You must be logged in to view this page', category='errormsg')
+        return redirect(url_for('adminlogin'))
+
+
+@app.post('/admin/delete-post/<int:id>/')
+def admin_delete_post(id):
+    if session.get('adminonline') is None:
+        flash('You must be logged in to view this page', category='errormsg')
+        return redirect(url_for('adminlogin'))
+    post = Post.query.get_or_404(id)
+    db.session.delete(post)
+    db.session.commit()
+    flash('Post removed successfully', category='success')
+    return redirect(request.referrer or url_for('admin_posts'))

@@ -1,0 +1,49 @@
+{% include "admin/admin_header.html" %}
+
+<main class="col-lg-7 offset-lg-2 admin-main">
+    <div class="admin-page-shell">
+        <div class="admin-page-header">
+            <div>
+                <p class="eyebrow">Operations hub</p>
+                <h1>All posts</h1>
+                <p class="admin-subtitle">Review and moderate posts shared across events.</p>
+            </div>
+        </div>
+
+        <div class="admin-panel">
+            {% if posts %}
+            <div class="admin-list">
+                {% for post in posts %}
+                <div class="admin-list-item">
+                    <div>
+                        <strong>
+                            {{ post.creator.fullname or post.creator.username if post.creator else 'Unknown user' }}
+                        </strong>
+                        <span>
+                            {{ post.content[:120] }}{% if post.content|length > 120 %}...{% endif %}
+                        </span>
+                        <span class="admin-badge">
+                            {% if post.event %}
+                                on <a href="{{ url_for('admin_view_event', id=post.event.id) }}">{{ post.event.name }}</a>
+                            {% else %}
+                                No linked event
+                            {% endif %}
+                            &middot; {{ post.created_at.strftime('%d %b %Y, %H:%M') if post.created_at else '' }}
+                        </span>
+                    </div>
+
+                    <form action="{{ url_for('admin_delete_post', id=post.id) }}" method="POST" onsubmit="return confirm('Delete this post permanently? This cannot be undone.');">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="admin-empty">No posts yet.</div>
+            {% endif %}
+        </div>
+    </div>
+</main>
+
+{% include "admin/admin_footer.html" %}
