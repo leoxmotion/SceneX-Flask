@@ -1,6 +1,7 @@
 import os
 import random
 import secrets
+from pkg import oauth
 from flask import render_template, request, abort, redirect, url_for, flash, session, jsonify
 
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -112,6 +113,80 @@ def check_email():
     else:
         return "<span class='text-success'>This Email is available.</span>"
 
+
+
+
+@app.route('/auth/google/login/')
+def google_login():
+    redirect_uri = url_for('google_callback', _external=True)
+    return oauth.google.authorize_redirect(redirect_uri)
+
+
+@app.route('/auth/google/callback/')
+def google_callback():
+    token = oauth.google.authorize_access_token()
+    userinfo = token.get('userinfo')
+
+    if not userinfo or not userinfo.get('email'):
+        flash('Google login failed. Please try again.', category='errormsg')
+        return redirect(url_for('login'))
+
+    email = userinfo['email']
+    fullname = userinfo.get('name', '')
+
+    existing_user = User.query.filter(User.email == email).first()
+    if existing_user:
+        session['useronline'] = existing_user.id
+        return redirect(url_for('profile', id=existing_user.id))
+
+    # New user — stash Google info in session, send to finish signup
+    session['pending_google_signup'] = {
+        'email': email,
+        'fullname': fullname,
+    }
+    return redirect(url_for('complete_google_signup'))
+
+
+@app.route('/auth/google/complete-signup/', methods=['GET', 'POST'])
+def complete_google_signup():
+    pending = session.get('pending_google_signup')
+    if not pending:
+        flash('Session expired, please try signing in with Google again.', category='errormsg')
+        return redirect(url_for('login'))
+
+    if request.method == 'GET':
+        states = State.query.all()
+        return render_template('user/complete_google_signup.html', pending=pending, states=states)
+
+    username = request.form.get('username')
+    gender = request.form.get('gender')
+    state_id = request.form.get('stateid')
+
+    if not all([username, gender, state_id]):
+        flash('All fields are compulsory!', category='errormsg')
+        return redirect(url_for('complete_google_signup'))
+
+    # Random unusable password — Google users never log in with a password
+    random_password_hash = generate_password_hash(secrets.token_urlsafe(32))
+
+    try:
+        user = User(
+            fullname=pending['fullname'],
+            username=username,
+            email=pending['email'],
+            password=random_password_hash,
+            gender=gender,
+            state_id=state_id,
+        )
+        db.session.add(user)
+        db.session.commit()
+        session.pop('pending_google_signup', None)
+        session['useronline'] = user.id
+        return redirect(url_for('profile', id=user.id))
+    except Exception as e:
+        db.session.rollback()
+        flash(str(e), 'errormsg')
+        return redirect(url_for('complete_google_signup'))
 
 # ---------------------------------------------------------------------------
 # Profile

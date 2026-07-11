@@ -3,10 +3,12 @@ from flask_wtf import CSRFProtect
 from flask_migrate import Migrate
 from werkzeug.middleware.proxy_fix import ProxyFix
 from sqlalchemy import inspect, text
+from authlib.integrations.flask_client import OAuth
 
 from pkg.config import LiveConfig
 
 csrf = CSRFProtect()
+oauth = OAuth()
 
 def create_app():
     from pkg.models import db, Event, Follow, User
@@ -20,10 +22,20 @@ def create_app():
     
     app.config.from_pyfile('config.py')
     app.config.from_object(LiveConfig)
+    
+    
 
     db.init_app(app)
     migrate = Migrate(app, db)
     csrf.init_app(app)
+    oauth.init_app(app)
+    google = oauth.register(
+    name='google',
+    client_id=app.config['GOOGLE_CLIENT_ID'],
+    client_secret=app.config['GOOGLE_CLIENT_SECRET'],
+    server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
+    client_kwargs={'scope': 'openid email profile'},
+)
 
 
     with app.app_context():
