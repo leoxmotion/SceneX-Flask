@@ -10,6 +10,7 @@
             </div>
             <h4>{{ event.name }}</h4>
             <p class="sidebar-muted-copy">
+                
                 <i class="fa-regular fa-calendar"></i> {{ event.event_start.strftime('%a, %B %d, %Y') }}
             </p>
             {% if session['useronline']==creator.id %}
