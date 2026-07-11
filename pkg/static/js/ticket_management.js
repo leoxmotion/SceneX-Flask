@@ -116,27 +116,33 @@ $(function() {
         });
 
         card.find('.delete-ticket-btn').click(function() {
-            var ticketId = $(this).data('ticket-id');
-            if (!confirm('Are you sure you want to delete this ticket?')) {
-                return;
-            }
+        var ticketId = $(this).data('ticket-id');
+        if (!confirm('Are you sure you want to delete this ticket?')) {
+            return;
+        }
 
-            $.ajax({
-                url: '/creator/tickets/' + ticketId + '/delete',
-                type: 'POST',
-                dataType: 'json',
-                success: function(response) {
-                    if (response.success) {
-                        $('.ticket-card[data-ticket-id="' + ticketId + '"]').fadeOut(300, function() {
-                            $(this).remove();
-                            if ($('#ticketCardsWrapper').children('.ticket-card').length === 0) {
-                                $('#ticketCardsWrapper').html('<div class="empty-state"><h4>No tickets have been created for this event yet.</h4><p>Click "Add Tickets" to create your first ticket.</p></div>');
-                            }
-                        });
-                    }
+        $.ajax({
+            url: '/creator/tickets/' + ticketId + '/delete/',
+            type: 'POST',
+            dataType: 'json',
+            headers: {
+                'X-CSRFToken': $('input[name="csrf_token"]').val()
+            },
+            success: function(response) {
+                if (response.success) {
+                    $('.ticket-card[data-ticket-id="' + ticketId + '"]').fadeOut(300, function() {
+                        $(this).remove();
+                        if ($('#ticketCardsWrapper').children('.ticket-card').length === 0) {
+                            $('#ticketCardsWrapper').html('<div class="empty-state"><h4>No tickets have been created for this event yet.</h4><p>Click "Add Tickets" to create your first ticket.</p></div>');
+                        }
+                    });
                 }
-            });
+            },
+            error: function() {
+                alert('An error occurred while deleting the ticket.');
+            }
         });
+});
     }
 
     ticketCardsWrapper.children('.ticket-card').each(function() {
@@ -144,42 +150,42 @@ $(function() {
     });
 
     ticketForm.submit(function(event) {
-        event.preventDefault();
+    event.preventDefault();
 
-        var eventId = window.location.pathname.split('/')[3];
-        var ticketId = ticketForm.find('input[name="ticket_id"]').val();
-        var url = ticketId ? '/creator/tickets/' + ticketId + '/update' : '/creator/events/' + eventId + '/tickets/add';
-        var requestData = ticketForm.serialize();
+    var eventId = window.location.pathname.split('/')[3];
+    var ticketId = ticketForm.find('input[name="ticket_id"]').val();
+    var url = ticketId ? '/creator/tickets/' + ticketId + '/update/' : '/creator/events/' + eventId + '/tickets/add/';
+    var requestData = ticketForm.serialize();
 
-        $.ajax({
-            url: url,
-            type: 'POST',
-            data: requestData,
-            dataType: 'json',
-            success: function(response) {
-                if (response.success) {
-                    var cardHtml = renderTicketCard(response.ticket);
-                    if (ticketId) {
-                        var existingCard = $('.ticket-card[data-ticket-id="' + ticketId + '"]');
-                        existingCard.replaceWith(cardHtml);
-                    } else {
-                        if ($('#ticketCardsWrapper').find('.empty-state').length) {
-                            $('#ticketCardsWrapper').empty();
-                        }
-                        $('#ticketCardsWrapper').append(cardHtml);
-                    }
-                    resetForm();
-                    ticketFormContainer.slideUp(300);
-                    attachCardEvents($('.ticket-card[data-ticket-id="' + response.ticket.id + '"]'));
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: requestData,
+        dataType: 'json',
+        success: function(response) {
+            if (response.success) {
+                var cardHtml = renderTicketCard(response.ticket);
+                if (ticketId) {
+                    var existingCard = $('.ticket-card[data-ticket-id="' + ticketId + '"]');
+                    existingCard.replaceWith(cardHtml);
                 } else {
-                    alert(response.error || 'Unable to save ticket.');
+                    if ($('#ticketCardsWrapper').find('.empty-state').length) {
+                        $('#ticketCardsWrapper').empty();
+                    }
+                    $('#ticketCardsWrapper').append(cardHtml);
                 }
-            },
-            error: function() {
-                alert('An error occurred while saving the ticket.');
+                resetForm();
+                ticketFormContainer.slideUp(300);
+                attachCardEvents($('.ticket-card[data-ticket-id="' + response.ticket.id + '"]'));
+            } else {
+                alert(response.error || 'Unable to save ticket.');
             }
-        });
+        },
+        error: function() {
+            alert('An error occurred while saving the ticket.');
+        }
     });
+});
 
     setCategoryFields(ticketCategory.val());
 });
