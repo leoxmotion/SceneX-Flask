@@ -8,7 +8,8 @@ from reportlab.lib.units import mm
 from reportlab.lib.utils import ImageReader
 from decimal import Decimal
 from datetime import datetime
-from flask import render_template, request, jsonify, redirect, url_for, flash, session
+from flask import render_template, request, jsonify, redirect, url_for, flash
+from flask import session
 from pkg import app, csrf
 from pkg.models import db, Event, EventTicket, EventAttendees, TicketOrder, TicketOrderItem, Notification
 
